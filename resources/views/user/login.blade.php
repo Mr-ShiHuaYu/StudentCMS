@@ -15,6 +15,12 @@
       <script src="{{asset('js/html5.min.js')}}"></script>
       <script src="{{asset('js/respond.min.js')}}"></script>
     <![endif]-->
+    <script>
+        // 添加判断iframe是否处于login页,如果是的话,就让父级跳转到login页
+        if (window.parent.location.pathname === '/' && window.location.href === '{{route('login')}}') {
+            window.parent.location.href = '{{route('login')}}';
+        }
+    </script>
     <style>
         #login-form {
             position: absolute;

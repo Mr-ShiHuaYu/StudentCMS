@@ -9,6 +9,7 @@
     @include('common.css')
     @yield('css')
     @include('common.js')
+
 </head>
 
 <body>
