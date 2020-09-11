@@ -22,3 +22,13 @@ git clone https://github.com/974988176/StudentCMS.git
 cd StudentCMS
 composer update
 ```
+
+### 效果展示
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-54-48.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-54-58.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-14.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-35.png)
