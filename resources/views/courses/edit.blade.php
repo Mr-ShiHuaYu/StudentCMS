@@ -40,10 +40,7 @@
                 var form = layui.form,
                     layer = layui.layer;
 
-                form.val('course', {
-                    'name': "{{$course->name}}",
-                    'teacher_id': "{{$course->teacher_id}}"
-                });
+                form.val('course', @json($course));
                 //监听提交
                 form.on('submit(save)',
                     function (data) {

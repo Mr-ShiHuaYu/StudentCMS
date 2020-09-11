@@ -13,6 +13,7 @@ class UserModel extends Authenticatable
     protected $guarded = [];
     protected $hidden = ['password', 'remember_token'];
     protected $jishuMap = [];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -24,14 +25,9 @@ class UserModel extends Authenticatable
         return $this->jishuMap[$value];
     }
 
-//    public function setJishuAttribute($value)
-//    {
-//        $this->attributes['jishu'] = array_search($value, $this->jishuMap);
-//    }
-
     public function parents()
     {
-        return $this->hasMany(ParentsModel::class,'student_id');
+        return $this->hasMany(ParentsModel::class, 'student_id');
     }
 
 }

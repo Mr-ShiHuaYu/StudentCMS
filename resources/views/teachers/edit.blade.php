@@ -51,12 +51,7 @@
                     layer = layui.layer;
 
                 //给表单赋值
-                form.val("teacher", {
-                    "name": "{{$teacher->name}}"
-                    ,"sex": "{{$teacher->sex}}"
-                    , 'qq': "{{$teacher->qq}}"
-                    , 'phone': "{{$teacher->phone}}"
-                });
+                form.val("teacher", @json($teacher));
 
                 //监听提交
                 form.on('submit(save)',

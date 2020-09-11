@@ -10,7 +10,7 @@
 @stop
 @section('content')
     <div class="layui-fluid">
-        <form class="layui-form" lay-filter="user">
+        <form class="layui-form" lay-filter="userForm">
             <table class="layui-table">
                 <tbody>
                 <tr>
@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <td>学生姓名</td>
-                    <td><input class="layui-input" name="name" type="text" value=></td>
+                    <td><input class="layui-input" name="name" type="text"></td>
                     <td>性别</td>
                     <td>
                         <input type="radio" name="sex" value="男" title="男">
@@ -33,15 +33,15 @@
                     <td>身份证号</td>
                     <td><input class="layui-input" name="sysid"></td>
                     <td>出生日期</td>
-                    <td><input id="birth" class="layui-input" name="birth" type="text" value="{{$user->birth}}"></td>
+                    <td><input id="birth" class="layui-input" name="birth" type="text"></td>
                     <td>民族</td>
-                    <td><input class="layui-input" name="minzu" type="text" value="{{$user->minzu}}"></td>
+                    <td><input class="layui-input" name="minzu" type="text"></td>
                 </tr>
                 <tr>
                     <td>家庭经济状况</td>
-                    <td><input class="layui-input" name="jingji" type="text" value="{{$user->jingji}}"></td>
+                    <td><input class="layui-input" name="jingji" type="text"></td>
                     <td>户口所在地</td>
-                    <td><input class="layui-input" name="hukou" type="text" value="{{$user->hukou}}"></td>
+                    <td><input class="layui-input" name="hukou" type="text"></td>
                     <td>是否寄宿</td>
                     <td>
                         <select name="jishu">
@@ -54,11 +54,11 @@
                 </tr>
                 <tr>
                     <td>户籍地址</td>
-                    <td colspan="5"><input class="layui-input" name="huji" type="text" value="{{$user->huji}}"></td>
+                    <td colspan="5"><input class="layui-input" name="huji" type="text"></td>
                 </tr>
                 <tr>
                     <td>现住址</td>
-                    <td colspan="5"><input class="layui-input" name="xianzz" type="text" value="{{$user->xianzz}}"></td>
+                    <td colspan="5"><input class="layui-input" name="xianzz" type="text"></td>
                 </tr>
                 <tr>
                     <td>是否农村留守儿童</td>
@@ -150,27 +150,14 @@
                     elem: '#birth'
                 });
                 // 为表单赋值初始值
-                form.val('user',{
-                    'name': "{{$user->name}}",
-                    'sex': "{{$user->sex}}",
-                    'phone': "{{$user->phone}}",
-                    'sysid': "{{$user->sysid}}",
-                    'birth': "{{$user->birth}}",
-                    'minzu': "{{$user->minzu}}",
-                    'jingji': "{{$user->jingji}}",
-                    'hukou': "{{$user->hukou}}",
-                    'jishu': "{{array_search($user->jishu, $jishuMap)}}",
-                    'huji': "{{$user->huji}}",
-                    'xianzz': "{{$user->xianzz}}",
-                    'liushou': "{{$user->liushou}}",
-                    'liushouqk': "{{$user->liushouqk}}",
-                    'liushoutgqk': "{{$user->liushoutgqk}}",
-                    'ganbu': "{{$user->ganbu}}",
-                    'huojiang': "{{$user->huojiang}}",
-                    'biye': "{{$user->biye}}"
-                });
+                var user = @json($user);
+                user['jishu'] = '{{array_search($user->jishu, $jishuMap)}}';
+                user['liushou'] = user['liushou'] + '';
+                form.val('userForm', user);
                 // 点击添加家庭主要成员
                 $('#add_parents').click(function () {
+                    var data1 = form.val("user");
+                    console.log(data1);
                     var dom = '<tr><td><input class="layui-input" name="parent[name][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[age][]" type="text" lay-verify="required"  placeholder="必填项"></td><td><input class="layui-input" name="parent[relation][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[unit][]" type="text"></td><td><input class="layui-input" name="parent[job][]" type="text"></td><td><input class="layui-input" name="parent[phone][]" type="text"></td><td></td></tr>';
                     if ($('#nodata').length) {
                         $('#nodata').remove();
@@ -179,6 +166,7 @@
                 });
 
                 $('.delete button').click(function () {
+
                     var that = this;
                     layer.confirm('确定删除这个家庭成员吗?', function () {
                         var id = $(that).prev(':hidden').val();

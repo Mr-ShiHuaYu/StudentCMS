@@ -50,7 +50,11 @@
             </tr>
             <tr>
                 <td>是否农村留守儿童</td>
-                <td>{{$user->liushow}}</td>
+                <td>@if ($user->liushou)
+                        是
+                    @else
+                        否
+                    @endif</td>
                 <td>留守儿童情况</td>
                 <td>{{$user->liushouqk}}</td>
                 <td>留守儿童托管情况</td>
