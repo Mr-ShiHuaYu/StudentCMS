@@ -7,11 +7,6 @@
                     <cite>用户管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
-                    {{--<li>
-                        <a onclick="xadmin.add_tab('统计页面','welcome1.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>统计页面</cite></a>
-                    </li>--}}
                     <li>
                         <a onclick="xadmin.add_tab('学生列表','{{route('user.index')}}',true)">
                             <i class="iconfont">&#xe6a7;</i>
