@@ -16,7 +16,7 @@
 - x-admin v2.2
 - echarts
 
-## 使用方法
+### 使用方法
 ```php
 git clone https://github.com/974988176/StudentCMS.git
 cd StudentCMS
