@@ -174,11 +174,24 @@ class User extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('您无权删除学生');
+        }
+        $res = UserModel::destroy($id);// 删除学生会关联删除他的家庭成员
+        if ($res) {
+            return $this->success('删除成功');
+        }
+
+        return $this->fail('删除失败');
+    }
+
+    public function delParent(Request $request, $id)
+    {
         $user = UserModel::find($id);
         if (Gate::denies('is_own', $user)) {
-            return $this->fail('您无权删除不是自己的信息');
+            return $this->fail('您无权删除不是自己的家庭成员');
         }
-        $p_id = $request->input('id');
+        $p_id = $request->input('pid');
         $parent = $user->parents()->where('id', '=', $p_id);
         $res = $parent->delete();
 //        $res = ParentsModel::destroy($p_id);// 可以直接这样,更快,但这里为了练习model一对多

@@ -22,6 +22,7 @@ Route::middleware('auth')->group(
         Route::resource('/user', 'User');
         Route::get('/getuser', 'User@getUser')->name('getuser');
         Route::delete('/delall', 'User@deleteAll')->name('user.delall');
+        Route::delete('/delparent/{id}', 'User@delParent')->name('user.delparent');
         // 老师
         Route::resource('/teacher','Teacher');
         Route::get('/getteacher', 'Teacher@getTeacher')->name('getteacher');

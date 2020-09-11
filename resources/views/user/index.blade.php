@@ -49,10 +49,10 @@
         </div>
     </script>
 
-    <script type="text/html" id="activeTpl">
+{{--    <script type="text/html" id="activeTpl">
         <span
             class="layui-btn layui-btn-normal layui-btn-mini @{{ d.jishu==='否'?'layui-btn-disabled':''}}">@{{d.jishu}}</span>
-    </script>
+    </script>--}}
 
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -104,6 +104,40 @@
                     , toolbar: '#toolbarDemo'
                     , defaultToolbar: ['filter', 'print', 'exports']
                 });
+
+                //监听行工具事件
+                table.on('tool(test)', function (obj) {
+                    var data = obj.data;
+                    switch (obj.event) {
+                        //监听单元格事件
+                        case 'edit':
+                            var url = '{{route('user.show','xxx')}}'.replace('xxx', data.id);
+                            xadmin.open('个人信息', url);
+                            break;
+
+                        case 'del':
+                            layer.confirm('真的删除<span style="color:red;">' + data.name + '</span>课程么', function (index) {
+                                var url = '{{route('user.destroy','xxx')}}'.replace('xxx', data.id);
+                                $.ajax({
+                                    type: 'delete',
+                                    url: url,
+                                    success: function (res) {
+                                        if (res.status === 'success') {
+                                            layer.alert(res.msg, {icon: 6}, function (index) {
+                                                window.location.reload();
+                                            })
+                                        } else {
+                                            layer.alert(res.msg, {icon: 5});
+                                        }
+                                    }
+                                });
+
+                            });
+                            break;
+                    }
+
+                });
+
 
                 //监听行双击事件（双击事件为：row）
                 table.on('rowDouble(test)', function (obj) {

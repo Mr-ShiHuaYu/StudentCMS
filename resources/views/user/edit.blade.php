@@ -156,8 +156,6 @@
                 form.val('userForm', user);
                 // 点击添加家庭主要成员
                 $('#add_parents').click(function () {
-                    var data1 = form.val("user");
-                    console.log(data1);
                     var dom = '<tr><td><input class="layui-input" name="parent[name][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[age][]" type="text" lay-verify="required"  placeholder="必填项"></td><td><input class="layui-input" name="parent[relation][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[unit][]" type="text"></td><td><input class="layui-input" name="parent[job][]" type="text"></td><td><input class="layui-input" name="parent[phone][]" type="text"></td><td></td></tr>';
                     if ($('#nodata').length) {
                         $('#nodata').remove();
@@ -169,11 +167,11 @@
 
                     var that = this;
                     layer.confirm('确定删除这个家庭成员吗?', function () {
-                        var id = $(that).prev(':hidden').val();
+                        var pid = $(that).prev(':hidden').val();
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('user.destroy',$user->id) }}",
-                            data: {id: id},
+                            url: "{{ route('user.delparent',$user->id) }}",
+                            data: {pid: pid},
                             success: function (res) {
                                 if (res.status === 'success') {
                                     layer.alert(res.msg, {icon: 6}, function (index) {
