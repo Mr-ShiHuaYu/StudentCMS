@@ -4,17 +4,17 @@
     <div class="layui-fluid">
         <div class="layui-row">
             <div class="layui-col-xs6 layui-col-xs-offset3">
-                <form class="layui-form">
+                <form class="layui-form" lay-filter="course">
                     <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>课程名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="name" class="layui-input" value="{{$course->name}}">
+                            <input type="text" name="name" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>授课老师</label>
                         <div class="layui-input-inline">
-                            <select name="teacher">
+                            <select name="teacher_id">
                                 <option value=""></option>
                                 @foreach($teachers as $v)
                                     <option value="{{$v->id}}">{{$v->name}}</option>
@@ -39,18 +39,26 @@
                 $ = layui.jquery;
                 var form = layui.form,
                     layer = layui.layer;
-                $('select[name=teacher]').val({{$course->teacher_id}});
-                form.render('select');
+
+                form.val('course', {
+                    'name': "{{$course->name}}",
+                    'teacher_id': "{{$course->teacher_id}}"
+                });
                 //监听提交
                 form.on('submit(save)',
                     function (data) {
-                        $.post('{{route('course.store')}}', data.field, function (res) {
-                            if (res.status === 'success') {
-                                layer.alert(res.msg, function (index) {
-                                    xadmin.father_reload();
-                                });
-                            } else {
-                                layer.msg(res.msg, {icon: 5, time: 1000});
+                        $.ajax({
+                            type: 'put',
+                            url: '{{route('course.update',$course->id)}}',
+                            data: data.field,
+                            success: function (res) {
+                                if (res.status === 'success') {
+                                    layer.alert(res.msg, {icon: 6}, function () {
+                                        xadmin.father_reload();
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 5, time: 1000});
+                                }
                             }
                         });
                         return false;

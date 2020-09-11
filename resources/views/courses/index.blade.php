@@ -47,6 +47,11 @@
         <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>添加</button>
     </script>
 
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
     <script>
         layui.use(['laydate', 'form'],
             function () {
@@ -75,7 +80,7 @@
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[ //表头
                         {field: 'teacher_id', hide: true}
-                        ,{type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        , {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
                         , {field: 'name', title: '课程名称', sort: true, align: 'center'}
                         , {
                             field: 'teacher',
@@ -90,35 +95,72 @@
                                 return '<button class="layui-btn layui-btn-normal">' + d.teacher.name + '</button>';
                             }
                         }
+                        @can('isAdmin')
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        @endcan
                     ]]
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]
                     , toolbar: '#toolbarDemo'
                 });
 
-                //监听单元格事件
+                //监听行工具事件
                 table.on('tool(test)', function (obj) {
                     var data = obj.data;
-                    if (obj.event === 'show_teacher') {
-                        if (data.teacher_id) {
-                            var url = '{{route('teacher.show','xxx')}}'.replace('xxx', data.teacher_id);
-                            xadmin.open('授课老师信息', url, 600);
-                        } else {
-                            layer.alert('该课程未指定老师,请让管理员双击指定授课老师!', {icon: 5})
-                        }
+                    switch (obj.event) {
+                        //监听单元格事件
+                        case 'show_teacher':
+                            if (data.teacher_id) {
+                                var url = '{{route('teacher.show','xxx')}}'.replace('xxx', data.teacher_id);
+                                xadmin.open('授课老师信息', url, 600);
+                            } else {
+                                layer.alert('该课程未指定老师,请让管理员双击指定授课老师!', {icon: 5})
+                            }
+                            break;
+                        case 'edit':
+                            var url = '{{route('course.edit','xxx')}}'.replace('xxx', data.id);
+                            xadmin.open('修改课程信息', url, 800);
+                            break;
+
+                        case 'del':
+                            layer.confirm('真的删除<span style="color:red;">' + data.name + '</span>课程么', function (index) {
+                                var url = '{{route('course.destroy','xxx')}}'.replace('xxx', data.id);
+                                $.ajax({
+                                    type: 'delete',
+                                    url: url,
+                                    success: function (res) {
+                                        if (res.status === 'success') {
+                                            layer.alert(res.msg, {icon: 6}, function (index) {
+                                                // obj.del();
+                                                // layer.close(index);
+                                                window.location.reload();
+                                            })
+                                        } else {
+                                            layer.alert(res.msg, {icon: 5});
+                                        }
+                                    }
+                                });
+
+                            });
+                            break;
                     }
+
                 });
 
                 //头工具栏事件
                 table.on('toolbar(test)', function (obj) {
+                    var data = obj.data;
+
                     switch (obj.event) {
                         case 'add':
                             xadmin.open('添加课程', '{{route('course.create')}}', 800);
                             break;
+
                     }
                     ;
                 });
 
+                @can('isAdmin')
                 //监听行双击事件（双击事件为：row）
                 table.on('rowDouble(test)', function (obj) {
                     var data = obj.data;
@@ -128,7 +170,7 @@
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
-
+                @endcan
             });
     </script>
 @stop

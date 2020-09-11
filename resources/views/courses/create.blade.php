@@ -45,7 +45,7 @@
                     function (data) {
                         $.post('{{route('course.store')}}', data.field, function (res) {
                             if (res.status === 'success') {
-                                layer.alert(res.msg, function (index) {
+                                layer.alert(res.msg, {icon: 6}, function (index) {
                                     xadmin.father_reload();
                                 });
                             } else {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CoursesModel;
 use App\Models\TeachersModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class Courses extends Controller
 {
@@ -88,7 +89,9 @@ class Courses extends Controller
     {
         $course = CoursesModel::find($id);
         $teachers = TeachersModel::get();
-
+        if (Gate::denies('isAdmin')) {
+            return view('user.noper');
+        }
         return view('courses.edit',compact('course','teachers'));
     }
 
@@ -101,7 +104,17 @@ class Courses extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $course = CoursesModel::find($id);
+
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('您无权修改课程');
+        }
+        $res = $course->update($request->all());
+        if ($res) {
+            return $this->success('修改成功');
+        } else {
+            return $this->fail('修改失败');
+        }
     }
 
     /**
@@ -112,6 +125,14 @@ class Courses extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('您无权删除课程');
+        }
+        $res = CoursesModel::destroy($id);
+        if ($res) {
+            return $this->success('删除成功');
+        }
+
+        return $this->fail('删除失败');
     }
 }

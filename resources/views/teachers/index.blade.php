@@ -86,7 +86,9 @@
                         , {field: 'sex', title: '性别', sort: true, align: 'center'}
                         , {field: 'phone', title: '电话', sort: true, align: 'center'}
                         , {field: 'qq', title: 'QQ', sort: true, align: 'center'}
+                        @can('isAdmin')
                         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        @endcan
                     ]]
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]
@@ -94,6 +96,7 @@
                     , defaultToolbar: ['filter', 'print', 'exports']
                 });
 
+                @can('isAdmin')
                 //监听行双击事件（双击事件为：row）
                 table.on('rowDouble(test)', function (obj) {
                     var data = obj.data;
@@ -104,6 +107,7 @@
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
+                @endcan
 
                 //头工具栏事件
                 table.on('toolbar(test)', function (obj) {
