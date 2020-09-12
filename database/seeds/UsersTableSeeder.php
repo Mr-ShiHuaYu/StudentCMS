@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         UserModel::find(1)->update(
             [
                 'uid' => 'admin',
-                'name' => '俞石华',
+                'name' => '系统管理员',
                 'is_admin' => true,
                 'sex' => '男',
                 'phone' => '18179871320',
