@@ -70,8 +70,9 @@ class Scores extends Controller
         // 列表检查,已经添加的不显示
         $student_id = auth()->user()->id;
         // 筛选中数据库中已经存在的这个学生的考试记录,在添加时,不显示出来,避免重复添加相同记录
-        $exam_rec = ScoresModel::where('student_id','=',$student_id)->select('exam_id as exam')->distinct()->get()->toArray();
-        $exams = ExamsModel::whereNotIn('id',$exam_rec)->get();
+        $exam_rec = ScoresModel::where('student_id', '=', $student_id)->select('exam_id as exam')->distinct()->get(
+        )->toArray();
+        $exams = ExamsModel::whereNotIn('id', $exam_rec)->get();
         $courses = CoursesModel::get();
         $is_admin = Gate::allows('isAdmin');
         $query = UserModel::query();
@@ -118,6 +119,9 @@ class Scores extends Controller
             $is_exist = ScoresModel::where($t)->exists();
             if ($is_exist) {
                 return $this->fail('已经存在同一考试同一课程的成绩,禁止重复插入!');
+            }
+            if ($data['score'] < 0 or $data['score'] > 150) {
+                return $this->fail('成绩不合法,成绩应在0-150分之间');
             }
             $temp = ScoresModel::create($d);
             if ( ! $temp) {
