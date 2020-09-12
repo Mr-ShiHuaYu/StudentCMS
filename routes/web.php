@@ -47,7 +47,7 @@ Route::middleware('auth')->group(
 Route::middleware('guest')->group(
     function () {
         Route::get('/login', 'Login@index')->name('login');
-        Route::post('/login', 'Login@store')->name('login.store');
+        Route::post('/dologin', 'Login@store')->name('login.store');
     }
 );
 

@@ -17,11 +17,16 @@
 - echarts
 
 ### 使用方法
-```php
-git clone https://github.com/974988176/StudentCMS.git
-cd StudentCMS
-composer update
 ```
+1. git clone https://github.com/974988176/StudentCMS.git
+2. cd StudentCMS
+composer update
+3. 创建数据库,复制.env.example为.env
+//生成key
+4.artisan key:generate
+5. 修改.env中数据库连接DB_DATABASE和APP_NAME属性
+```
+
 ### 权限管理
 #### 管理员权限
 > 管理员拥有网站所有权限,当检测到管理员时,所有内容右侧将会显示操作栏,可以进行编辑或删除,双击每一行可以进行编辑操作
@@ -51,3 +56,6 @@ composer update
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-14.png)
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-35.png)
+
+### 已知bug
+- 切换账号登录新账号时,虽提示登录成功,但依然跳转到登录页,需要进行2次登录才可以登录到首页,同一个账号不存在这个Bug,希望有大佬帮我解决一下这个问题,感谢.

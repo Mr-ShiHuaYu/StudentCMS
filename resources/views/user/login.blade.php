@@ -83,8 +83,8 @@
         form.on('submit(login)', function (data) {
             $.post("{{ route('login.store') }}", data.field, function (res) {
                 if (res.status === 'success') {
-                    layer.msg(res.msg, {icon: 6, time: 1000}, function () {
-                        window.location.href = "{{ route('index') }}";
+                    layer.alert(res.msg, {icon: 6}, function () {
+                        window.location.href = "/";
                     })
                 } else {
                     layer.msg(res.msg, {icon: 5, time: 1000});
