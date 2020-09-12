@@ -38,12 +38,12 @@
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('成绩录入','{{route('score.create')}}')">
+                        <a onclick="xadmin.add_tab('成绩录入','{{route('score.create')}}',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>成绩录入</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('成绩查询','{{route('score.index')}}')">
+                        <a onclick="xadmin.add_tab('成绩查询','{{route('score.index')}}',true)">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>成绩查询</cite></a>
                     </li>

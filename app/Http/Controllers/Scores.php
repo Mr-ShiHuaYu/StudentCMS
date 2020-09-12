@@ -7,6 +7,7 @@ use App\Models\ExamsModel;
 use App\Models\ScoresModel;
 use App\Models\UserModel;
 use DB;
+use Gate;
 use Illuminate\Http\Request;
 
 class Scores extends Controller
@@ -26,6 +27,8 @@ class Scores extends Controller
     public function getscore(Request $request)
     {
         // 全站最难,最关键的方法,利用mysql的if函数,将行转列,按学生的学号分组,max最课程成绩最大值,正常来说,一个学生的一次考试一个课程的成绩只有一个
+        // 要考虑权限,学生只能查看自己的成绩
+        $is_admin = Gate::allows('isAdmin');
         $page = $request->get('page');
         $limit = $request->get('limit');
         $offset = ($page - 1) * $limit;
@@ -39,8 +42,15 @@ class Scores extends Controller
         $sql .= " FROM scores sc
         LEFT JOIN courses c on c.id=sc.course_id
         LEFT JOIN users u on u.id=sc.student_id
-        LEFT JOIN exams e ON e.id=sc.exam_id
-        GROUP BY u.uid";
+        LEFT JOIN exams e ON e.id=sc.exam_id";
+        $uid = auth()->user()->uid;
+        // 添加权限判断,学生只能查看自己的成绩
+        if ($is_admin) {
+            $sql .= " WHERE u.is_admin = 0";
+        } else {
+            $sql .= " WHERE u.uid = '$uid'";
+        }
+        $sql .= " GROUP BY u.uid,e.name ORDER BY sc.created_at";
         $data = DB::table(DB::raw("($sql) as res"))->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
@@ -57,9 +67,22 @@ class Scores extends Controller
      */
     public function create()
     {
-        $exams = ExamsModel::get();
+        // 列表检查,已经添加的不显示
+        $student_id = auth()->user()->id;
+        // 筛选中数据库中已经存在的这个学生的考试记录,在添加时,不显示出来,避免重复添加相同记录
+        $exam_rec = ScoresModel::where('student_id','=',$student_id)->select('exam_id as exam')->distinct()->get()->toArray();
+        $exams = ExamsModel::whereNotIn('id',$exam_rec)->get();
         $courses = CoursesModel::get();
-        $students = UserModel::where('is_admin', '<>', 1)->get();
+        $is_admin = Gate::allows('isAdmin');
+        $query = UserModel::query();
+        // 添加权限判断,学生录入只能录入自己的名字的成绩
+        if ($is_admin) {
+            $students = $query->where('is_admin', '<>', 1);
+        } else {
+            // 如果是学生,只筛选出自己的
+            $students = $query->where('uid', '=', auth()->user()->uid);
+        }
+        $students = $students->get();
 
         return view('scores.create', compact('exams', 'courses', 'students'));
     }
@@ -72,7 +95,11 @@ class Scores extends Controller
      */
     public function store(Request $request)
     {
-        $student = $request->input('student_id');
+        $student = (int)$request->input('student_id');
+        $is_admin = Gate::allows('isAdmin');
+        if ( ! $is_admin && $student !== auth()->user()->id) {
+            return $this->fail('非法操作,不能添加不是自己的成绩');
+        }
         $exam = $request->input('exam_id');
         $input = $request->only('course_id', 'score');
         $data = [];
@@ -85,6 +112,13 @@ class Scores extends Controller
             }
         }
         foreach ($data as $d) {
+            // 插入前判断,有没有相同的成绩
+            $t = $d;
+            unset($t['score']);
+            $is_exist = ScoresModel::where($t)->exists();
+            if ($is_exist) {
+                return $this->fail('已经存在同一考试同一课程的成绩,禁止重复插入!');
+            }
             $temp = ScoresModel::create($d);
             if ( ! $temp) {
                 $flag = false;

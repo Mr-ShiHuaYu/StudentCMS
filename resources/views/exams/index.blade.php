@@ -78,7 +78,7 @@
                     , page: true //开启分页
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[
-                        {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'name', title: '考试名称', sort: true, align: 'center'}
                         , {field: 'time', title: '考试时间', sort: true, align: 'center'}
                         @can('isAdmin')

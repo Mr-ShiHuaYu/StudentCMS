@@ -81,7 +81,7 @@
                     , page: true //开启分页
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[ //表头
-                        {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'name', title: '姓名', sort: true, align: 'center'}
                         , {field: 'sex', title: '性别', sort: true, align: 'center'}
                         , {field: 'phone', title: '电话', sort: true, align: 'center'}

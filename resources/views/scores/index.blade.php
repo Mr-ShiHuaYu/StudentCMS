@@ -43,7 +43,7 @@
 
 @section('js')
     <script type="text/html" id="toolbarDemo">
-        <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>成绩录入</button>
     </script>
 
     <script type="text/html" id="barDemo">
@@ -78,7 +78,7 @@
                     , page: true //开启分页
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[
-                        {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'uid', title: '学号', sort: true, align: 'center'}
                         , {field: 'name', title: '姓名', sort: true, align: 'center'}
                         , {field: 'exam', title: '考试', sort: true, align: 'center'}
@@ -127,7 +127,7 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加考试', '{{route('exam.create')}}', 800);
+                            xadmin.open('成绩录入', '{{route('score.create')}}');
                             break;
                     }
                 });

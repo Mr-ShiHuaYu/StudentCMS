@@ -79,7 +79,7 @@
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[ //表头
                         {field: 'teacher_id', hide: true}
-                        , {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        , {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'name', title: '课程名称', sort: true, align: 'center'}
                         , {
                             field: 'teacher',

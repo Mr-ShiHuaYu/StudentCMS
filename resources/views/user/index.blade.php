@@ -86,8 +86,7 @@
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , initSort: {field: 'uid', type: 'asc'}
                     , cols: [[ //表头
-                        // {type: 'checkbox', width: 80, align: 'center'}
-                        {type: 'numbers', title: '序号', width: 100, sort: true, align: 'center'}
+                        {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'uid', title: '学号', sort: true, align: 'center'}
                         , {field: 'name', title: '姓名', sort: true, align: 'center'}
                         , {field: 'sex', title: '性别', sort: true, align: 'center'}
