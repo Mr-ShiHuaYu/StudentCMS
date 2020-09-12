@@ -47,6 +47,15 @@ composer update
 #### 老师权限
 - 暂时老师的权限和学生一样,下一步再考虑
 
+### 待完成事项
+- 成绩的echarts分析图,包括优秀率,良好率,及格率和不及格率
+- 成绩的数据表格单击编辑功能
+- 学生各科成绩的每次考试的变化拆线图
+- 权限改用laravel-permission
+- 学生信息,老师信息和学生成绩的导出,将采用laravel-excel导出
+- 学生请假条的填写,审批,需要家长邮箱的验证码认证,第一时间通过邮件通知管理员(班主任),班主任进行审批,拒绝或同意
+- 学生课程表的展示,动态的,可更新
+
 ### 效果展示
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-54-48.png)
@@ -56,6 +65,10 @@ composer update
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-14.png)
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-35.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031238.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031338.png)
 
 ### 已知bug
 - 切换账号登录新账号时,虽提示登录成功,但依然跳转到登录页,需要进行2次登录才可以登录到首页,同一个账号不存在这个Bug,希望有大佬帮我解决一下这个问题,感谢.
