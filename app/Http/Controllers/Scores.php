@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CoursesModel;
+use App\Models\ExamsModel;
 use App\Models\ScoresModel;
-use Illuminate\Http\Request;
+use App\Models\UserModel;
 use DB;
+use Illuminate\Http\Request;
 
 class Scores extends Controller
 {
@@ -17,7 +19,8 @@ class Scores extends Controller
     public function index()
     {
         $courses = DB::table('courses')->orderBy('id')->get();
-        return view('scores.index',compact('courses'));
+
+        return view('scores.index', compact('courses'));
     }
 
     public function getscore(Request $request)
@@ -46,6 +49,7 @@ class Scores extends Controller
 
         return $res;
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,8 +57,11 @@ class Scores extends Controller
      */
     public function create()
     {
+        $exams = ExamsModel::get();
+        $courses = CoursesModel::get();
+        $students = UserModel::where('is_admin', '<>', 1)->get();
 
-        return view('scores.create');
+        return view('scores.create', compact('exams', 'courses', 'students'));
     }
 
     /**
@@ -65,7 +72,29 @@ class Scores extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $student = $request->input('student_id');
+        $exam = $request->input('exam_id');
+        $input = $request->only('course_id', 'score');
+        $data = [];
+        $flag = true;
+        foreach ($input as $key => $val) {
+            foreach ($val as $k => $v) {
+                $data[$k][$key] = $v;
+                $data[$k]['student_id'] = $student;
+                $data[$k]['exam_id'] = $exam;
+            }
+        }
+        foreach ($data as $d) {
+            $temp = ScoresModel::create($d);
+            if ( ! $temp) {
+                $flag = false;
+            }
+        }
+        if ($flag) {
+            return $this->success('添加成功');
+        } else {
+            return $this->fail('添加失败');
+        }
     }
 
     /**
