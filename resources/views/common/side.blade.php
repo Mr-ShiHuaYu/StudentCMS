@@ -20,17 +20,16 @@
                 </ul>
             </li>
             <li>
-                <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="订单管理">&#xe723;</i>
-                    <cite>课程管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-                <ul class="sub-menu">
-                    <li>
-                        <a onclick="xadmin.add_tab('课程列表','{{route('course.index')}}',true)">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>课程列表</cite></a>
-                    </li>
-                </ul>
+                <a onclick="xadmin.add_tab('课程列表','{{route('course.index')}}',true)">
+                    <i class="iconfont left-nav-li" lay-tips="课程列表">&#xe723;</i>
+                    <cite>课程列表</cite>
+                </a>
+            </li>
+            <li>
+                <a onclick="xadmin.add_tab('考试列表','{{route('exam.index')}}',true)">
+                    <i class="iconfont left-nav-li" lay-tips="考试列表">&#xe723;</i>
+                    <cite>考试列表</cite>
+                </a>
             </li>
             <li>
                 <a href="javascript:;">

@@ -33,7 +33,7 @@
                     <td>身份证号</td>
                     <td><input class="layui-input" name="sysid"></td>
                     <td>出生日期</td>
-                    <td><input id="birth" class="layui-input" name="birth" type="text"></td>
+                    <td><input id="birth" class="layui-input" name="birth" type="text" autocomplete="off"></td>
                     <td>民族</td>
                     <td><input class="layui-input" name="minzu" type="text"></td>
                 </tr>

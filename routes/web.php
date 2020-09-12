@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// 用于测试路由
+Route::get('/test', 'Test@test');
 
 // 需要登录
 Route::middleware('auth')->group(
@@ -34,7 +36,10 @@ Route::middleware('auth')->group(
         // 课程
         Route::resource('/course', 'Courses');
         Route::get('/getcourse', 'Courses@getcourse')->name('getcourse');
-        Route::get('/test', 'Test@test1');
+
+        // 考试
+        Route::resource('/exam','Exams');
+        Route::get('/getexams','Exams@getexams')->name('getexams');
     }
 );
 

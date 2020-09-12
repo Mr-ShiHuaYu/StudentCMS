@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CoursesModel;
-use App\Models\TeachersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Models\ExamsModel;
 
-class Courses extends Controller
+class Exams extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,15 +15,16 @@ class Courses extends Controller
      */
     public function index()
     {
-        return view('courses.index');
+        return view('exams.index');
+
     }
 
-    public function getcourse(Request $request)
+    public function getexams(Request $request)
     {
         $page = $request->get('page');
         $limit = $request->get('limit');
         $offset = ($page - 1) * $limit;
-        $data = CoursesModel::with('teacher')->offset($offset)->paginate($limit)->toArray();
+        $data = ExamsModel::offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
         $res['count'] = $data['total'];
@@ -32,35 +32,27 @@ class Courses extends Controller
 
         return $res;
     }
-
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $teachers = TeachersModel::get();
+        $exams = ExamsModel::get();
 
-        return view('courses.create', compact('teachers'));
+        return view('exams.create',compact('exams'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $teacher = $request->teacher;
-        $name = $request->name;
-        $res = CoursesModel::create(
-            [
-                'name' => $name,
-                'teacher_id' => $teacher,
-            ]
-        );
+        $res = ExamsModel::create($request->all());
         if ($res) {
             return $this->success('添加成功');
         } else {
@@ -87,12 +79,11 @@ class Courses extends Controller
      */
     public function edit($id)
     {
-        $course = CoursesModel::find($id);
-        $teachers = TeachersModel::get();
+        $exam = ExamsModel::find($id);
         if (Gate::denies('isAdmin')) {
             return view('user.noper');
         }
-        return view('courses.edit',compact('course','teachers'));
+        return view('exams.edit',compact('exam'));
     }
 
     /**
@@ -104,12 +95,12 @@ class Courses extends Controller
      */
     public function update(Request $request, $id)
     {
-        $course = CoursesModel::find($id);
+        $exam = ExamsModel::find($id);
 
         if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权修改课程');
+            return $this->fail('您无权修改考试');
         }
-        $res = $course->update($request->all());
+        $res = $exam->update($request->all());
         if ($res) {
             return $this->success('修改成功');
         } else {
@@ -126,9 +117,9 @@ class Courses extends Controller
     public function destroy($id)
     {
         if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权删除课程');
+            return $this->fail('您无权删除考试');
         }
-        $res = CoursesModel::destroy($id);
+        $res = ExamsModel::destroy($id);
         if ($res) {
             return $this->success('删除成功');
         }

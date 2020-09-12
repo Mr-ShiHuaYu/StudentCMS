@@ -4,7 +4,6 @@
     <div class="x-nav">
     <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">课程管理</a>
         <a><cite>课程列表</cite></a>
     </span>
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
