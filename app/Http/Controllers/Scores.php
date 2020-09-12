@@ -39,6 +39,7 @@ class Scores extends Controller
             $sql_temp[] = "MAX(if(c.name='$course->name',sc.score,0)) as '$course->name'";
         }
         $sql .= join(',', $sql_temp);
+        $sql .= ",AVG(sc.score) avg,SUM(sc.score) sum";
         $sql .= " FROM scores sc
         LEFT JOIN courses c on c.id=sc.course_id
         LEFT JOIN users u on u.id=sc.student_id

@@ -78,7 +78,7 @@
                     , page: true //开启分页
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度
                     , cols: [[
-                        {type: 'numbers', title: '序号', width: 100, align: 'center'}
+                        {type: 'numbers', title: '序号', width: 80, align: 'center'}
                         , {field: 'uid', title: '学号', sort: true, align: 'center'}
                         , {field: 'name', title: '姓名', sort: true, align: 'center'}
                         , {field: 'exam', title: '考试', sort: true, align: 'center'}
@@ -86,6 +86,13 @@
                         @foreach($courses as $course)
                         , {field: '{{$course->name}}', title: '{{$course->name}}', sort: true, align: 'center'}
                         @endforeach
+                        , {
+                            field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
+                                return (d.avg * 1).toFixed(2);
+                            }
+                        }
+                        , {field: 'sum', title: '总分', sort: true, align: 'center'}
+
                     ]]
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]
