@@ -40,6 +40,10 @@ Route::middleware('auth')->group(
         // 考试
         Route::resource('/exam','Exams');
         Route::get('/getexams','Exams@getexams')->name('getexams');
+
+        // 成绩
+        Route::resource('/score','Scores');
+        Route::get('/getscore','Scores@getscore')->name('getscore');
     }
 );
 

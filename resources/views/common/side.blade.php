@@ -43,7 +43,7 @@
                             <cite>成绩录入</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('成绩查询','admin-list.html')">
+                        <a onclick="xadmin.add_tab('成绩查询','{{route('score.index')}}')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>成绩查询</cite></a>
                     </li>
