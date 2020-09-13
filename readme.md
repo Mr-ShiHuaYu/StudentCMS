@@ -64,7 +64,7 @@ composer update
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031338.png)
 
 
-[gifi演示]: https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/studentcms_20200913.gif
+[gifi演示](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/studentcms_20200913.gif)
 
 
 ### 已知bug
