@@ -80,6 +80,7 @@
                 var table = layui.table;
                 table.render({
                     elem: '#user_table'
+                    , title: "学生信息表"
                     , height: 'full-130'
                     , url: '{{route('getuser')}}' //数据接口
                     , page: true //开启分页

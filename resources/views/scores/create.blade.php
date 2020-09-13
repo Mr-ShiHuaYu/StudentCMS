@@ -81,13 +81,16 @@
                     layer = layui.layer;
                 //自定义验证规则
                 form.verify({
-                    score: [/^1?[0-9]?\d([.]\d)?$/, '成绩必须>=0']
+                    score: function (value) {
+                        if (value < 0 || value > 150) {
+                            return '成绩应在0-150分之间'
+                        }
+                    }
                 });
                 //监听提交
                 form.on('submit(save)',
                     function (data) {
                         $.post('{{route('score.store')}}', data.field, function (res) {
-                            // console.log(data.field);
                             if (res.status === 'success') {
                                 layer.alert(res.msg, {icon: 6}, function (index) {
                                     layer.close(index);

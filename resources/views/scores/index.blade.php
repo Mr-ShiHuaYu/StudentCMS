@@ -25,9 +25,22 @@
                             </div>
                             <div class="layui-inline layui-show-xs-block">
                                 <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
-                                       class="layui-input"></div>
+                                       class="layui-input">
+                            </div>
+
                             <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                <div class="layui-input-inline">
+                                    <select name="exam_id" lay-search="">
+                                        <option value="">选择考试</option>
+                                        @foreach($exams as $exam)
+                                            <option value="{{$exam->id}}">{{$exam->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline layui-show-xs-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="search">
                                     <i class="layui-icon">&#xe615;</i></button>
                             </div>
                         </form>
@@ -84,7 +97,13 @@
                         , {field: 'exam', title: '考试', sort: true, align: 'center'}
                         // 关键代码,循环课程
                         @foreach($courses as $course)
-                        , {field: '{{$course->name}}', title: '{{$course->name}}', sort: true, align: 'center'}
+                        , {
+                            field: '{{$course->name}}',
+                            edit: 'text',
+                            title: '{{$course->name}}',
+                            sort: true,
+                            align: 'center'
+                        }
                         @endforeach
                         , {
                             field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
@@ -145,11 +164,39 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                    xadmin.open('修改考试信息', url, 800);
+                    // xadmin.open('修改考试信息', url, 800);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
                 @endcan
+
+                //监听单元格编辑
+                table.on('edit(test)', function (obj) {
+                    var value = obj.value //得到修改后的值
+                        , data = obj.data //得到所在行所有键值
+                        , field = obj.field; //得到字段  化学
+                    var old = $(this).prev().text();//旧值
+                    if (value < 0 || value > 150) {
+                        layer.msg('成绩应在0-150分之间');
+                        $(this).val(old);
+                        return false;
+                    }
+                    layer.confirm('真的要修改' + data.name + '的' + field + '成绩为' + value + '吗?', function (index) {
+                        $.ajax({
+                            type: 'put',
+                            url: '{{route('score.update','x')}}',
+                            data: {uid: data.uid, course: field, score: value, exam: data.exam},
+                            success: function (res) {
+                                if (res.status === 'success') {
+                                    layer.msg(res.msg, {icon: 6, time: 1000});
+                                } else {
+                                    layer.alert(res.msg, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                    return false;
+                });
             });
     </script>
 @stop

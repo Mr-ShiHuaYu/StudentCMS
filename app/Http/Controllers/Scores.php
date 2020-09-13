@@ -20,8 +20,8 @@ class Scores extends Controller
     public function index()
     {
         $courses = DB::table('courses')->orderBy('id')->get();
-
-        return view('scores.index', compact('courses'));
+        $exams = ExamsModel::get();
+        return view('scores.index', compact('courses','exams'));
     }
 
     public function getscore(Request $request)
@@ -121,7 +121,7 @@ class Scores extends Controller
             if ($is_exist) {
                 return $this->fail('已经存在同一考试同一课程的成绩,禁止重复插入!');
             }
-            if ($data['score'] < 0 or $data['score'] > 150) {
+            if ($d['score'] < 0 or $d['score'] > 150) {
                 return $this->fail('成绩不合法,成绩应在0-150分之间');
             }
             $temp = ScoresModel::create($d);
@@ -167,7 +167,19 @@ class Scores extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        if ($input['score'] < 0 or $input['score'] > 150) {
+            return $this->fail('成绩不合法,成绩应在0-150分之间');
+        }
+        $student_id = UserModel::where('uid', '=', $input['uid'])->value('id');
+        $course_id = CoursesModel::where('name', '=', $input['course'])->value('id');
+        $exam_id = ExamsModel::where('name', '=', $input['exam'])->value('id');
+        $res = ScoresModel::where(compact('student_id', 'course_id', 'exam_id'))->update(['score' => $input['score']]);
+        if ($res) {
+            return $this->success('修改成功');
+        } else {
+            return $this->fail('修改失败');
+        }
     }
 
     /**

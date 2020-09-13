@@ -49,7 +49,6 @@ composer update
 
 ### 待完成事项
 - 成绩的echarts分析图,包括优秀率,良好率,及格率和不及格率
-- 成绩的数据表格单击编辑功能
 - 学生各科成绩的每次考试的变化拆线图
 - 权限改用laravel-permission
 - 学生信息,老师信息和学生成绩的导出,将采用laravel-excel导出
