@@ -25,14 +25,9 @@
 @stop
 
 @section('js')
-    <script type="text/html" id="toolbarDemo">
-        <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>添加</button>
-    </script>
+    @include('common.addbtn',['name'=>'添加'])
+    @include('common.operation')
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
 
     <script>
         layui.use(['laydate', 'form'],
@@ -108,7 +103,7 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加考试', '{{route('exam.create')}}', 800);
+                            xadmin.open('添加考试', '{{route('exam.create')}}', 700, 400);
                             break;
                     }
                 });

@@ -14,14 +14,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>性别</label>
                         <div class="layui-input-inline">
-                            <input type="radio" name="sex" value="男" title="男">
+                            <input type="radio" name="sex" value="男" title="男" checked>
                             <input type="radio" name="sex" value="女" title="女">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">联系电话</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="phone" class="layui-input">
+                            <input type="text" name="phone" lay-verify="required" class="layui-input">
                         </div>
                     </div>
 

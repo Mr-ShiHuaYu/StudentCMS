@@ -13,7 +13,7 @@
                     <a onclick="xadmin.add_tab('个人信息','{{route('user.show',auth()->user()->id)}}')">个人信息</a></dd>
                 <dd>
                 <dd>
-                    <a onclick="xadmin.open('修改密码','{{route('repwd')}}',800)">修改密码</a></dd>
+                    <a onclick="xadmin.open('修改密码','{{route('repwd')}}',700, 400)">修改密码</a></dd>
                 <dd>
                     <a href="{{route('logout')}}">退出</a>
                 </dd>

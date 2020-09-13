@@ -49,14 +49,9 @@
 @stop
 
 @section('js')
-    <script type="text/html" id="toolbarDemo">
-        <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>成绩录入</button>
-    </script>
+    @include('common.addbtn',['name'=>'成绩录入'])
+    @include('common.operation')
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
 
     <script>
         layui.use(['laydate', 'form', 'table'],

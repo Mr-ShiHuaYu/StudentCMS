@@ -26,16 +26,8 @@
 @stop
 
 @section('js')
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-xs" lay-event="add"><i class="layui-icon"></i>添加</button>
-        </div>
-    </script>
-
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
+    @include('common.addbtn',['name'=>'添加'])
+    @include('common.operation')
 
     <script>
         layui.use(['laydate', 'form'],
@@ -126,7 +118,7 @@
                         });
                     } else if (obj.event === 'edit') {
                         var url = '{{route('teacher.edit','xxx')}}'.replace('xxx', data.id);
-                        xadmin.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url);
+                        xadmin.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url, 400, 400);
                     }
                 });
             });

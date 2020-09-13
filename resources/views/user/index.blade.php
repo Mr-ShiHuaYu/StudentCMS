@@ -16,26 +16,33 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-body ">
-                        <form class="layui-form layui-col-space5">
-                            <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="出生日期开始" name="birth_start"
-                                       id="start">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="出生日期结束" name="birth_end"
-                                       id="end">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="keyword" placeholder="支持任意字段模糊查找" autocomplete="off"
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="search">
-                                    <i class="layui-icon">&#xe615;</i></button>
-                            </div>
-                        </form>
-                    </div>
+                    @can('isAdmin')
+                        <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5">
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input class="layui-input" autocomplete="off" placeholder="出生日期开始"
+                                           name="birth_start"
+                                           id="start">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input class="layui-input" autocomplete="off" placeholder="出生日期结束" name="birth_end"
+                                           id="end">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="keyword" placeholder="支持任意字段模糊查找" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="search">
+                                        <i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="layui-card-body ">
+                            <div class="layui-form-mid layui-word-aux">双击行可编辑个人信息</div>
+                        </div>
+                    @endcan
                     <div class="layui-card-body ">
                         <table id="user_table" lay-filter="test"></table>
                     </div>
@@ -46,16 +53,9 @@
 @stop
 
 @section('js')
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-xs" lay-event="add"><i class="layui-icon"></i>添加</button>
-        </div>
-    </script>
+    @include('common.addbtn',['name'=>'添加'])
+    @include('common.operation')
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
     <script>
         layui.use(['laydate', 'form', 'table'],
             function () {
@@ -111,10 +111,10 @@
                         , {field: 'phone', title: '手机', sort: true, align: 'center'}
                         , {field: 'birth', title: '出生日期', sort: true, align: 'center'}
                         , {field: 'minzu', title: '民族', sort: true, align: 'center'}
-                        // , {field: 'jishu', title: '寄宿', sort: true, align: 'center', templet: '#activeTpl'}
                         , {field: 'jishu', title: '寄宿', sort: true, align: 'center'}
+                        @can('isAdmin')
                         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
-                        // , {minWidth: 200, align: 'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
+                        @endcan
                     ]]
                     , limits: [10, 20, 30, 50, 100]
                     , limit: 10

@@ -25,14 +25,8 @@
 @stop
 
 @section('js')
-    <script type="text/html" id="toolbarDemo">
-        <button class="layui-btn" lay-event="add"><i class="layui-icon"></i>添加</button>
-    </script>
-
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
+    @include('common.addbtn',['name'=>'添加'])
+    @include('common.operation')
 
     <script>
         layui.use(['laydate', 'form'],
@@ -135,7 +129,7 @@
 
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加课程', '{{route('course.create')}}', 800);
+                            xadmin.open('添加课程', '{{route('course.create')}}', 700, 400);
                             break;
 
                     }
