@@ -27,7 +27,7 @@
                                        id="end">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="uidorname" placeholder="学号或姓名" autocomplete="off"
+                                <input type="text" name="keyword" placeholder="支持任意字段模糊查找" autocomplete="off"
                                        class="layui-input">
                             </div>
                             <div class="layui-inline layui-show-xs-block">

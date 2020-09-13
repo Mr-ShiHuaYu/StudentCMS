@@ -21,7 +21,7 @@ class User extends Controller
         $limit = $request->get('limit');
         $start = $request->get('birth_start');
         $end = $request->get('birth_end');
-        $uidorname = $request->get('uidorname');
+        $keyword = $request->get('keyword');
 
         $offset = ($page - 1) * $limit;
         $is_admin = Gate::allows('isAdmin');
@@ -39,8 +39,20 @@ class User extends Controller
         if ($end) {
             $query->whereDate('birth', '<', $end);
         }
-        if ($uidorname) {
-            $query->where('uid','like','%'.$uidorname.'%')->orWhere('name','like','%'.$uidorname.'%');
+        if ($keyword) {
+            $jishuMap = config('modelmap.jishuMap');
+            if (in_array($keyword, $jishuMap)) {
+                $query->where('jishu', '=', array_search($keyword, $jishuMap));
+            } else {
+                $temp = array_keys(UserModel::first()->toArray());
+                $temp = array_diff($temp, ['id', 'is_admin', 'created_at', 'updated_at']);
+                $sql = [];
+                foreach ($temp as $t) {
+                    $sql[] = "IFNULL($t,'')";
+                }
+                $sql = join(',', $sql);
+                $query->whereRaw("CONCAT($sql) LIKE '%$keyword%'");
+            }
         }
         $users = $query->offset($offset)->paginate($limit);
         $data = $users->toArray();
