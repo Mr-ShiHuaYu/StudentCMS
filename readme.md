@@ -59,15 +59,11 @@ composer update
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-54-48.png)
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-54-58.png)
-
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-14.png)
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/Snipaste_2020-09-11_20-55-35.png)
-
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031238.png)
-
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031338.png)
+
+![](https://cdn.yushihua.vip/2020/laravel_studentcms.gif)
 
 ### 已知bug
 - 切换账号登录新账号时,虽提示登录成功,但依然跳转到登录页,需要进行2次登录才可以登录到首页,同一个账号不存在这个Bug,希望有大佬帮我解决一下这个问题,感谢.
