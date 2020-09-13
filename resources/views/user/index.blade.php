@@ -19,16 +19,19 @@
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
                             <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
+                                <input class="layui-input" autocomplete="off" placeholder="出生日期开始" name="birth_start"
+                                       id="start">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
+                                <input class="layui-input" autocomplete="off" placeholder="出生日期结束" name="birth_end"
+                                       id="end">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
-                                       class="layui-input"></div>
+                                <input type="text" name="uidorname" placeholder="学号或姓名" autocomplete="off"
+                                       class="layui-input">
+                            </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                <button class="layui-btn" lay-submit="" lay-filter="search">
                                     <i class="layui-icon">&#xe615;</i></button>
                             </div>
                         </form>
@@ -49,36 +52,50 @@
         </div>
     </script>
 
-{{--    <script type="text/html" id="activeTpl">
-        <span
-            class="layui-btn layui-btn-normal layui-btn-mini @{{ d.jishu==='否'?'layui-btn-disabled':''}}">@{{d.jishu}}</span>
-    </script>--}}
-
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
     <script>
-        layui.use(['laydate', 'form'],
+        layui.use(['laydate', 'form', 'table'],
             function () {
                 var laydate = layui.laydate
                     , form = layui.form;
-                //执行一个laydate实例
-                laydate.render({
-                    elem: '#start' //指定元素
+                var table = layui.table;
+
+                var startDate = laydate.render({
+                    elem: '#start',
+                    trigger: 'click',
+                    min: '1900-1-1',
+                    type: 'month',
+                    done: function (value, date) {
+                        endDate.config.min = {
+                            year: date.year,
+                            month: date.month - 1,
+                            date: date.date
+                        };
+                        endDate.config.start = {
+                            year: date.year,
+                            month: date.month - 1,
+                            date: date.date
+                        };
+                    }
                 });
 
-                //执行一个laydate实例
-                laydate.render({
-                    elem: '#end' //指定元素
+                var endDate = laydate.render({
+                    elem: '#end',
+                    trigger: 'click',
+                    type: 'month',
+                    done: function (value, date) {
+                        startDate.config.max = {
+                            year: date.year,
+                            month: date.month - 1,
+                            date: date.date
+                        }
+                    }
                 });
-            });
-    </script>
-    <script>
-        layui.use('table',
-            function () {
-                var table = layui.table;
-                table.render({
+
+                var user_table = table.render({
                     elem: '#user_table'
                     , title: "学生信息表"
                     , height: 'full-130'
@@ -131,11 +148,9 @@
                                         }
                                     }
                                 });
-
                             });
                             break;
                     }
-
                 });
 
 
@@ -186,6 +201,16 @@
                     }
                     ;
                 });
+
+                form.on('submit(search)', function (data) {
+                    user_table.reload({
+                        where: data.field,
+                        page: {
+                            curr: 1
+                        }
+                    });
+                    return false;
+                })
             });
     </script>
 @stop

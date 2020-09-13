@@ -35,30 +35,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <table class="layui-table">
-                            <colgroup>
-                                <col width="50">
-                                <col width="50">
-                                <col>
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>课程</th>
-                                <th>分数</th>
-                            </tr>
-                            </thead>
-                            @foreach($courses as $course)
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="50">
+                                    <col width="50">
+                                    <col>
+                                </colgroup>
+                                <thead>
                                 <tr>
-                                    <td>{{$course->name}}</td>
-                                    <td>
-                                        <input type="hidden" name="course_id[]" value="{{$course->id}}">
-                                        <input type="number" lay-verify="required|score" name="score[]"
-                                               class="layui-input">
-                                    </td>
+                                    <th>课程</th>
+                                    <th>分数</th>
                                 </tr>
-                            @endforeach
-                        </table>
+                                </thead>
+                                @foreach($courses as $course)
+                                    <tr>
+                                        <td>{{$course->name}}</td>
+                                        <td>
+                                            <input type="hidden" name="course_id[]" value="{{$course->id}}">
+                                            <input type="number" lay-verify="required|score" name="score[]"
+                                                   class="layui-input">
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
                     </div>
 
                     <div class="layui-form-item" style="text-align: center;">

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class UserModel extends Authenticatable
 {
     protected $table = 'users';
-    protected $guarded = [];
+    protected $guarded = ['is_admin'];
     protected $hidden = ['password', 'remember_token'];
     protected $jishuMap = [];
 

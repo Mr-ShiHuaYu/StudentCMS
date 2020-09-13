@@ -19,6 +19,10 @@ class User extends Controller
     {
         $page = $request->get('page');
         $limit = $request->get('limit');
+        $start = $request->get('birth_start');
+        $end = $request->get('birth_end');
+        $uidorname = $request->get('uidorname');
+
         $offset = ($page - 1) * $limit;
         $is_admin = Gate::allows('isAdmin');
         $query = UserModel::query();
@@ -28,6 +32,15 @@ class User extends Controller
         } else {
 //            不是管理员
             $query->where('uid', '=', auth()->user()->uid);
+        }
+        if ($start) {
+            $query->whereDate('birth', '>', $start);
+        }
+        if ($end) {
+            $query->whereDate('birth', '<', $end);
+        }
+        if ($uidorname) {
+            $query->where('uid','like','%'.$uidorname.'%')->orWhere('name','like','%'.$uidorname.'%');
         }
         $users = $query->offset($offset)->paginate($limit);
         $data = $users->toArray();
@@ -90,11 +103,26 @@ class User extends Controller
      */
     public function store(Request $request)
     {
+        $message = [
+            'uid.unique' => '错误,已存在相同学号',
+        ];
+
+        $request->validate(
+            [
+                'uid' => 'required|unique:users',
+                'name' => 'required',
+                'phone' => 'required',
+                'sysid' => 'required',
+                'birth' => 'required',
+                'minzu' => 'required',
+            ],
+            $message
+        );
         if (Gate::denies('isAdmin')) {
             return $this->fail('您无权添加学生');
         }
         // 学生本人信息
-        $student = $request->except('parent');
+        $student = $request->except('parent', 'is_admin');
         $student['password'] = Hash::make('123456');
         $res = $user = UserModel::create($student);
         // 家庭主要成员

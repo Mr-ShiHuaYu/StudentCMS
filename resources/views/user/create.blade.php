@@ -10,41 +10,41 @@
 @stop
 @section('content')
     <div class="layui-fluid">
-        <form class="layui-form">
+        <form class="layui-form" lay-filter="userForm">
             <table class="layui-table">
                 <tbody>
                 <tr>
                     <td class="xuehao">学号</td>
-                    <td class="xuehao" colspan="5"><input class="layui-input" name="uid" type="text"></td>
+                    <td class="xuehao" colspan="5"><input class="layui-input" name="uid" type="text" lay-verify="required"></td>
                 </tr>
                 <tr>
                     <td>学生姓名</td>
-                    <td><input class="layui-input" name="name" type="text"></td>
+                    <td><input class="layui-input" name="name" type="text" lay-verify="required"></td>
                     <td>性别</td>
                     <td>
                         <input type="radio" name="sex" value="男" title="男">
                         <input type="radio" name="sex" value="女" title="女">
                     </td>
                     <td>联系电话</td>
-                    <td><input class="layui-input" name="phone" lay-filter="phone" type="text" >
+                    <td><input class="layui-input" name="phone" lay-verify="phone" type="text">
                     </td>
                 </tr>
                 <tr>
                     <td>身份证号</td>
-                    <td><input class="layui-input" name="sysid" type="text" ></td>
+                    <td><input class="layui-input" name="sysid" lay-verify="required" type="text"></td>
                     <td>出生日期</td>
-                    <td><input id="birth" class="layui-input" name="birth" type="text" ></td>
+                    <td><input id="birth" class="layui-input" name="birth" type="text" lay-verify="required"></td>
                     <td>民族</td>
-                    <td><input class="layui-input" name="minzu" type="text" ></td>
+                    <td><input class="layui-input" name="minzu" type="text" lay-verify="required"></td>
                 </tr>
                 <tr>
                     <td>家庭经济状况</td>
-                    <td><input class="layui-input" name="jingji" type="text" ></td>
+                    <td><input class="layui-input" name="jingji" type="text"></td>
                     <td>户口所在地</td>
-                    <td><input class="layui-input" name="hukou" type="text" ></td>
+                    <td><input class="layui-input" name="hukou" type="text"></td>
                     <td>是否寄宿</td>
                     <td>
-                        <select name="jishu" lay-filter="jishu">
+                        <select name="jishu" lay-filter="jishu" lay-verify="required">
                             <option value=""></option>
                             @foreach($jishuMap as $k => $v)
                                 <option value="{{$k}}">{{$v}}</option>
@@ -54,11 +54,11 @@
                 </tr>
                 <tr>
                     <td>户籍地址</td>
-                    <td colspan="5"><input class="layui-input" name="huji" type="text" ></td>
+                    <td colspan="5"><input class="layui-input" name="huji" type="text"></td>
                 </tr>
                 <tr>
                     <td>现住址</td>
-                    <td colspan="5"><input class="layui-input" name="xianzz" type="text" ></td>
+                    <td colspan="5"><input class="layui-input" name="xianzz" type="text"></td>
                 </tr>
                 <tr>
                     <td>是否农村留守儿童</td>
@@ -66,16 +66,17 @@
                         <input type="radio" name="liushou" value="1" title="是">
                         <input type="radio" name="liushou" value="0" title="否">
                     <td>留守儿童情况</td>
-                    <td><input class="layui-input" name="liushouqk" type="text" ></td>
+                    <td><input class="layui-input" name="liushouqk" type="text"></td>
                     <td>留守儿童托管情况</td>
-                    <td><input class="layui-input" name="liushoutgqk" type="text" ></td>
+                    <td><input class="layui-input" name="liushoutgqk" type="text"></td>
                 </tr>
                 </tbody>
             </table>
             <table class="layui-table">
                 <tbody>
                 <tr>
-                    <td rowspan="100">家庭主要成员情况<i id="add_parents" class="layui-icon layui-icon-add-1" style="color: red;"></i></td>
+                    <td rowspan="100">家庭主要成员情况<i id="add_parents" class="layui-icon layui-icon-add-1"
+                                                 style="color: red;"></i></td>
                     <td>姓名</td>
                     <td>年龄</td>
                     <td>与学生关系</td>
@@ -91,12 +92,12 @@
                 <tr>
                     <td width="200">曾担任班干部的情况</td>
                     <td colspan="5" style="text-align: left;"><input class="layui-input" name="ganbu" type="text"
-                                                                     ></td>
+                        ></td>
                 </tr>
                 <tr>
                     <td>获奖情况</td>
                     <td colspan="5" style="text-align: left;"><input class="layui-input" name="huojiang" type="text"
-                                                                     >
+                        >
                     </td>
                 </tr>
                 <tr>
@@ -125,7 +126,11 @@
                 laydate.render({
                     elem: '#birth'
                 });
-
+                form.val('userForm', {
+                    'sex': '男',
+                    'jishu': 0,
+                    'liushou': '0'
+                });
                 // 点击添加家庭主要成员
                 $('#add_parents').click(function () {
                     var dom = '<tr><td><input class="layui-input" name="parent[name][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[age][]" type="text" lay-verify="required"  placeholder="必填项"></td><td><input class="layui-input" name="parent[relation][]" type="text" lay-verify="required" placeholder="必填项"></td><td><input class="layui-input" name="parent[unit][]" type="text"></td><td><input class="layui-input" name="parent[job][]" type="text"></td><td><input class="layui-input" name="parent[phone][]" type="text"></td><td></td></tr>';
@@ -160,8 +165,8 @@
                                             icon: 6
                                         },
                                         function (index) {
-                                        xadmin.close();
-                                        window.location.reload();
+                                            xadmin.close();
+                                            window.location.reload();
                                         });
                                 } else {
                                     layer.alert(res.msg, {

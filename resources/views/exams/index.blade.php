@@ -16,23 +16,6 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body ">
-                        <form class="layui-form layui-col-space5">
-                            <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
-                                       class="layui-input"></div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                    <i class="layui-icon">&#xe615;</i></button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="layui-card-body ">
                         <table id="exam_table" lay-filter="test"></table>
                     </div>
                 </div>
