@@ -17,17 +17,11 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
+                            <div class="layui-form-mid layui-word-aux">可按学生姓名,学号和考试模糊搜索</div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
-                            </div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off"
+                                <input type="text" name="name_uid" placeholder="请输入学生姓名或学号" autocomplete="off"
                                        class="layui-input">
                             </div>
-
                             <div class="layui-inline layui-show-xs-block">
                                 <div class="layui-input-inline">
                                     <select name="exam_id" lay-search="">
@@ -40,7 +34,7 @@
                             </div>
 
                             <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="search">
+                                <button class="layui-btn" lay-submit="" lay-filter="search" data-type="reload">
                                     <i class="layui-icon">&#xe615;</i></button>
                             </div>
                         </form>
@@ -65,26 +59,24 @@
     </script>
 
     <script>
-        layui.use(['laydate', 'form'],
+        layui.use(['laydate', 'form', 'table'],
             function () {
                 var laydate = layui.laydate
                     , form = layui.form;
+                var table = layui.table;
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#start' //指定元素
+                    , trigger: 'click'
                 });
 
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#end' //指定元素
+                    , trigger: 'click'
                 });
-            });
-    </script>
-    <script>
-        layui.use('table',
-            function () {
-                var table = layui.table;
-                table.render({
+
+                var score_table = table.render({
                     elem: '#score_table'
                     , height: 'full-130'
                     , url: '{{route('getscore')}}' //数据接口
@@ -197,6 +189,20 @@
                     });
                     return false;
                 });
+
+                // 表格的搜索重载
+                form.on('submit(search)',
+                    function (data) {
+                        score_table.reload({
+                            where: data.field
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        return false;
+                    });
+
+
             });
     </script>
 @stop

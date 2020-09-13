@@ -21,7 +21,8 @@ class Scores extends Controller
     {
         $courses = DB::table('courses')->orderBy('id')->get();
         $exams = ExamsModel::get();
-        return view('scores.index', compact('courses','exams'));
+
+        return view('scores.index', compact('courses', 'exams'));
     }
 
     public function getscore(Request $request)
@@ -32,6 +33,8 @@ class Scores extends Controller
         $page = $request->get('page');
         $limit = $request->get('limit');
         $offset = ($page - 1) * $limit;
+        $exam_id = $request->get('exam_id'); // 搜索考试
+        $keyword = $request->get('name_uid'); // 搜索学号或姓名
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
         $sql = "SELECT u.uid uid,u.name name,e.name exam,";
@@ -50,6 +53,16 @@ class Scores extends Controller
             $sql .= " WHERE u.is_admin = 0";
         } else {
             $sql .= " WHERE u.uid = '$uid'";
+        }
+        // 搜索考试
+        if ($exam_id) {
+            $sql .= " and e.id=$exam_id";
+        }
+        // 搜索学号或姓名
+        if ($keyword) {
+            $student_id = UserModel::where('uid','like','%'.$keyword.'%')->orWhere('name','like','%'.$keyword.'%')->pluck('id')->toArray();
+            $id_str = join(',',$student_id);
+            $sql .= " and u.id IN ($id_str)";
         }
         $sql .= " GROUP BY u.uid,e.name ORDER BY sc.created_at";
         $data = DB::table(DB::raw("($sql) as res"))->offset($offset)->paginate($limit)->toArray();
