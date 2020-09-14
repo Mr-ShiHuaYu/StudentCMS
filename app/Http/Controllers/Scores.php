@@ -62,8 +62,12 @@ class Scores extends Controller
         }
         // 搜索学号或姓名
         if ($keyword) {
-            $student_id = UserModel::where('uid','like','%'.$keyword.'%')->orWhere('name','like','%'.$keyword.'%')->pluck('id')->toArray();
-            $id_str = join(',',$student_id);
+            $student_id = UserModel::where('uid', 'like', '%'.$keyword.'%')->orWhere(
+                'name',
+                'like',
+                '%'.$keyword.'%'
+            )->pluck('id')->toArray();
+            $id_str = join(',', $student_id);
             $sql .= " and u.id IN ($id_str)";
         }
         $sql .= " GROUP BY u.uid,e.name ORDER BY sc.created_at";
@@ -210,6 +214,10 @@ class Scores extends Controller
 
     public function export()
     {
+        if (Gate::denies('isAdmin')) {
+            return view('user.noper');
+        }
+
         return Excel::download(new ScoresExport, '学生考试成绩表.xlsx');
     }
 }

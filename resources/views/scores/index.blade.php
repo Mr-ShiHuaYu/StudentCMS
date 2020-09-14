@@ -103,11 +103,15 @@
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]
                     , toolbar: '#toolbarDemo'
-                    , defaultToolbar: ['filter', 'print', {
-                        title: '导出Excel' //标题
-                        , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
-                        , icon: 'layui-icon-export' //图标类名
-                    }]
+                    , defaultToolbar: ['filter', 'print',
+                            @can('isAdmin')
+                        {
+                            title: '导出Excel' //标题
+                            , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
+                            , icon: 'layui-icon-export' //图标类名
+                        }
+                        @endcan
+                    ]
                 });
 
                 //头工具栏事件

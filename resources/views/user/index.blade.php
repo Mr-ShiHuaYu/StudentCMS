@@ -119,11 +119,15 @@
                     , limits: [10, 20, 30, 50, 100]
                     , limit: 10
                     , toolbar: '#toolbarDemo'
-                    , defaultToolbar: ['filter', 'print', {
-                        title: '导出Excel' //标题
-                        , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
-                        , icon: 'layui-icon-export' //图标类名
-                    }]
+                    , defaultToolbar: ['filter', 'print',
+                            @can('isAdmin')
+                        {
+                            title: '导出Excel' //标题
+                            , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
+                            , icon: 'layui-icon-export' //图标类名
+                        }
+                        @endcan
+                    ]
                 });
 
                 //监听行工具事件
@@ -175,7 +179,7 @@
                             xadmin.open('添加学生', '{{route('user.create')}}');
                             break;
                         case 'export_excel':
-                            window.open('{{route('user.export')}}','_blank');
+                            window.open('{{route('user.export')}}', '_blank');
                     }
                 });
 

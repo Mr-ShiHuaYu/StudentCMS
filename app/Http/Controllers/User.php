@@ -246,6 +246,10 @@ class User extends Controller
 
     public function export()
     {
+        if (Gate::denies('isAdmin')) {
+            return view('user.noper');
+        }
+
         return Excel::download(new UsersExport, '学生个人信息表.xlsx');
     }
 }
