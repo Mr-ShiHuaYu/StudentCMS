@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use DB;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Test extends Controller
 {
     public function test()
     {
-        $res = DB::table('exams')->get()->toArray();
-        var_export($res);
-        return $res;
+        return Excel::download(new UsersExport,'学生个人信息表.xlsx');
     }
 
 }

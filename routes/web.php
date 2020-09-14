@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // 用于测试路由
 Route::get('/test', 'Test@test');
 
@@ -25,8 +26,9 @@ Route::middleware('auth')->group(
         Route::get('/getuser', 'User@getUser')->name('getuser');
         Route::delete('/delall', 'User@deleteAll')->name('user.delall');
         Route::delete('/delparent/{id}', 'User@delParent')->name('user.delparent');
+        Route::get('/export', 'User@export')->name('user.export');
         // 老师
-        Route::resource('/teacher','Teacher');
+        Route::resource('/teacher', 'Teacher');
         Route::get('/getteacher', 'Teacher@getTeacher')->name('getteacher');
 
         // 修改密码
@@ -38,12 +40,12 @@ Route::middleware('auth')->group(
         Route::get('/getcourse', 'Courses@getcourse')->name('getcourse');
 
         // 考试
-        Route::resource('/exam','Exams');
-        Route::get('/getexams','Exams@getexams')->name('getexams');
+        Route::resource('/exam', 'Exams');
+        Route::get('/getexams', 'Exams@getexams')->name('getexams');
 
         // 成绩
-        Route::resource('/score','Scores');
-        Route::get('/getscore','Scores@getscore')->name('getscore');
+        Route::resource('/score', 'Scores');
+        Route::get('/getscore', 'Scores@getscore')->name('getscore');
     }
 );
 

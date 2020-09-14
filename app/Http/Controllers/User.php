@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\UserModel;
-use Illuminate\Http\Request;
 use Gate;
 use Hash;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class User extends Controller
 {
@@ -242,17 +244,8 @@ class User extends Controller
         return $this->fail('删除失败');
     }
 
-    public function deleteAll(Request $request)
+    public function export()
     {
-        $ids = $request->input('ids');
-        $res = UserModel::destroy($ids);
-        if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权删除学生');
-        }
-        if ($res) {
-            return $this->success('删除成功');
-        } else {
-            return $this->fail('删除失败');
-        }
+        return Excel::download(new UsersExport, '学生个人信息表.xlsx');
     }
 }

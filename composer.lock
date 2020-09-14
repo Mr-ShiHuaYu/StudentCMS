@@ -991,16 +991,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.21",
+            "version": "3.1.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "405ff5f0dd014a0d5a1fdb8fd6f525a9a1ece3f6"
+                "reference": "ba7152670257ba9f47bb6ff7cee025f8fc9da608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/405ff5f0dd014a0d5a1fdb8fd6f525a9a1ece3f6",
-                "reference": "405ff5f0dd014a0d5a1fdb8fd6f525a9a1ece3f6",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/ba7152670257ba9f47bb6ff7cee025f8fc9da608",
+                "reference": "ba7152670257ba9f47bb6ff7cee025f8fc9da608",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1011,13 +1011,12 @@
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0",
+                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
                 "php": "^7.0",
                 "phpoffice/phpspreadsheet": "^1.14"
             },
             "require-dev": {
-                "orchestra/database": "^5.0",
-                "orchestra/testbench": "^5.0",
+                "orchestra/testbench": "^6.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -1068,7 +1067,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-06T09:25:20+00:00"
+            "time": "2020-09-08T15:29:50+00:00"
         },
         {
             "name": "maennchen/zipstream-php",

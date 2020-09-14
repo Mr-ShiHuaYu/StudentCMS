@@ -119,7 +119,11 @@
                     , limits: [10, 20, 30, 50, 100]
                     , limit: 10
                     , toolbar: '#toolbarDemo'
-                    , defaultToolbar: ['filter', 'print', 'exports']
+                    , defaultToolbar: ['filter', 'print', {
+                        title: '导出Excel' //标题
+                        , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
+                        , icon: 'layui-icon-export' //图标类名
+                    }]
                 });
 
                 //监听行工具事件
@@ -133,7 +137,7 @@
                             break;
 
                         case 'del':
-                            layer.confirm('真的删除<span style="color:red;">' + data.name + '</span>课程么', function (index) {
+                            layer.confirm('真的删除<span style="color:red;">' + data.name + '</span>学生么', function (index) {
                                 var url = '{{route('user.destroy','xxx')}}'.replace('xxx', data.id);
                                 $.ajax({
                                     type: 'delete',
@@ -167,39 +171,14 @@
                 //头工具栏事件
                 table.on('toolbar(test)', function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
+                    console.log(obj.event);
                     switch (obj.event) {
-                        case 'delAll':
-                            var data = checkStatus.data;
-                            var names = data.map(function (item) {
-                                return item.name;
-                            });
-                            var ids = data.map(function (item) {
-                                return item.id;
-                            });
-                            if (ids.length) {
-                                layer.confirm('确定删除<span style="color:red;">' + names.toString() + '</span>吗?', function () {
-                                    $.ajax({
-                                        type: 'delete',
-                                        url: '{{route('user.delall')}}',
-                                        data: {ids: ids},
-                                        success: function (res) {
-                                            if (res.status === 'success') {
-                                                layer.alert(res.msg, {icon: 6}, function () {
-                                                    window.location.reload();
-                                                });
-                                            } else {
-                                                layer.msg(res.msg, {icon: 5, time: 1000});
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                            break;
                         case 'add':
                             xadmin.open('添加学生', '{{route('user.create')}}');
                             break;
+                        case 'export_excel':
+                            window.open('{{route('user.export')}}','_blank');
                     }
-                    ;
                 });
 
                 form.on('submit(search)', function (data) {
