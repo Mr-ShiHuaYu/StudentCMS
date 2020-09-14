@@ -26,7 +26,7 @@ Route::middleware('auth')->group(
         Route::get('/getuser', 'User@getUser')->name('getuser');
         Route::delete('/delall', 'User@deleteAll')->name('user.delall');
         Route::delete('/delparent/{id}', 'User@delParent')->name('user.delparent');
-        Route::get('/export', 'User@export')->name('user.export');
+        Route::get('/export/user', 'User@export')->name('user.export');
         // 老师
         Route::resource('/teacher', 'Teacher');
         Route::get('/getteacher', 'Teacher@getTeacher')->name('getteacher');
@@ -46,6 +46,8 @@ Route::middleware('auth')->group(
         // 成绩
         Route::resource('/score', 'Scores');
         Route::get('/getscore', 'Scores@getscore')->name('getscore');
+        Route::get('/export/score', 'Scores@export')->name('score.export');
+
     }
 );
 

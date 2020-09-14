@@ -37,11 +37,13 @@
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#start' //指定元素
+                    , trigger: 'click'
                 });
 
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#end' //指定元素
+                    , trigger: 'click'
                 });
             });
     </script>

@@ -170,8 +170,6 @@
 
                 //头工具栏事件
                 table.on('toolbar(test)', function (obj) {
-                    var checkStatus = table.checkStatus(obj.config.id);
-                    console.log(obj.event);
                     switch (obj.event) {
                         case 'add':
                             xadmin.open('添加学生', '{{route('user.create')}}');

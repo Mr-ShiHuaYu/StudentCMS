@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ScoresExport;
 use App\Models\CoursesModel;
 use App\Models\ExamsModel;
 use App\Models\ScoresModel;
@@ -9,6 +10,7 @@ use App\Models\UserModel;
 use DB;
 use Gate;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Scores extends Controller
 {
@@ -204,5 +206,10 @@ class Scores extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new ScoresExport, '学生考试成绩表.xlsx');
     }
 }

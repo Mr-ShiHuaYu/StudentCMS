@@ -148,6 +148,7 @@
                 //常规用法
                 laydate.render({
                     elem: '#birth'
+                    , trigger: 'click'
                 });
                 // 为表单赋值初始值
                 var user = @json($user);

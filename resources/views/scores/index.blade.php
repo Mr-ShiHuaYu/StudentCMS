@@ -103,37 +103,11 @@
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]
                     , toolbar: '#toolbarDemo'
-                });
-
-                //监听行工具事件
-                table.on('tool(test)', function (obj) {
-                    var data = obj.data;
-                    switch (obj.event) {
-                        case 'edit':
-                            var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                            xadmin.open('修改考试信息', url, 800);
-                            break;
-
-                        case 'del':
-                            layer.confirm('真的删除<span style="color:red;">' + data.name + '</span>考试么', function (index) {
-                                var url = '{{route('exam.destroy','xxx')}}'.replace('xxx', data.id);
-                                $.ajax({
-                                    type: 'delete',
-                                    url: url,
-                                    success: function (res) {
-                                        if (res.status === 'success') {
-                                            layer.alert(res.msg, {icon: 6}, function (index) {
-                                                window.location.reload();
-                                            })
-                                        } else {
-                                            layer.alert(res.msg, {icon: 5});
-                                        }
-                                    }
-                                });
-
-                            });
-                            break;
-                    }
+                    , defaultToolbar: ['filter', 'print', {
+                        title: '导出Excel' //标题
+                        , layEvent: 'export_excel' //事件名，用于 toolbar 事件中使用
+                        , icon: 'layui-icon-export' //图标类名
+                    }]
                 });
 
                 //头工具栏事件
@@ -142,6 +116,8 @@
                         case 'add':
                             xadmin.open('成绩录入', '{{route('score.create')}}');
                             break;
+                        case 'export_excel':
+                            window.open('{{route('score.export')}}', '_blank');
                     }
                 });
 

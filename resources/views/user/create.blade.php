@@ -125,6 +125,7 @@
                 //常规用法
                 laydate.render({
                     elem: '#birth'
+                    , trigger: 'click'
                 });
                 form.val('userForm', {
                     'sex': '男',

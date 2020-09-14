@@ -37,11 +37,13 @@
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#start' //指定元素
+                    , trigger: 'click'
                 });
 
                 //执行一个laydate实例
                 laydate.render({
                     elem: '#end' //指定元素
+                    , trigger: 'click'
                 });
             });
     </script>
@@ -74,7 +76,7 @@
                     switch (obj.event) {
                         case 'edit':
                             var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                            xadmin.open('修改考试信息', url, 800);
+                            xadmin.open('修改考试信息', url, 700, 400);
                             break;
 
                         case 'del':
