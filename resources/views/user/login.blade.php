@@ -36,10 +36,10 @@
 <body class="login-bg" style="background: #20262e;">
 <canvas class="background"></canvas>
 <div id="login-form" class="login layui-anim layui-anim-up">
-    <div class="message">管理员登录</div>
+    <div class="message">{{config('app.name')}}登录</div>
     <div id="darkbannerwrap"></div>
     <form class="layui-form">
-{{--        {{csrf_field()}}--}}
+        {{--        {{csrf_field()}}--}}
         <input name="uid" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
@@ -76,24 +76,19 @@
     layui.use('form', function () {
         var form = layui.form;
         var $ = layui.$;
-        // layer.msg('玩命卖萌中', function(){
-        //   //关闭后的操作
-        //   });
-        //监听提交
         form.on('submit(login)', function (data) {
             $.post("{{ route('login.store') }}", data.field, function (res) {
                 if (res.status === 'success') {
-                    layer.alert(res.msg, {icon: 6}, function () {
-                        window.location.href = "/";
+                    layer.msg(res.msg, {icon: 6, time: 1000}, function () {
+                        window.location.href = '{{route('index')}}';
                     })
                 } else {
-                    layer.msg(res.msg, {icon: 5, time: 1000});
+                    layer.alert(res.msg, {icon: 5, time: 1000});
                 }
             });
             return false;
         });
     });
 </script>
-<!-- 底部结束 -->
 </body>
 </html>

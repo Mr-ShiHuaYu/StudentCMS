@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="学生管理系统">
+  <component name="PublishConfigData" serverName="学生管理系统">
     <serverData>
       <paths name="学生管理系统">
         <serverdata>
@@ -15,6 +15,5 @@
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

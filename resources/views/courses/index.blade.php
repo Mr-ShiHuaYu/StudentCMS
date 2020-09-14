@@ -29,8 +29,9 @@
     @include('common.operation')
 
     <script>
-        layui.use(['laydate', 'form'],
+        layui.use(['laydate', 'form', 'table'],
             function () {
+                var table = layui.table;
                 var laydate = layui.laydate
                     , form = layui.form;
                 //执行一个laydate实例
@@ -42,12 +43,7 @@
                 laydate.render({
                     elem: '#end' //指定元素
                 });
-            });
-    </script>
-    <script>
-        layui.use('table',
-            function () {
-                var table = layui.table;
+
                 table.render({
                     elem: '#user_table'
                     , height: 'full-130'

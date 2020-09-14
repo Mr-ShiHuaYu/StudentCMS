@@ -11,7 +11,7 @@
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 13/09/2020 03:15:55
+ Date: 13/09/2020 23:31:22
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `courses`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `courses_name_unique`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of courses
@@ -43,6 +43,7 @@ INSERT INTO `courses` VALUES (6, '生物', 1, '2020-09-12 09:07:48', '2020-09-12
 INSERT INTO `courses` VALUES (7, '地理', 1, '2020-09-12 09:07:48', '2020-09-12 09:07:48');
 INSERT INTO `courses` VALUES (8, '政治', 1, '2020-09-12 09:07:48', '2020-09-12 09:07:48');
 INSERT INTO `courses` VALUES (9, '历史', 1, '2020-09-12 09:07:48', '2020-09-12 09:07:48');
+INSERT INTO `courses` VALUES (10, '化研', 4, '2020-09-13 20:12:37', '2020-09-13 20:12:37');
 
 -- ----------------------------
 -- Table structure for exams
@@ -126,13 +127,13 @@ CREATE TABLE `scores`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 96 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of scores
 -- ----------------------------
-INSERT INTO `scores` VALUES (4, 78, 3, 1, 1, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
-INSERT INTO `scores` VALUES (5, 88, 3, 1, 2, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
+INSERT INTO `scores` VALUES (4, 60, 3, 1, 1, '2020-09-13 00:09:42', '2020-09-13 20:21:18');
+INSERT INTO `scores` VALUES (5, 67, 3, 1, 2, '2020-09-13 00:09:42', '2020-09-13 10:15:22');
 INSERT INTO `scores` VALUES (6, 98, 3, 1, 3, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
 INSERT INTO `scores` VALUES (7, 87, 3, 1, 4, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
 INSERT INTO `scores` VALUES (8, 65, 3, 1, 5, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
@@ -140,7 +141,7 @@ INSERT INTO `scores` VALUES (9, 67, 3, 1, 6, '2020-09-13 00:09:42', '2020-09-13 
 INSERT INTO `scores` VALUES (10, 78, 3, 1, 7, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
 INSERT INTO `scores` VALUES (11, 78, 3, 1, 8, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
 INSERT INTO `scores` VALUES (12, 65, 3, 1, 9, '2020-09-13 00:09:42', '2020-09-13 00:09:42');
-INSERT INTO `scores` VALUES (13, 67, 4, 1, 1, '2020-09-13 00:32:53', '2020-09-13 00:32:53');
+INSERT INTO `scores` VALUES (13, 33, 4, 1, 1, '2020-09-13 00:32:53', '2020-09-13 12:09:54');
 INSERT INTO `scores` VALUES (14, 77, 4, 1, 2, '2020-09-13 00:32:53', '2020-09-13 00:32:53');
 INSERT INTO `scores` VALUES (15, 88, 4, 1, 3, '2020-09-13 00:32:53', '2020-09-13 00:32:53');
 INSERT INTO `scores` VALUES (16, 77, 4, 1, 4, '2020-09-13 00:32:53', '2020-09-13 00:32:53');
@@ -194,6 +195,35 @@ INSERT INTO `scores` VALUES (63, 88, 4, 4, 6, '2020-09-13 02:11:42', '2020-09-13
 INSERT INTO `scores` VALUES (64, 88, 4, 4, 7, '2020-09-13 02:11:42', '2020-09-13 02:11:42');
 INSERT INTO `scores` VALUES (65, 88, 4, 4, 8, '2020-09-13 02:11:42', '2020-09-13 02:11:42');
 INSERT INTO `scores` VALUES (66, 88, 4, 4, 9, '2020-09-13 02:11:42', '2020-09-13 02:11:42');
+INSERT INTO `scores` VALUES (67, 124, 7, 1, 1, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (68, 33, 7, 1, 2, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (69, 67, 7, 1, 3, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (70, 78, 7, 1, 4, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (71, 87, 7, 1, 5, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (72, 87, 7, 1, 6, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (73, 87, 7, 1, 7, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (74, 78, 7, 1, 8, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (75, 98, 7, 1, 9, '2020-09-13 09:49:20', '2020-09-13 09:49:20');
+INSERT INTO `scores` VALUES (76, 57, 14, 3, 1, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (77, 120, 14, 3, 2, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (78, 76, 14, 3, 3, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (79, 89, 14, 3, 4, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (80, 89, 14, 3, 5, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (81, 87, 14, 3, 6, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (82, 67, 14, 3, 7, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (83, 89, 14, 3, 8, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (84, 87, 14, 3, 9, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (85, 67, 14, 3, 10, '2020-09-13 20:13:39', '2020-09-13 20:13:39');
+INSERT INTO `scores` VALUES (86, 89, 8, 1, 1, '2020-09-13 20:31:51', '2020-09-13 20:33:43');
+INSERT INTO `scores` VALUES (87, 89, 8, 1, 2, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (88, 89, 8, 1, 3, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (89, 87, 8, 1, 4, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (90, 87, 8, 1, 5, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (91, 87, 8, 1, 6, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (92, 67, 8, 1, 7, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (93, 67, 8, 1, 8, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (94, 77, 8, 1, 9, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
+INSERT INTO `scores` VALUES (95, 77, 8, 1, 10, '2020-09-13 20:31:52', '2020-09-13 20:31:52');
 
 -- ----------------------------
 -- Table structure for teachers
@@ -208,7 +238,7 @@ CREATE TABLE `teachers`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of teachers
@@ -220,7 +250,6 @@ INSERT INTO `teachers` VALUES (4, '敖楠', '女', '18094093949', '57705102', '1
 INSERT INTO `teachers` VALUES (5, '滕红', '女', '15820302133', '41788401', '1977-02-15 04:38:19', '2017-12-24 01:27:59');
 INSERT INTO `teachers` VALUES (6, '畅华', '男', '15958713250', '16570782', '2001-11-18 14:56:00', '2000-07-28 13:36:04');
 INSERT INTO `teachers` VALUES (8, '管荣', '女', '17634835289', '84710750', '1998-04-16 01:17:21', '2003-01-31 19:56:30');
-INSERT INTO `teachers` VALUES (9, '路雪梅', '女', '15302510643', '40308731', '1973-02-23 05:53:20', '1972-04-27 18:03:53');
 
 -- ----------------------------
 -- Table structure for users
@@ -253,18 +282,18 @@ CREATE TABLE `users`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_uid_unique`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'admin', '$2y$10$zruwG14as35el7fZgJV6heze2Hcd10NRCu0f1j9Y4yRrbf7AjOlgW', '系统管理员', 1, '男', '18179871320', '13046369', '2002-07-09', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创联世纪信息有限公司', NULL, NULL, 'yQVu0s3SOTz0nX0i9RsCQybRfAF08G1wgVj4xFxr8FfzXUkYTKh8cqB8MvVc', '1989-01-29 13:14:14', '2020-09-09 22:34:59');
+INSERT INTO `users` VALUES (1, 'admin', '$2y$10$zruwG14as35el7fZgJV6heze2Hcd10NRCu0f1j9Y4yRrbf7AjOlgW', '系统管理员', 1, '男', '18179871320', '13046369', '2002-07-09', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创联世纪信息有限公司', NULL, NULL, '8p14MwRn7Jdst1No7J43qsnPFrbevgN5JowVppo67KgdxloNbp6wIpQUQSec', '1989-01-29 13:14:14', '2020-09-09 22:34:59');
 INSERT INTO `users` VALUES (2, '69299701', '$2y$10$fklQwLK36zEVhc/jzH4VR.fH4ySnEHBmUK4Em1iK3Z35oB14yNQ7.', '管波', 0, '男', '18582312404', '99296209', '1994-11-09', '汉', '家庭经济状况1', '户口所在地', '1', '户籍地址', '现住址', 0, '留守儿童情', '留守儿童托管情况', '超艺信息有限公司', '曾担任班干部的情况', '获奖情况', 'PKrJrkSAQ9', '1996-06-13 23:03:11', '2020-09-11 22:21:01');
 INSERT INTO `users` VALUES (3, '42626416', '$2y$10$LseoUBFLjotEwFflO/tMLersqfP4raq4qkowS4VCH8KF.4mbqtqrK', '柏智明', 0, '男', '17180383406', '65791172', '1982-06-13', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '南康科技有限公司', NULL, NULL, '8HRAv13ruhUcawufGIB7rDM9BM5TmTBOcn83u9aIISg2vrrHNrlJJCJxRaug', '1994-07-19 10:13:30', '2020-09-10 21:52:05');
 INSERT INTO `users` VALUES (4, '44181897', '$2y$10$pNlh8g2s8EeNi5LfAm7kQ.Yb6f/b7rr/PbB7pRuoAY/Jga8uLTRve', '周阳', 0, '女', '17198594837', '31122985', '1994-03-22', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '方正科技传媒有限公司', NULL, NULL, 'JKOOG0CTnk', '2016-08-26 21:14:26', '1981-02-17 02:40:29');
 INSERT INTO `users` VALUES (5, '61360406', '$2y$10$oDNf2v4JFweVqr9RX.iv3uF90y4OSKR/ji35GSPdZUp3A6/AghIe6', '胡晧', 0, '女', '18731670478', '75436196', '1987-10-16', '畲', NULL, NULL, '0', NULL, NULL, 1, NULL, NULL, '艾提科信科技有限公司', NULL, NULL, 'A4XiGfxXgh', '2016-08-12 17:18:40', '2020-09-11 22:36:40');
 INSERT INTO `users` VALUES (7, '86086630', '$2y$10$gKn06B0G1BpbpEP7AKt1jOt8f5vK4cxVmJuYYI0JI3oodvVnu6NZ.', '鄢畅', 0, '男', '18753256344', '93087616', '1983-07-08', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '华成育卓信息有限公司', NULL, NULL, 'yREzRveT4S', '1993-11-06 16:50:58', '2006-11-13 20:26:27');
-INSERT INTO `users` VALUES (8, '29786124', '$2y$10$T1uM6i9gwZ1kYQ4FeCK6oeH/7jWHMIprlaW6jbJszNgLAJjoJvurK', '吕明霞', 0, '女', '17190950841', '84552806', '2017-01-13', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创汇科技有限公司', NULL, NULL, 'x9VXh6jnlLcNJ9NNoAQE9t286Sexz6c1URAY1TgKDUGBYo7UnCL6nnATD3be', '1988-10-21 09:17:21', '1994-04-07 04:22:48');
+INSERT INTO `users` VALUES (8, '29786124', '$2y$10$T1uM6i9gwZ1kYQ4FeCK6oeH/7jWHMIprlaW6jbJszNgLAJjoJvurK', '吕明霞', 0, '女', '17190950841', '84552806', '2017-01-13', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创汇科技有限公司', NULL, NULL, 'Fdu6xc5cwxidJH8rQMFqjB1KlPwwZB2KZHw3Hzc0mtsA9fq33xxR8BhieB30', '1988-10-21 09:17:21', '1994-04-07 04:22:48');
 INSERT INTO `users` VALUES (9, '42746992', '$2y$10$ulpG5.gchdK0iaK44NTZFemqxOgfh/f0vkElgMGIPqW2cdWC3hmjm', '韦淑华', 0, '男', '17686416244', '70019089', '2001-03-31', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '良诺传媒有限公司', NULL, NULL, 'SJLzJ9rU9i', '2010-04-09 14:25:26', '2020-09-10 21:49:00');
 INSERT INTO `users` VALUES (10, '34533333', '$2y$10$KHFtZT3oHIJXwOYqT2Fld.PFHhTr4WRkivCFcqVQbxMdQf0NFpB5K', '葛哲', 0, '女', '15832458858', '11526012', '1991-11-01', '畲', NULL, NULL, '0', NULL, NULL, 1, NULL, NULL, '中建创业信息有限公司', NULL, NULL, 'VyViwnVI0U', '1970-06-08 06:55:06', '2020-09-10 23:59:53');
 INSERT INTO `users` VALUES (11, '87912899', '$2y$10$MecKLEmk9skRyxjTJp90KuTbQxJvtxvXmai8u093iRvxTY9CMMdcO', '秦晨', 0, '女', '13787632181', '14632878', '1988-09-21', '畲', NULL, NULL, '0', NULL, NULL, 1, NULL, NULL, '网新恒天传媒有限公司', NULL, NULL, 'PVLJeHT7Ij', '2003-11-14 23:07:48', '2020-09-11 22:39:20');
@@ -309,6 +338,7 @@ INSERT INTO `users` VALUES (49, '34858055', '$2y$10$p/hJLElN38YqtLjLXzWWm.go/Usl
 INSERT INTO `users` VALUES (50, '81619218', '$2y$10$9VZofzXlSnuc7bIsu8MuZOzXNWy3bsNCd/.ubNVaDuNVf0sWN/Hb2', '左桂花', 0, '女', '17664597731', '69641366', '2004-02-29', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '恒聪百汇科技有限公司', NULL, NULL, '33YoCGqu8z', '1984-06-12 06:52:53', '1983-07-16 13:02:14');
 INSERT INTO `users` VALUES (51, '3042013024', '$2y$10$WmiSUTcB7w5q9NL3mR8IrO5ITfcRquqGYgHb4ZElXxxRg3vw5zHbG', 's佟欢s', 0, '男', '13850863745', '27102160', '2000-12-05', '畲', '家庭经济状况1', '户口所在地', '2', '户籍地址', '现住址', 1, '留守儿童情', '留守儿童托管情况', NULL, NULL, NULL, NULL, '2020-09-10 22:32:27', '2020-09-10 22:32:27');
 INSERT INTO `users` VALUES (53, '3042013025', '$2y$10$1FPwJ.kD786CiZG/epTHVO.5QXkbteclu2.VGavhNsWgXXTYr5p5K', '鲁文彬', 0, '男', '13850863745', '27102160', '2000-12-05', '畲', '家庭经济状况1', '户口所在地', '2', '户籍地址', '现住址', 1, '留守儿童情', '留守儿童托管情况', NULL, NULL, NULL, NULL, '2020-09-10 22:33:29', '2020-09-10 22:33:29');
+INSERT INTO `users` VALUES (56, '3042013026', '$2y$10$gF6ARJuJhXzEyJhUnjBSzee1sC08MHc1D3Obe1KaSO4JScxFabCke', '柏智明', 0, '男', '17180383406', '97811759', '2000-12-05', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-13 13:22:21', '2020-09-13 13:22:21');
 
 -- ----------------------------
 -- Procedure structure for SP_QueryData
