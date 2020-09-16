@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(UserModel::class, 50)->create();
+        factory(UserModel::class, 20)->create();
         UserModel::find(1)->update(
             [
                 'uid' => 'admin',

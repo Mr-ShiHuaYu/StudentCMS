@@ -12,6 +12,12 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <label class="layui-form-label">满分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="full" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>授课老师</label>
                         <div class="layui-input-inline">
                             <select name="teacher_id">

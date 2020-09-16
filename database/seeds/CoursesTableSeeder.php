@@ -14,9 +14,9 @@ class CoursesTableSeeder extends Seeder
     {
         CoursesModel::truncate();
         $courses = [
-            ['name' => '语文', 'teacher_id' => 1],
-            ['name' => '数学', 'teacher_id' => 1],
-            ['name' => '英语', 'teacher_id' => 1],
+            ['name' => '语文', 'teacher_id' => 1, 'full' => 150],
+            ['name' => '数学', 'teacher_id' => 1, 'full' => 150],
+            ['name' => '英语', 'teacher_id' => 1, 'full' => 150],
             ['name' => '物理', 'teacher_id' => 1],
             ['name' => '化学', 'teacher_id' => 1],
             ['name' => '生物', 'teacher_id' => 1],

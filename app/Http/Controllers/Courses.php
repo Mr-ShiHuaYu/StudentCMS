@@ -53,14 +53,10 @@ class Courses extends Controller
      */
     public function store(Request $request)
     {
-        $teacher = $request->teacher;
-        $name = $request->name;
-        $res = CoursesModel::create(
-            [
-                'name' => $name,
-                'teacher_id' => $teacher,
-            ]
-        );
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('您无权添加课程');
+        }
+        $res = CoursesModel::create($request->all());
         if ($res) {
             return $this->success('添加成功');
         } else {

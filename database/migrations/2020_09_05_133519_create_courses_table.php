@@ -13,12 +13,16 @@ class CreateCoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name',100)->unique();
-            $table->unsignedBigInteger('teacher_id')->comment('授课老师')->nullable();
-            $table->timestamps();
-        });
+        Schema::create(
+            'courses',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name', 100)->unique();
+                $table->unsignedInteger('full')->default(100);
+                $table->unsignedBigInteger('teacher_id')->comment('授课老师')->nullable();
+                $table->timestamps();
+            }
+        );
     }
 
     /**

@@ -12,9 +12,15 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <label class="layui-form-label">满分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="full" class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <label class="layui-form-label"><span class="x-red">*</span>授课老师</label>
                         <div class="layui-input-inline">
-                            <select name="teacher" lay-verify="required" lay-search="">
+                            <select name="teacher_id" lay-verify="required" lay-search="">
                                 <option value=""></option>
                                 @foreach($teachers as $v)
                                     <option value="{{$v->id}}">{{$v->name}}</option>

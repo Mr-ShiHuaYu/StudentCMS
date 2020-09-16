@@ -56,6 +56,7 @@
                         {field: 'teacher_id', hide: true}
                         , {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {field: 'name', title: '课程名称', sort: true, align: 'center'}
+                        , {field: 'full', title: '满分', sort: true, align: 'center'}
                         , {
                             field: 'teacher',
                             event: 'show_teacher',
