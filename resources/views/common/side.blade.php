@@ -33,7 +33,7 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="成绩管理">&#xe726;</i>
+                    <i class="iconfont left-nav-li" lay-tips="成绩管理">&#xe6ce;</i>
                     <cite>成绩管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
@@ -48,9 +48,22 @@
                             <cite>成绩查询</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('成绩分析','admin-list.html')">
+                        <a href="javascript:;">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>成绩分析</cite></a>
+                            <cite>成绩分析</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('总体分析','{{route('analyze.index')}}',true)">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>总体分析</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('个人分析','member-list1.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>个人分析</cite></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>

@@ -65,9 +65,9 @@
                             align: 'center',
                             templet: function (d) {
                                 if (!d.teacher) {
-                                    return '<button class="layui-btn layui-btn-danger">未指定老师</button>';
+                                    return '<span style="cursor: pointer;" class="layui-badge">未指定老师</span>';
                                 }
-                                return '<button class="layui-btn layui-btn-normal">' + d.teacher.name + '</button>';
+                                return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.teacher.name + '</button>';
                             }
                         }
                         @can('isAdmin')

@@ -48,8 +48,10 @@ Route::middleware('auth')->group(
         Route::get('/getscore', 'Scores@getscore')->name('getscore');
         Route::get('/export/score', 'Scores@export')->name('score.export');
 
-        // 成绩展示
-        Route::get('/rank','ScoreShow@rankCourse');
+        // 成绩分析
+        Route::get('/analyze/index','ScoreShow@index')->name('analyze.index');
+        Route::get('/pie/{cid}','ScoreShow@getPie')->name('analyze.getpie');
+        Route::get('/analyze/showall','ScoreShow@showAll')->name('score.showall');
     }
 );
 
