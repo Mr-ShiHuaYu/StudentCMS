@@ -1,3 +1,14 @@
+## 演示站点
+> 系统还在不断更新完善中，成绩分析还没完善，发现问题及时反馈哈
+http://stu.yushihua.vip
+
+- 管理员账号:admin/admin
+- 学生账号:test/test
+
+> 切换账号要登录2次，这是个小bug，后续解决
+
+> 顺便提一下我的个人博客:https://yushihua.vip
+
 ## 学生管理系统
 ### 项目介绍
 基于php Laravel和layui开发的学生管理系统
@@ -24,11 +35,12 @@
 ```
 1. git clone https://github.com/974988176/StudentCMS.git
 2. cd StudentCMS
-composer update
+composer install
 3. 创建数据库,复制.env.example为.env
 //生成key
-4.artisan key:generate
+4. php artisan key:generate
 5. 修改.env中数据库连接DB_DATABASE和APP_NAME属性
+6. php artisan migrate:refresh --seed
 ```
 
 ### 权限管理
