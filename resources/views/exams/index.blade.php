@@ -62,7 +62,7 @@
                         , {field: 'name', title: '考试名称', sort: true, align: 'center'}
                         , {field: 'time', title: '考试时间', sort: true, align: 'center'}
                         @can('isAdmin')
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        , {title: '操作', toolbar: '#barDemo', width: 150}
                         @endcan
                     ]]
                     , limit: 10

@@ -64,7 +64,7 @@
                         , {field: 'phone', title: '电话', sort: true, align: 'center'}
                         , {field: 'qq', title: 'QQ', sort: true, align: 'center'}
                         @can('isAdmin')
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        , {title: '操作', toolbar: '#barDemo', width: 150}
                         @endcan
                     ]]
                     , limit: 10

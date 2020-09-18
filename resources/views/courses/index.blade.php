@@ -71,7 +71,7 @@
                             }
                         }
                         @can('isAdmin')
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        , {title: '操作', toolbar: '#barDemo', width: 150}
                         @endcan
                     ]]
                     , limit: 10

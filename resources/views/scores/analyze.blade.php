@@ -37,13 +37,13 @@
                     , height: 'full-130'
                     , url: '{{route('score.showall')}}'
                     , page: false
-                    , cellMinWidth: 50
+                    , cellMinWidth: 40
                     , cols: [[
                         {field: 'cid', hide: true}
                         , {type: 'numbers', title: '序号', width: 100, align: 'center'}
                         , {
                             field: 'course',
-                            title: '课程名称',
+                            title: '课程',
                             event: 'show_analyze',
                             sort: true,
                             align: 'center',
@@ -51,19 +51,20 @@
                                 return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.course + '</span>';
                             }
                         }
+                        , {field: 'full', title: '满分', sort: true, align: 'center'}
                         , {field: 'join_num', title: '参考人数', sort: true, align: 'center'}
                         , {field: '优秀', title: '优秀', sort: true, align: 'center'}
                         , {field: '良好', title: '良好', sort: true, align: 'center'}
                         , {field: '及格', title: '及格', sort: true, align: 'center'}
                         , {field: '不及格', title: '不及格', sort: true, align: 'center'}
+
+                        , {field: 'max', title: '最高分', sort: true, align: 'center'}
+                        , {field: 'min', title: '最低分', sort: true, align: 'center'}
                         , {
                             field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
                                 return (d.avg * 1).toFixed(2);
                             }
                         }
-                        , {field: 'max', title: '最高分', sort: true, align: 'center'}
-                        , {field: 'min', title: '最低分', sort: true, align: 'center'}
-                        , {field: 'sum', title: '总分', sort: true, align: 'center'}
                     ]]
                 });
 
