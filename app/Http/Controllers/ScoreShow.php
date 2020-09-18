@@ -3,30 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\CoursesModel;
+use App\Models\ExamsModel;
 use DB;
-use Illuminate\Http\Request;
 
 class ScoreShow extends Controller
 {
-    public function index()
-    {
-        return view('scores.analyze');
-    }
-
-    public function getPie(Request $request, $cid)
+    public function getRate()
     {
         $score_sep = config('sys.score_sep');
+
+        return array_map(
+            function ($item) {
+                return $item / 100;
+            },
+            $score_sep
+        );
+    }
+
+    public function index()
+    {
+        $exams = ExamsModel::get();
+
+        return view('scores.analyze', compact('exams'));
+    }
+
+    public function getPie($cid, $eid)
+    {
         $full = (int)CoursesModel::where('id', '=', $cid)->value('full');
-        $youxiu = $score_sep['youxiu'] * $full / 100;
-        $lianghao = $score_sep['lianghao'] * $full / 100;
-        $jige = $score_sep['jige'] * $full / 100;
-        $sql = "SELECT c.NAME AS course, sum( CASE WHEN sc.score >= {$youxiu} THEN 1 ELSE 0 END ) AS '优秀', sum( CASE WHEN sc.score >= {$lianghao} AND sc.score < {$youxiu} THEN 1 ELSE 0 END ) AS '良好', sum( CASE WHEN sc.score >= {$jige} AND sc.score < {$lianghao} THEN 1 ELSE 0 END ) AS '及格', sum( CASE WHEN sc.score < {$jige} THEN 1 ELSE 0 END ) AS '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 AND c.id = {$cid}";
+        $rate = $this->getRate();
+        $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 AND c.id = {$cid} AND e.id={$eid}";
         $res = (array)DB::select($sql)[0];
         $json_str = '{"name":"","type":"pie","radius":"55%","center":["45%","50%"],"data":[],"itemStyle":{"emphasis":{"shadowBlur":10,"shadowOffsetX":0,"shadowColor":"rgba(0, 0, 0, 0.5)"}}}';
         $template = json_decode($json_str, true);
         $data = $template;
         $data['name'] = $res['course'];
+        $data['exam'] = $res['exam'];
         unset($res['course']);
+        unset($res['exam']);
         $t = [];
         foreach ($res as $key => $val) {
             $t[] = ['name' => $key, 'value' => $val];
@@ -36,10 +49,11 @@ class ScoreShow extends Controller
         return view('scores.showPie', compact('data'));
     }
 
-    public function showAll(Request $request)
+    public function showAll()
     {
-        $sql = "SELECT c.NAME AS course,c.id AS cid,c.full as full,count(*) AS join_num,sum( CASE WHEN sc.score >= 135 THEN 1 ELSE 0 END ) AS '优秀',sum( CASE WHEN sc.score >= 120 AND sc.score < 135 THEN 1 ELSE 0 END ) AS '良好',sum( CASE WHEN sc.score >= 90 AND sc.score < 120 THEN 1 ELSE 0 END ) AS '及格',sum( CASE WHEN sc.score < 90 THEN 1 ELSE 0 END ) AS '不及格',
-	AVG( sc.score ) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 GROUP BY course ORDER BY c.id";
+        $rate = $this->getRate();
+        $eid = request()->input('exam_id');
+        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) '优秀',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) '良好',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) '及格',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) '不及格',AVG( sc.score ) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 and e.id={$eid} GROUP BY course ORDER BY cid";
         $data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $res['data'] = $data;
         $res['code'] = 0;

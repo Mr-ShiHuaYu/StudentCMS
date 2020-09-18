@@ -50,7 +50,7 @@ Route::middleware('auth')->group(
 
         // 成绩分析
         Route::get('/analyze/index','ScoreShow@index')->name('analyze.index');
-        Route::get('/pie/{cid}','ScoreShow@getPie')->name('analyze.getpie');
+        Route::get('/pie/{cid}/{eid}','ScoreShow@getPie')->name('analyze.getpie');
         Route::get('/analyze/showall','ScoreShow@showAll')->name('score.showall');
     }
 );

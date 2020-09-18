@@ -16,6 +16,23 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-sm12">
                 <div class="layui-card-body">
+                    <form class="layui-form layui-col-space5">
+                        <div class="layui-form-mid layui-word-aux">请选择考试,若不选,默认为一</div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <div class="layui-input-inline">
+                                <select name="exam_id" lay-search="">
+                                    @foreach($exams as $exam)
+                                        <option value="{{$exam->id}}">{{$exam->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="search" data-type="reload">
+                                <i class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </form>
                     <table id="analyze_table" lay-filter="test"></table>
                 </div>
             </div>
@@ -32,15 +49,18 @@
                     , form = layui.form
                     , table = layui.table;
 
-                table.render({
+                var analyze_table = table.render({
                     elem: '#analyze_table'
                     , height: 'full-130'
                     , url: '{{route('score.showall')}}'
                     , page: false
                     , cellMinWidth: 40
+                    , where: {'exam_id': 1}
                     , cols: [[
                         {field: 'cid', hide: true}
+                        , {field: 'eid', hide: true}
                         , {type: 'numbers', title: '序号', width: 100, align: 'center'}
+                        , {field: 'exam', title: '考试', sort: true, align: 'center'}
                         , {
                             field: 'course',
                             title: '课程',
@@ -73,11 +93,24 @@
                     var data = obj.data;
                     switch (obj.event) {
                         case 'show_analyze':
-                            var url = "{{route('analyze.getpie','xxx')}}".replace('xxx', data.cid);
+                            var url = "{{route('analyze.getpie',['cid','eid'])}}".replace('cid', data.cid).replace('eid',data.eid);
                             xadmin.open('', url, 800, 400);
                             break;
                     }
                 });
+
+                // 表格的搜索重载
+                form.on('submit(search)',
+                    function (data) {
+                        //执行重载
+                        // table.reload('test', {
+                        //     where: data.field
+                        // }, 'data');
+                        analyze_table.reload({
+                            where: data.field
+                        });
+                        return false;
+                    });
             });
     </script>
 @stop

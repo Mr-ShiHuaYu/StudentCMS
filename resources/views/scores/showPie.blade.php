@@ -5,7 +5,7 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-sm12 layui-col-md6">
                 <div class="layui-card">
-                    <div class="layui-card-header">{{$data['name']}}课程分析</div>
+                    <div class="layui-card-header">{{$data['exam'].$data['name']}}课程分析</div>
                     <div class="layui-card-body" style="min-height: 300px;">
                         <div id="main1" class="layui-col-sm12" style="height: 300px;"></div>
                     </div>

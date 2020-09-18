@@ -38,9 +38,6 @@ layui.use("jquery", function() {
                                 $.each(item, function(index, i) {
                                     m = m + i + '<br>';
                                 });
-                            } else {
-                                // 这一句是英文
-                                // m = m + item + '<br>';
                             }
                         });
                         msg = m;
@@ -50,7 +47,7 @@ layui.use("jquery", function() {
                     msg = '超出访问频率限制';
                     break;
                 case 500:
-                    msg = '500 INTERNAL SERVER ERROR';
+                    msg = '500服务器内部错误';
                     break;
                 default:
                     return true;
