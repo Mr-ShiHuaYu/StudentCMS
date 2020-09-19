@@ -50,8 +50,9 @@ Route::middleware('auth')->group(
 
         // 成绩分析
         Route::get('/analyze/index','ScoreShow@index')->name('analyze.index');
-        Route::get('/pie/{cid}/{eid}','ScoreShow@getPie')->name('analyze.getpie');
-        Route::get('/analyze/showall','ScoreShow@showAll')->name('score.showall');
+        Route::get('/analyze/pie/{cid}/{eid}','ScoreShow@getPie')->name('analyze.getpie');
+        Route::get('/analyze/showall','ScoreShow@showAll')->name('analyze.showall');
+        Route::post('/analyze/tips','ScoreShow@tips')->name('analyze.tips');
     }
 );
 
@@ -62,6 +63,3 @@ Route::middleware('guest')->group(
         Route::post('/dologin', 'Login@store')->name('login.store');
     }
 );
-
-
-

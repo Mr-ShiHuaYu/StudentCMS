@@ -52,7 +52,7 @@
                 var analyze_table = table.render({
                     elem: '#analyze_table'
                     , height: 'full-130'
-                    , url: '{{route('score.showall')}}'
+                    , url: '{{route('analyze.showall')}}'
                     , page: false
                     , cellMinWidth: 40
                     , where: {'exam_id': 1}
@@ -73,13 +73,96 @@
                         }
                         , {field: 'full', title: '满分', sort: true, align: 'center'}
                         , {field: 'join_num', title: '参考人数', sort: true, align: 'center'}
-                        , {field: '优秀', title: '优秀', sort: true, align: 'center'}
-                        , {field: '良好', title: '良好', sort: true, align: 'center'}
-                        , {field: '及格', title: '及格', sort: true, align: 'center'}
-                        , {field: '不及格', title: '不及格', sort: true, align: 'center'}
+                        , {
+                            field: 'youxiu',
+                            title: '优秀',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.youxiu * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.youxiu + '</span>';
 
-                        , {field: 'max', title: '最高分', sort: true, align: 'center'}
-                        , {field: 'min', title: '最低分', sort: true, align: 'center'}
+                                } else {
+                                    return d.youxiu;
+                                }
+                            }
+                        }
+                        , {
+                            field: 'lianghao',
+                            title: '良好',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.lianghao * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.lianghao + '</span>';
+
+                                } else {
+                                    return d.lianghao;
+                                }
+                            }
+                        }
+                        , {
+                            field: 'jige',
+                            title: '及格',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.jige * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.jige + '</span>';
+
+                                } else {
+                                    return d.jige;
+                                }
+                            }
+                        }
+                        , {
+                            field: 'bujige',
+                            title: '不及格',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.bujige * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.bujige + '</span>';
+
+                                } else {
+                                    return d.bujige;
+                                }
+                            }
+                        }
+                        , {
+                            field: 'max',
+                            title: '最高分',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.max * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge">' + d.max + '</span>';
+
+                                } else {
+                                    return d.max;
+                                }
+                            }
+                        }
+                        , {
+                            field: 'min',
+                            title: '最低分',
+                            sort: true,
+                            align: 'center',
+                            event: 'show_detail',
+                            templet: function (d) {
+                                if (d.min * 1) {
+                                    return '<span style="cursor: pointer;" class="layui-badge layui-bg-green">' + d.min + '</span>';
+
+                                } else {
+                                    return d.min;
+                                }
+                            }
+                        }
                         , {
                             field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
                                 return (d.avg * 1).toFixed(2);
@@ -93,8 +176,25 @@
                     var data = obj.data;
                     switch (obj.event) {
                         case 'show_analyze':
-                            var url = "{{route('analyze.getpie',['cid','eid'])}}".replace('cid', data.cid).replace('eid',data.eid);
+                            var url = "{{route('analyze.getpie',['cid','eid'])}}".replace('cid', data.cid).replace('eid', data.eid);
                             xadmin.open('', url, 800, 400);
+                            break;
+                        case 'show_detail':
+                            var that = this;
+                            var field = $(this).data('field');
+                            $.post('/analyze/tips?cid=' + data.cid + '&eid=' + data.eid + '&field=' + field, function (res) {
+                                if (res.status === 'success') {
+                                    var s = '';
+                                    res.data.forEach(function (item) {
+                                        s += item.name + ':' + item.score + '<br>';
+                                    });
+                                    layer.tips(s, that, {
+                                        // tips: [2, '#1E9FFF'],
+                                        tips: [2, '#5FB878'],
+                                        tipsMore: true
+                                    });
+                                }
+                            });
                             break;
                     }
                 });

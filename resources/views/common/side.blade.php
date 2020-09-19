@@ -67,7 +67,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
+{{--            <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="系统统计">&#xe6ce;</i>
                     <cite>系统统计</cite>
@@ -198,7 +198,7 @@
                             <cite>notice 通知控件</cite></a>
                     </li>
                 </ul>
-            </li>
+            </li>--}}
         </ul>
     </div>
 </div>
