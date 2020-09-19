@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CoursesModel;
 use App\Models\ExamsModel;
 use DB;
+use Illuminate\Support\Facades\Gate;
 
 class ScoreShow extends Controller
 {
@@ -22,6 +23,9 @@ class ScoreShow extends Controller
 
     public function index()
     {
+        if (Gate::denies('isAdmin')) {
+            return view('user.noper');
+        }
         $exams = ExamsModel::get();
 
         return view('scores.analyze', compact('exams'));
@@ -29,6 +33,10 @@ class ScoreShow extends Controller
 
     public function getPie($cid, $eid)
     {
+        if (Gate::denies('isAdmin')) {
+            return view('user.noper');
+        }
+
         $full = (int)CoursesModel::where('id', '=', $cid)->value('full');
         $rate = $this->getRate();
         $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 AND c.id = {$cid} AND e.id={$eid}";
@@ -51,6 +59,9 @@ class ScoreShow extends Controller
 
     public function showAll()
     {
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('无权限');
+        }
         $rate = $this->getRate();
         $eid = request()->input('exam_id');
         $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',AVG( sc.score ) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 and e.id={$eid} GROUP BY course ORDER BY cid";
@@ -65,6 +76,9 @@ class ScoreShow extends Controller
 
     public function tips()
     {
+        if (Gate::denies('isAdmin')) {
+            return $this->fail('无权限');
+        }
         $cid = request()->input('cid');
         $eid = request()->input('eid');
         $field = request()->input('field');

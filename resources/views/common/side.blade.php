@@ -53,11 +53,13 @@
                             <cite>成绩分析</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
+                            @can('isAdmin')
                             <li>
                                 <a onclick="xadmin.add_tab('总体分析','{{route('analyze.index')}}',true)">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>总体分析</cite></a>
                             </li>
+                            @endcan
                             <li>
                                 <a onclick="xadmin.add_tab('个人分析','member-list1.html')">
                                     <i class="iconfont">&#xe6a7;</i>
