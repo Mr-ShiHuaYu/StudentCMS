@@ -19,11 +19,11 @@ class User extends Controller
 
     public function getUser(Request $request)
     {
-        $page = $request->get('page');
-        $limit = $request->get('limit');
-        $start = $request->get('birth_start');
-        $end = $request->get('birth_end');
-        $keyword = $request->get('keyword');
+        $page = $request->input('page');
+        $limit = $request->input('limit');
+        $start = $request->input('birth_start');
+        $end = $request->input('birth_end');
+        $keyword = $request->input('keyword');
 
         $offset = ($page - 1) * $limit;
         $is_admin = Gate::allows('isAdmin');

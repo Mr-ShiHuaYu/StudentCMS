@@ -52,6 +52,7 @@
                 var analyze_table = table.render({
                     elem: '#analyze_table'
                     , height: 'full-130'
+                    , method: 'post'
                     , url: '{{route('analyze.showall')}}'
                     , page: false
                     , cellMinWidth: 40

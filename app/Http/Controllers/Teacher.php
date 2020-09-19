@@ -16,8 +16,8 @@ class Teacher extends Controller
 
     public function getTeacher(Request $request)
     {
-        $page = $request->get('page');
-        $limit = $request->get('limit');
+        $page = $request->input('page');
+        $limit = $request->input('limit');
         $offset = ($page - 1) * $limit;
         $data = TeachersModel::offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];

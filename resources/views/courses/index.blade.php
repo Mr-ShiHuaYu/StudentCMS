@@ -49,6 +49,7 @@
                 table.render({
                     elem: '#user_table'
                     , height: 'full-130'
+                    , method: 'post'
                     , url: '{{route('getcourse')}}' //数据接口
                     , page: true //开启分页
                     , cellMinWidth: 50 //全局定义常规单元格的最小宽度

@@ -21,8 +21,8 @@ class Courses extends Controller
 
     public function getcourse(Request $request)
     {
-        $page = $request->get('page');
-        $limit = $request->get('limit');
+        $page = $request->input('page');
+        $limit = $request->input('limit');
         $offset = ($page - 1) * $limit;
         $data = CoursesModel::with('teacher')->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];

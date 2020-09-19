@@ -32,11 +32,11 @@ class Scores extends Controller
         // 全站最难,最关键的方法,利用mysql的if函数,将行转列,按学生的学号分组,max最课程成绩最大值,正常来说,一个学生的一次考试一个课程的成绩只有一个
         // 要考虑权限,学生只能查看自己的成绩
         $is_admin = Gate::allows('isAdmin');
-        $page = $request->get('page');
-        $limit = $request->get('limit');
+        $page = $request->input('page');
+        $limit = $request->input('limit');
         $offset = ($page - 1) * $limit;
-        $exam_id = $request->get('exam_id'); // 搜索考试
-        $keyword = $request->get('name_uid'); // 搜索学号或姓名
+        $exam_id = $request->input('exam_id'); // 搜索考试
+        $keyword = $request->input('name_uid'); // 搜索学号或姓名
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
         $sql = "SELECT u.uid uid,u.name name,e.name exam,";
@@ -70,7 +70,7 @@ class Scores extends Controller
             $id_str = join(',', $student_id);
             $sql .= " and u.id IN ($id_str)";
         }
-        $sql .= " GROUP BY u.uid,e.name ORDER BY sc.created_at";
+        $sql .= " GROUP BY u.uid,e.name ORDER BY e.id";
         $data = DB::table(DB::raw("($sql) as res"))->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;

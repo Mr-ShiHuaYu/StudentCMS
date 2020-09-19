@@ -61,7 +61,7 @@
                             </li>
                             @endcan
                             <li>
-                                <a onclick="xadmin.add_tab('个人分析','member-list1.html')">
+                                <a onclick="xadmin.add_tab('个人分析','/analyze/getrank?uid=3')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>个人分析</cite></a>
                             </li>
