@@ -63,23 +63,27 @@
                                     <th>分数</th>
                                 </tr>
                                 </thead>
-                                @foreach($courses as $course)
-                                    <tr>
-                                        <td>{{$course->name}}</td>
-                                        <td>
-                                            <input type="hidden" name="course_id[]" value="{{$course->id}}">
-                                            <input type="number" lay-verify="required|score" name="score[]"
-                                                   class="layui-input">
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if (count($exams))
+                                    @foreach($courses as $course)
+                                        <tr>
+                                            <td>{{$course->name}}</td>
+                                            <td>
+                                                <input type="hidden" name="course_id[]" value="{{$course->id}}">
+                                                <input type="number" lay-verify="required|score" name="score[]"
+                                                       class="layui-input">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </table>
                         </div>
                     </div>
 
-                    <div class="layui-form-item" style="text-align: center;">
-                        <button class="layui-btn" lay-filter="save" lay-submit="">提交</button>
-                    </div>
+                    @if (count($exams))
+                        <div class="layui-form-item" style="text-align: center;">
+                            <button class="layui-btn" lay-filter="save" lay-submit="">提交</button>
+                        </div>
+                    @endif
                 </form>
 
             </div>
