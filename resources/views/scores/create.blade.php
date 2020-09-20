@@ -19,16 +19,20 @@
                     <div class="layui-form-item">
                         <div class="layui-col-xs6" style="text-align: center;">
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 100px;">选择考试</label>
-                                <div class="layui-input-inline">
-                                    <select name="exam_id" lay-verify="required" lay-search="">
-                                        <option value=""></option>
-                                        @foreach($exams as $exam)
-                                            <option value="{{$exam->id}}">{{$exam->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="layui-form-mid layui-word-aux">可模糊搜索,已添加的考试不显示</div>
+
+                                @if (count($exams))
+                                    <label class="layui-form-label" style="width: 100px;">选择考试</label>
+                                    <div class="layui-input-inline">
+                                        <select name="exam_id" lay-verify="required" lay-search="">
+                                            @foreach($exams as $exam)
+                                                <option value="{{$exam->id}}">{{$exam->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">可模糊搜索,已添加的考试不显示</div>
+                                @else
+                                    <div class="layui-form-mid layui-word-aux">你已添加全部考试成绩</div>
+                                @endif
                             </div>
                         </div>
                         <div class="layui-col-xs6" style="text-align: center;">
@@ -36,7 +40,6 @@
                                 <label class="layui-form-label" style="width: 100px;">选择学生</label>
                                 <div class="layui-input-inline">
                                     <select name="student_id" lay-verify="required" lay-search="">
-                                        <option value=""></option>
                                         @foreach($students as $student)
                                             <option value="{{$student->id}}">{{$student->name}}</option>
                                         @endforeach

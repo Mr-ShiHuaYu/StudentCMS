@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema; //add fixed sql
+use Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
