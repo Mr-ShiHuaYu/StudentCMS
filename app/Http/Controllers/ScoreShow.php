@@ -7,7 +7,7 @@ use App\Models\ExamsModel;
 use App\Models\ScoresModel;
 use App\Models\UserModel;
 use DB;
-use Illuminate\Support\Facades\Gate;
+use Gate;
 
 class ScoreShow extends Controller
 {
@@ -113,6 +113,11 @@ class ScoreShow extends Controller
     public function getRank()
     {
         $uid = request()->input('uid');
+        $user = UserModel::find($uid);
+        // 权限判断,判断当前登录的用户id和想要查看的用户是不是一个
+        if (Gate::denies('is_own', $user)) {
+            return $this->fail('无权限查看不是自己的成绩');
+        }
         $uname = UserModel::where('id', '=', $uid)->value('name');
         // 获取学号为x的学生参加的考试
         $sql = "select distinct e.name exam from scores sc,exams e where sc.exam_id=e.id and sc.student_id={$uid} ORDER BY e.id";
@@ -124,27 +129,69 @@ class ScoreShow extends Controller
         // 获取学号为x的学生各次考试的分数，已按eid排序，和上面是一致的顺序
         $sql = "select t.name,group_concat(score order by eid) scores from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $scdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
-
+        $score_series = [];
         foreach ($scdata as $d) {
-            $d->scores = explode(',', $d->scores);
+            $score_series[] = [
+                'name' => $d->name,
+                'type' => 'line',
+                'smooth' => true,
+                'data' => explode(',', $d->scores),
+            ];
         }
 
         // 获取学号为x的学生各次排名的分数
         $sql = "select t.name,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $rkdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
+        $rkdata_series = [];
         foreach ($rkdata as $d) {
-            $d->scores = explode(',', $d->ranks);
+            $rkdata_series[] = [
+                'name' => $d->name,
+                'type' => 'line',
+                'smooth' => true,
+                'data' => explode(',', $d->ranks),
+            ];
+        }
+        $data = compact('exams', 'uname', 'courses', 'score_series', 'rkdata_series');
+        if (array_filter($data)) {
+            return $this->success('成功', $data);
         }
 
-        return view('scores.showLine', compact('exams', 'uname', 'courses', 'scdata', 'rkdata'));
+        return $this->fail('失败');
     }
 
     public function gerenfx()
     {
+        return view('scores.showLine');
+    }
+
+    public function getHasScoreUser()
+    {
+        $keyword = request()->input('name_uid'); // 搜索学号或姓名
+
         // 要列出至少有一门考试的学生的列表，形成表格
         $uid = ScoresModel::distinct()->pluck('student_id')->toArray();
         // 根据这个uid,从学生表里面找
-        $users = UserModel::whereIn('id',$uid)->select('id','uid','name')->get()->toArray();
-        return $users;
+        $query = UserModel::whereIn('id', $uid)->select('id', 'uid', 'name');
+        // 搜索学号或姓名
+        if ($keyword) {
+            $query->where('uid', 'like', '%'.$keyword.'%')->orWhere(
+                'name',
+                'like',
+                '%'.$keyword.'%'
+            );
+        }
+
+        // 权限判断,如果不是管理员,只允许看自己的
+        if(Gate::denies('isAdmin')) {
+            $query->where('uid', '=', auth()->user()->uid);
+        }
+
+        $data = $query->get()->toArray();
+        $res['data'] = $data;
+        $res['code'] = 0;
+        $res['count'] = count($data);
+        $res['msg'] = '获取数据失败';
+
+        return $res;
     }
 }

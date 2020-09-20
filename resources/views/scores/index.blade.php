@@ -17,11 +17,15 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
-                            <div class="layui-form-mid layui-word-aux">可按学生姓名,学号和考试模糊搜索</div>
-                            <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="name_uid" placeholder="请输入学生姓名或学号" autocomplete="off"
-                                       class="layui-input">
-                            </div>
+                            @can('isAdmin')
+                                <div class="layui-form-mid layui-word-aux">可按学生姓名,学号和考试模糊搜索</div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="name_uid" placeholder="请输入学生姓名或学号" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            @else
+                                <div class="layui-form-mid layui-word-aux">可按考试搜索</div>
+                            @endcan
                             <div class="layui-inline layui-show-xs-block">
                                 <div class="layui-input-inline">
                                     <select name="exam_id" lay-search="">

@@ -56,8 +56,7 @@ class User extends Controller
                 $query->whereRaw("CONCAT($sql) LIKE '%$keyword%'");
             }
         }
-        $users = $query->offset($offset)->paginate($limit);
-        $data = $users->toArray();
+        $data = $query->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
         $res['count'] = $data['total'];

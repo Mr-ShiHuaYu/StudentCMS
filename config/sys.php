@@ -6,4 +6,6 @@ return [
         'lianghao' => 80,
         'jige' => 60
     ],
+    // 是否隐藏左侧菜单
+    'hide_side' => true
 ];

@@ -54,9 +54,10 @@ Route::middleware('auth')->group(
         Route::post('/analyze/showall','ScoreShow@showAll')->name('analyze.showall');
         Route::post('/analyze/tips','ScoreShow@tips')->name('analyze.tips');
         // 获取个人成绩不同考试拆线图
-        Route::get('/analyze/getrank','ScoreShow@getRank')->name('analyze.getrank');
+        Route::post('/analyze/getrank','ScoreShow@getRank')->name('analyze.getrank');
         // 个人分析列表页
         Route::get('/analyze/gerenfx','ScoreShow@gerenfx')->name('analyze.gerenfx');
+        Route::post('/analyze/hasscore','ScoreShow@getHasScoreUser')->name('analyze.hasscore');
     }
 );
 

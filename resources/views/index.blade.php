@@ -32,6 +32,19 @@
     <script>
         // 是否开启刷新记忆tab功能
         // var is_remember = true;// 注释掉就是开始
+        layui.use('jquery', function () {
+            var $ = layui.jquery;
+            @if(config('sys.hide_side'))
+            xadmin.hide_side();
+            @endif
+        });
     </script>
-    <script src="{{ asset('js/csrf.js') }}"></script>
+@stop
+
+@section('css')
+    <style>
+        .layui-nav .layui-nav-item dl dd {
+            text-align: center;
+        }
+    </style>
 @stop

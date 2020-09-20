@@ -45,8 +45,7 @@
     <script>
         layui.use(['laydate', 'form', 'table'],
             function () {
-                var laydate = layui.laydate
-                    , form = layui.form
+                var form = layui.form
                     , table = layui.table;
 
                 var analyze_table = table.render({

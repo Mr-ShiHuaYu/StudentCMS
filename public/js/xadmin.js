@@ -59,7 +59,7 @@
 
 	Xadmin.prototype.add_lay_tab = function(title,url,id) {
 		element.tabAdd('xbs_tab', {
-	       title: title 
+	       title: title
 	        ,content: '<iframe tab-id="'+id+'" frameborder="0" src="'+url+'" scrolling="yes" class="x-iframe"></iframe>'
 	        ,id: id
 	    })
@@ -97,7 +97,7 @@
 	        content: url
 	    });
 	    if(full){
-	       layer.full(index); 
+	       layer.full(index);
 	    }
 	}
 	/**
@@ -193,8 +193,18 @@
 		  ,value: tab_list[id]
 		});
 	};
+
+	// 自己写的隐藏左侧菜单的方法
+    Xadmin.prototype.hide_side = function(){
+        $('.left-nav i').css('font-size','18px');
+        $('.left-nav').css({width: '0px'});
+        $('.left_open').hide();
+        $('.left-nav cite,.left-nav .nav_right').hide();
+        $('.page-content-bg').hide();
+        $('.page-content').css({left: '0px'});
+    };
 	win.xadmin = new Xadmin();
-	
+
 }(window);
 
 layui.use(['layer','element','jquery'],function() {
@@ -259,7 +269,7 @@ layui.use(['layer','element','jquery'],function() {
                 $(this).siblings().removeClass('open');
             }
         }
-        event.stopPropagation(); 
+        event.stopPropagation();
     })
     var left_tips_index = null;
     $('.left-nav #nav').on('mouseenter', '.left-nav-li', function(event) {
@@ -270,7 +280,7 @@ layui.use(['layer','element','jquery'],function() {
     })
 
     $('.left-nav #nav').on('mouseout', '.left-nav-li', function(event) {
-        layer.close(left_tips_index); 
+        layer.close(left_tips_index);
     })
     // 隐藏左侧
     $('.container .left_open i').click(function(event) {
