@@ -94,22 +94,33 @@
                             // 在这里改变上面的uname,改变option里面的内容,渲染echarts
                             var d = res.data;
                             $('.uname span').text('(' + d.uname + ')');
-                            option.legend.data = d.courses;
-                            option.xAxis.data = d.exams;
+
                             // 这里要用到对象的深层拷贝,不然,两个对象之间会互相影响
-                            var option2 = $.extend(true, {}, option);
-                            var option3 = $.extend(true, {}, option);
-                            var option4 = $.extend(true, {}, option);
-                            option.series = d.score_series;
-                            option.tooltip = tooltip1;
+                            var option1 = $.extend(true, {}, tpl_option);
+                            option1.legend.data = d.courses;
+                            option1.xAxis.data = d.exams;
+                            option1.series = d.score_series;
+                            option1.tooltip = tooltip1;
+
+                            var option2 = $.extend(true, {}, tpl_option);
+                            option2.legend.data = d.courses;
+                            option2.xAxis.data = d.exams;
                             // 让图2,排名图的y轴坐标上下反转,设置y轴坐标的最小值min,刻度最小间隔数minInterval
                             option2.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
                             option2.series = d.rkdata_series;
+
+                            var option3 = $.extend(true, {}, tpl_option);
+                            option3.legend.data = d.courses;
+                            option3.xAxis.data = d.exams;
                             option3.series = d.sum_series;
+                            option3.tooltip = tooltip3;
+
+                            var option4 = $.extend(true, {}, tpl_option);
+                            option4.legend.data = d.courses;
+                            option4.xAxis.data = d.exams;
                             option4.series = d.sum_rank_series;
                             option4.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
-                            option3.tooltip = tooltip3;
-                            myChart.setOption(option);
+                            myChart.setOption(option1);
                             myChart2.setOption(option2);
                             myChart3.setOption(option3);
                             myChart4.setOption(option4);
@@ -146,7 +157,8 @@
                         return params[0].axisValueLabel + '<br>总分:' + d.data.value + "<br>排名:" + d.data.rank
                     }
                 };
-                var option = {
+
+                var tpl_option = {
                     tooltip: {
                         trigger: 'axis'
                     },
@@ -162,6 +174,9 @@
                     },
                     xAxis: {
                         type: 'category',
+                        axisLabel :{
+                            interval:0
+                        },
                         boundaryGap: false,
                         data: []
                     },
