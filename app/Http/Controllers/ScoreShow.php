@@ -126,20 +126,32 @@ class ScoreShow extends Controller
         // 获取学号为x的学生的所有课程
         $sql = "select distinct c.name course from scores sc,courses c where sc.course_id=c.id and sc.student_id={$uid} ORDER BY c.id";
         $courses = DB::table(DB::raw("($sql) as res"))->pluck('course')->toArray();
-        // 获取学号为x的学生各次考试的分数，已按eid排序，和上面是一致的顺序
-        $sql = "select t.name,group_concat(score order by eid) scores from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
+        // 个人分析----各科分数变化折线图1
+        $sql = "select t.name,group_concat(score order by eid) scores,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $scdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $score_series = [];
         foreach ($scdata as $d) {
+            $ranks = explode(',', $d->ranks);
+            $scores = explode(',', $d->scores);
+            $data = array_map(
+                function ($r, $s) {
+                    return [
+                        'value' => $s,
+                        'score' => $r,
+                    ];
+                },
+                $ranks,
+                $scores
+            );
             $score_series[] = [
                 'name' => $d->name,
                 'type' => 'line',
                 'smooth' => true,
-                'data' => explode(',', $d->scores),
+                'data' => $data,
             ];
         }
 
-        // 获取学号为x的学生各次排名的分数
+        // 个人分析----各科排名变化折线图2
         $sql = "select t.name,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $rkdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $rkdata_series = [];
@@ -151,7 +163,36 @@ class ScoreShow extends Controller
                 'data' => explode(',', $d->ranks),
             ];
         }
-        $data = compact('exams', 'uname', 'courses', 'score_series', 'rkdata_series');
+        // 个人分析----总分折线图3
+        $sql = "select t.uid,t.name,t.eid,t.exam,t.sum_score sum,rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,e.name exam,sum(score) sum_score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
+        $sum_data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
+        $sum_data_temp = [];
+        foreach ($sum_data as $d) {
+            $sum_data_temp[] = [
+                'value' => $d->sum,
+                'rank' => $d->rank,
+            ];
+        }
+        $sum_series = [
+            'type' => 'line',
+            'smooth' => true,
+            'data' => $sum_data_temp,
+        ];
+
+        // 个人分析----总分排名折线图4
+        $sql = "select rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,sum(score) sum_score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
+        $sum_rank_temp = DB::table(DB::raw("($sql) as res"))->get()->toArray();
+        $sum_rank_data = [];
+        foreach ($sum_rank_temp as $r) {
+            $sum_rank_data[] = $r->rank;
+        }
+        $sum_rank_series = [
+            'type' => 'line',
+            'smooth' => true,
+            'data' => $sum_rank_data,
+        ];
+
+        $data = compact('exams', 'uname', 'courses', 'score_series', 'rkdata_series', 'sum_series', 'sum_rank_series');
         if (array_filter($data)) {
             return $this->success('成功', $data);
         }
@@ -182,7 +223,7 @@ class ScoreShow extends Controller
         }
 
         // 权限判断,如果不是管理员,只允许看自己的
-        if(Gate::denies('isAdmin')) {
+        if (Gate::denies('isAdmin')) {
             $query->where('uid', '=', auth()->user()->uid);
         }
 

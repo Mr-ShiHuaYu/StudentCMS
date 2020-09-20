@@ -1,7 +1,9 @@
 @extends('common.layout')
 @section('content')
     @include('common.header')
-    @include('common.side')
+    @unless(config('sys.hide_side'))
+        @include('common.side')
+    @endunless
     <div class="page-content">
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
             <ul class="layui-tab-title">

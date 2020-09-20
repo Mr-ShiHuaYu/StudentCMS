@@ -6,13 +6,18 @@ class Test extends Controller
 {
     public function test()
     {
-        $score_sep = config('sys.score_sep');
+        $a = ['a', 'b', 'c'];
+        $b = [1, 2, 3];
 
         return array_map(
-            function ($item) {
-                return $item / 100;
+            function ($a, $b) {
+                return [
+                    'name'=>$a,
+                    'value' =>$b
+                ];
             },
-            $score_sep
+            $a,
+            $b
         );
     }
 

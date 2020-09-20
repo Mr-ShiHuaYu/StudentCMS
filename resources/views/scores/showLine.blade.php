@@ -3,7 +3,7 @@
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-sm12  layui-col-md4">
+            <div class="layui-col-sm12  layui-col-md3">
                 <div class="layui-card-body">
                     <blockquote class="layui-elem-quote layui-word-aux">
                         1. 表中为至少有一门成绩的人,没成绩则不显示<br>
@@ -22,18 +22,34 @@
                     <table id="showline_table" lay-filter="test" lay-skin="line"></table>
                 </div>
             </div>
-            <div class="layui-col-sm12  layui-col-md8">
-                <div class="layui-card">
-                    <div class="layui-card-header uname"><span style="color: red;"></span>个人分析----分数变化拆线图</div>
-                    <div class="layui-card-body" style="min-height: 300px;">
-                        <div id="main1" class="layui-col-sm12" style="height: 300px;"></div>
+            <div class="layui-col-sm12  layui-col-md9 layui-col-space10">
+                <div class="layui-col-sm12  layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header uname">各科分数折线图<span style="color: red;"></span></div>
+                        <div class="layui-card-body" style="min-height: 200px;">
+                            <div id="main1" class="layui-col-sm12" style="height: 200px;"></div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header uname">总分折线图<span style="color: red;"></span></div>
+                        <div class="layui-card-body" style="min-height: 200px;">
+                            <div id="main3" class="layui-col-sm12" style="height: 200px;"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="layui-col-sm12  layui-col-md6">
 
-                <div class="layui-card">
-                    <div class="layui-card-header uname"><span style="color: red;"></span>个人分析----排名变化拆线图</div>
-                    <div class="layui-card-body" style="min-height: 300px;">
-                        <div id="main2" class="layui-col-sm12" style="height: 300px;"></div>
+                    <div class="layui-card">
+                        <div class="layui-card-header uname">各科排名折线图<span style="color: red;"></span></div>
+                        <div class="layui-card-body" style="min-height: 200px;">
+                            <div id="main2" class="layui-col-sm12" style="height: 200px;"></div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header uname">总分排名折线图<span style="color: red;"></span></div>
+                        <div class="layui-card-body" style="min-height: 200px;">
+                            <div id="main4" class="layui-col-sm12" style="height: 200px;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,6 +67,8 @@
 
                 var myChart = echarts.init(document.getElementById('main1'));
                 var myChart2 = echarts.init(document.getElementById('main2'));
+                var myChart3 = echarts.init(document.getElementById('main3'));
+                var myChart4 = echarts.init(document.getElementById('main4'));
 
                 var showline_table = table.render({
                     elem: '#showline_table'
@@ -75,15 +93,26 @@
                         if (res.status === 'success') {
                             // 在这里改变上面的uname,改变option里面的内容,渲染echarts
                             var d = res.data;
-                            $('.uname span').text(d.uname);
+                            $('.uname span').text('(' + d.uname + ')');
                             option.legend.data = d.courses;
                             option.xAxis.data = d.exams;
                             // 这里要用到对象的深层拷贝,不然,两个对象之间会互相影响
                             var option2 = $.extend(true, {}, option);
+                            var option3 = $.extend(true, {}, option);
+                            var option4 = $.extend(true, {}, option);
                             option.series = d.score_series;
+                            option.tooltip = tooltip1;
+                            // 让图2,排名图的y轴坐标上下反转,设置y轴坐标的最小值min,刻度最小间隔数minInterval
+                            option2.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
                             option2.series = d.rkdata_series;
+                            option3.series = d.sum_series;
+                            option4.series = d.sum_rank_series;
+                            option4.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
+                            option3.tooltip = tooltip3;
                             myChart.setOption(option);
                             myChart2.setOption(option2);
+                            myChart3.setOption(option3);
+                            myChart4.setOption(option4);
                         }
                     });
                     //标注选中样式
@@ -102,6 +131,21 @@
                         return false;
                     });
 
+                var tooltip1 = {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        var d = params[0];
+                        return params[0].name + '<br>' + d.marker + '成绩:' + d.data.value + '<br>' + d.marker + '排名:' + d.data.score
+                    }
+                };
+
+                var tooltip3 = {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        var d = params[0];
+                        return params[0].axisValueLabel + '<br>总分:' + d.data.value + "<br>排名:" + d.data.rank
+                    }
+                };
                 var option = {
                     tooltip: {
                         trigger: 'axis'
