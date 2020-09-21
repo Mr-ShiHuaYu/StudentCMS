@@ -37,6 +37,7 @@ class UserModel extends Authenticatable
         self::deleting(
             function ($user) {
                 $user->parents()->delete();
+                ScoresModel::where('student_id', '=', $user->id)->delete();
             }
         );
     }
