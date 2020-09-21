@@ -182,7 +182,8 @@
                         case 'show_detail':
                             var that = this;
                             var field = $(this).data('field');
-                            $.post('/analyze/tips?cid=' + data.cid + '&eid=' + data.eid + '&field=' + field, function (res) {
+                            var post_data = {cid: data.cid, 'eid': data.eid, 'field': field};
+                            $.post('{{route('analyze.tips')}}', post_data, function (res) {
                                 if (res.status === 'success') {
                                     var s = '';
                                     res.data.forEach(function (item) {
