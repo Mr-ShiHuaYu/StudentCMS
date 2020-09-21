@@ -16,4 +16,15 @@ class CoursesModel extends Model
     {
         return $this->belongsTo(TeachersModel::class, 'teacher_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        // 在删除课程时同时删除关联成绩
+        self::deleting(
+            function ($course) {
+                ScoresModel::where('course_id', '=', $course->id)->delete();
+            }
+        );
+    }
 }

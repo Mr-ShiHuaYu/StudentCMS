@@ -55,7 +55,7 @@
                     , url: '{{route('analyze.showall')}}'
                     , page: false
                     , cellMinWidth: 40
-                    , where: {'exam_id': 1}
+                    , where: {'exam_id': "{{$exams[0]->id}}"}
                     , cols: [[
                         {field: 'cid', hide: true}
                         , {field: 'eid', hide: true}
