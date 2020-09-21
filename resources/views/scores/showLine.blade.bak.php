@@ -94,22 +94,30 @@
                             // 在这里改变上面的uname,改变option里面的内容,渲染echarts
                             var d = res.data;
                             $('.uname span').text('(' + d.uname + ')');
-                            tpl_option.legend.data = d.courses;
-                            tpl_option.xAxis.data = d.exams;
+
                             // 这里要用到对象的深层拷贝,不然,两个对象之间会互相影响
                             var option1 = $.extend(true, {}, tpl_option);
+                            option1.legend.data = d.courses;
+                            option1.xAxis.data = d.exams;
                             option1.series = d.score_series;
                             option1.tooltip = tooltip1;
 
                             var option2 = $.extend(true, {}, tpl_option);
+                            option2.legend.data = d.courses;
+                            option2.xAxis.data = d.exams;
                             // 让图2,排名图的y轴坐标上下反转,设置y轴坐标的最小值min,刻度最小间隔数minInterval
                             option2.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
                             option2.series = d.rkdata_series;
+
                             var option3 = $.extend(true, {}, tpl_option);
+                            option3.legend.data = d.courses;
+                            option3.xAxis.data = d.exams;
                             option3.series = d.sum_series;
                             option3.tooltip = tooltip3;
 
                             var option4 = $.extend(true, {}, tpl_option);
+                            option4.legend.data = d.courses;
+                            option4.xAxis.data = d.exams;
                             option4.series = d.sum_rank_series;
                             option4.yAxis = {type: 'value', inverse: true, min: 1, minInterval: 1};
                             myChart.setOption(option1);
