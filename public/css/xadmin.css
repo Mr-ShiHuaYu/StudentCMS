@@ -410,10 +410,14 @@ table th, table td {
 
 @media screen and (max-width: 768px){
     .fast-add{
-        display: none;
+        /*display: none;*/
+        background-color: #009688!important;
     }
     .layui-nav .to-index{
         display: none;
+    }
+    .container .right {
+        top: -136px;
     }
     .container .logo a{
         width: 140px;
@@ -432,6 +436,7 @@ table th, table td {
     }
     .page-content{
         left: 60px;
+        top: 145px;
     }
     .page-content .layui-tab-content .layui-tab-item{
         -webkit-overflow-scrolling: touch;

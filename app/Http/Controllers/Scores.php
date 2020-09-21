@@ -140,8 +140,10 @@ class Scores extends Controller
             if ($is_exist) {
                 return $this->fail('已经存在同一考试同一课程的成绩,禁止重复插入!');
             }
-            if ($d['score'] < 0 or $d['score'] > 150) {
-                return $this->fail('成绩不合法,成绩应在0-150分之间');
+            // 动态获取
+            $full_max = CoursesModel::max('full');
+            if ($d['score'] < 0 or $d['score'] > $full_max) {
+                return $this->fail("成绩不合法,成绩应在0-{$full_max}分之间");
             }
             $temp = ScoresModel::create($d);
             if ( ! $temp) {

@@ -3,11 +3,11 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="e7c9ae40-459f-4478-9cf5-73a4905ad2d0" name="学生管理系统" url="http://39.100.247.232">
-        <fileTransfer host="39.100.247.232" port="22" rootFolder="/www/wwwroot/zhuolina.top" accessType="SFTP">
+        <fileTransfer host="39.100.247.232" port="63333" rootFolder="/www/wwwroot" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
+          <option name="port" value="63333" />
         </fileTransfer>
       </webServer>
     </option>
