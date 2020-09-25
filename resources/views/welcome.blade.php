@@ -7,7 +7,7 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <blockquote class="layui-elem-quote">欢迎管理员：
-                            <span class="x-red">{{ auth()->user()->name }}</span>！当前时间:2018-04-25 20:50:53
+                            <span class="x-red">{{ auth()->user()->name }}</span>！当前时间:<span id="curTime">{{$time}}</span>
                         </blockquote>
                         <blockquote class="layui-elem-quote">
                             <span class="x-red">我的桌面还没设计，有好的想法可以跟我反应</span>
@@ -44,4 +44,27 @@
             <style id="welcome_style"></style>
         </div>
     </div>
+@stop
+@section('js')
+    <script !src="">
+        function toDb(i) {
+            return i * 1 < 10 ? '0' + i : i;
+        }
+
+        function getTime() {
+            var t = new Date();
+            var y = toDb(t.getFullYear());
+            var m = toDb(t.getMonth() + 1);
+            var d = toDb(t.getDate());
+            var h = toDb(t.getHours());
+            var i = toDb(t.getMinutes());
+            var s = toDb(t.getSeconds());
+            return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s;
+        }
+
+        setInterval(function () {
+            var dom = document.getElementById('curTime');
+            dom.innerHTML = getTime();
+        }, 1000)
+    </script>
 @stop

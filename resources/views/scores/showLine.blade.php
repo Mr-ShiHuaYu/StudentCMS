@@ -3,52 +3,61 @@
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-sm12  layui-col-md3">
-                <div class="layui-card-body">
-                    <blockquote class="layui-elem-quote layui-word-aux">
-                        1. 表中为至少有一门成绩的人,没成绩则不显示<br>
-                        2. 单击某个学生来具体查看成绩变化图
-                    </blockquote>
-                    <form class="layui-form" style="text-align: center;">
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="name_uid" placeholder="可模糊搜索姓名,学号" autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                        <div class="layui-inline">
-                            <button class="layui-btn" lay-submit="" lay-filter="search" data-type="reload">
-                                <i class="layui-icon">&#xe615;</i></button>
-                        </div>
-                    </form>
-                    <table id="showline_table" lay-filter="test" lay-skin="line"></table>
-                </div>
-            </div>
-            <div class="layui-col-sm12  layui-col-md9 layui-col-space10">
-                <div class="layui-col-sm12  layui-col-md6">
-                    <div class="layui-card">
-                        <div class="layui-card-header uname">各科分数折线图<span style="color: red;"></span></div>
-                        <div class="layui-card-body" style="min-height: 200px;">
-                            <div id="main1" class="layui-col-sm12" style="height: 200px;"></div>
-                        </div>
-                    </div>
-                    <div class="layui-card">
-                        <div class="layui-card-header uname">总分折线图<span style="color: red;"></span></div>
-                        <div class="layui-card-body" style="min-height: 200px;">
-                            <div id="main3" class="layui-col-sm12" style="height: 200px;"></div>
-                        </div>
+            @can('isAdmin')
+                <div class="layui-col-sm12  layui-col-md3">
+                    <div class="layui-card-body">
+                        <blockquote class="layui-elem-quote layui-word-aux">
+                            1. 表中为至少有一门成绩的人,没成绩则不显示<br>
+                            2. 单击某个学生来具体查看成绩变化图
+                        </blockquote>
+                        <form class="layui-form" style="text-align: center;">
+                            <div class="layui-inline layui-show-xs-block">
+                                <input type="text" name="name_uid" placeholder="可模糊搜索姓名,学号" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit="" lay-filter="search" data-type="reload">
+                                    <i class="layui-icon">&#xe615;</i></button>
+                            </div>
+                        </form>
+                        <table id="showline_table" lay-filter="test" lay-skin="line"></table>
                     </div>
                 </div>
-                <div class="layui-col-sm12  layui-col-md6">
-
-                    <div class="layui-card">
-                        <div class="layui-card-header uname">各科排名折线图<span style="color: red;"></span></div>
-                        <div class="layui-card-body" style="min-height: 200px;">
-                            <div id="main2" class="layui-col-sm12" style="height: 200px;"></div>
+            @endcan
+            <div class="layui-col-sm12  layui-col-md8 @cannot('isAdmin')layui-col-md-offset2 @endcannot">
+                <div class="layui-row  layui-col-space10">
+                    <div class="layui-col-sm12  layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header uname">各科分数折线图<span style="color: red;"></span></div>
+                            <div class="layui-card-body" style="min-height: 200px;">
+                                <div id="main1" class="layui-col-sm12" style="height: 200px;"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="layui-card">
-                        <div class="layui-card-header uname">总分排名折线图<span style="color: red;"></span></div>
-                        <div class="layui-card-body" style="min-height: 200px;">
-                            <div id="main4" class="layui-col-sm12" style="height: 200px;"></div>
+                    <div class="layui-col-sm12  layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header uname">各科排名折线图<span style="color: red;"></span></div>
+                            <div class="layui-card-body" style="min-height: 200px;">
+                                <div id="main2" class="layui-col-sm12" style="height: 200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row  layui-col-space10">
+                    <div class="layui-col-sm12  layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header uname">总分折线图<span style="color: red;"></span></div>
+                            <div class="layui-card-body" style="min-height: 200px;">
+                                <div id="main3" class="layui-col-sm12" style="height: 200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12  layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header uname">总分排名折线图<span style="color: red;"></span></div>
+                            <div class="layui-card-body" style="min-height: 200px;">
+                                <div id="main4" class="layui-col-sm12" style="height: 200px;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,11 +94,8 @@
                     ]]
                 });
 
-                //监听行单击事件（双击事件为：rowDouble）
-                table.on('row(test)', function (obj) {
-                    var data = obj.data;
-                    // 在这里向后台请求数据,并在右边的图表显示
-                    $.post('{{route('analyze.getrank')}}', {uid: data.id}, function (res) {
+                function showLine(uid) {
+                    $.post('{{route('analyze.getrank')}}', {uid: uid}, function (res) {
                         if (res.status === 'success') {
                             // 在这里改变上面的uname,改变option里面的内容,渲染echarts
                             var d = res.data;
@@ -118,6 +124,16 @@
                             myChart4.setOption(option4);
                         }
                     });
+                }
+
+                @cannot('isAdmin')
+                showLine({{auth()->user()->id}});
+                @endcannot
+                //监听行单击事件（双击事件为：rowDouble）
+                table.on('row(test)', function (obj) {
+                    var data = obj.data;
+                    // 在这里向后台请求数据,并在右边的图表显示
+                    showLine(data.id);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
@@ -166,8 +182,8 @@
                     },
                     xAxis: {
                         type: 'category',
-                        axisLabel :{
-                            interval:0
+                        axisLabel: {
+                            interval: 0
                         },
                         boundaryGap: false,
                         data: []

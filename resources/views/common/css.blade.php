@@ -2,4 +2,4 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{asset('css/font.css')}}">
 <link rel="stylesheet" href="{{asset('css/xadmin.css')}}">
-<link rel="stylesheet" href="{{asset('css/app.css')}}">
+{{--<link rel="stylesheet" href="{{asset('css/app.css')}}">--}}
