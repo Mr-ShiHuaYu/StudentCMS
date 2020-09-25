@@ -242,7 +242,7 @@ body{
 .x-slide_left {
     width: 17px;
     height: 61px;
-    background: url(../images/icon.png) 0 0 no-repeat;
+    /*background: url(../images/icon.png) 0 0 no-repeat;*/
     position: absolute;
     top: 200px;
     left: 220px;
@@ -401,7 +401,7 @@ table th, table td {
     top: 36px;
     bottom: 0px;
     width: 100%;
-    background:rgb(255, 255, 255,0);
+    background:rgb(255, 255, 255);
     padding: 0px;
     overflow: hidden;
     display: none;
