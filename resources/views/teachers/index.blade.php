@@ -81,7 +81,6 @@
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('teacher.edit','xxx')}}'.replace('xxx', data.id);
                     xadmin.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url);
-
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
@@ -91,12 +90,10 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加老师', '{{route('teacher.create')}}', 800);
+                            xadmin.open('添加老师', '{{route('teacher.create')}}');
                             break;
                     }
-                    ;
                 });
-
                 //监听行工具事件
                 table.on('tool(test)', function (obj) {
                     var data = obj.data;
@@ -117,11 +114,10 @@
                                     }
                                 }
                             });
-
                         });
                     } else if (obj.event === 'edit') {
                         var url = '{{route('teacher.edit','xxx')}}'.replace('xxx', data.id);
-                        xadmin.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url, 400, 400);
+                        xadmin.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url);
                     }
                 });
             });

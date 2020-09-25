@@ -177,7 +177,7 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加学生', '{{route('user.create')}}');
+                            xadmin.open('添加学生', '{{route('user.create')}}', 70);
                             break;
                         case 'export_excel':
                             window.open('{{route('user.export')}}', '_blank');

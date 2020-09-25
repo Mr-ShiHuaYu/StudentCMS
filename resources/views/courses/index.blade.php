@@ -68,7 +68,7 @@
                                 if (!d.teacher) {
                                     return '<span style="cursor: pointer;" class="layui-badge">未指定老师</span>';
                                 }
-                                return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.teacher.name + '</button>';
+                                return '<span style="cursor: pointer;" class="layui-badge layui-bg-blue">' + d.teacher.name + '</span>';
                             }
                         }
                         @can('isAdmin')
@@ -88,14 +88,14 @@
                         case 'show_teacher':
                             if (data.teacher_id) {
                                 var url = '{{route('teacher.show','xxx')}}'.replace('xxx', data.teacher_id);
-                                xadmin.open('授课老师信息', url, 600);
+                                xadmin.open('授课老师信息', url, 40);
                             } else {
                                 layer.alert('该课程未指定老师,请让管理员双击指定授课老师!', {icon: 5})
                             }
                             break;
                         case 'edit':
                             var url = '{{route('course.edit','xxx')}}'.replace('xxx', data.id);
-                            xadmin.open('修改课程信息', url, 800);
+                            xadmin.open('修改课程信息', url, 45);
                             break;
 
                         case 'del':
@@ -129,9 +129,8 @@
 
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('添加课程', '{{route('course.create')}}', 700, 400);
+                            xadmin.open('添加课程', '{{route('course.create')}}', 50);
                             break;
-
                     }
                     ;
                 });
@@ -142,7 +141,7 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('course.edit','xxx')}}'.replace('xxx', data.id);
-                    xadmin.open('修改课程信息', url, 800);
+                    xadmin.open('修改课程信息', url);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });

@@ -123,7 +123,7 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('成绩录入', '{{route('score.create')}}');
+                            xadmin.open('成绩录入', '{{route('score.create')}}',60);
                             break;
                         case 'export_excel':
                             window.open('{{route('score.export')}}', '_blank');
