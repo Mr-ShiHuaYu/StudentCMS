@@ -399,10 +399,10 @@ table th, table td {
 #tab_show{
     position: absolute;
     top: 36px;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
     background:rgb(255, 255, 255);
-    padding: 0px;
+    padding: 0;
     overflow: hidden;
     display: none;
 }
