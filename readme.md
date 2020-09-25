@@ -103,8 +103,6 @@ composer install
 - [x] 学生各科成绩的每次考试的变化折线图
 - [x] 学生信息,老师信息和学生成绩的导出,将采用laravel-excel导出
 - [x] 添加演示站点
-- [ ] 学生请假条的填写,审批,需要家长邮箱的验证码认证,第一时间通过邮件通知管理员(班主任),班主任进行审批,拒绝或同意
-- [ ] 学生课程表的展示,动态的,可更新
 - [ ] 权限改用laravel-permission
 
 ### 效果展示
@@ -115,6 +113,11 @@ composer install
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200913031338.png)
 
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200925140324.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200925140404.png)
+
+![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20200925140428.png)
 
 [gif演示](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/laravel_studentcms.gif)
 
