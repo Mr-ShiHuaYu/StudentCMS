@@ -21,9 +21,9 @@
                         <div class="layui-inline layui-show-xs-block">
                             <div class="layui-input-inline">
                                 <select name="exam_id" lay-search="">
-                                    @foreach($exams as $exam)
-                                        <option value="{{$exam->id}}">{{$exam->name}}</option>
-                                    @endforeach
+                                        @foreach($exams as $exam)
+                                            <option value="{{$exam->id}}">{{$exam->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                     , url: '{{route('analyze.showall')}}'
                     , page: false
                     , cellMinWidth: 40
-                    , where: {'exam_id': "{{$exams[0]->id}}"}
+                    , where: {'exam_id': "{{$first_id}}"}
                     , cols: [[
                         {field: 'cid', hide: true}
                         , {field: 'eid', hide: true}

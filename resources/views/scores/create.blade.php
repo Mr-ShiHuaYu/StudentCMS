@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="layui-form-mid layui-word-aux">可模糊搜索,已添加的考试不显示</div>
                                 @else
-                                    <div class="layui-form-mid layui-word-aux">你已添加全部考试成绩</div>
+                                    <div class="layui-form-mid layui-word-aux">你已添加全部考试成绩或未添加任何考试</div>
                                 @endif
                             </div>
                         </div>

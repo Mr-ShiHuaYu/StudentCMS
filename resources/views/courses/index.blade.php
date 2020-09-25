@@ -86,7 +86,7 @@
                     switch (obj.event) {
                         //监听单元格事件
                         case 'show_teacher':
-                            if (data.teacher_id) {
+                            if (data.teacher) {
                                 var url = '{{route('teacher.show','xxx')}}'.replace('xxx', data.teacher_id);
                                 xadmin.open('授课老师信息', url, 40);
                             } else {

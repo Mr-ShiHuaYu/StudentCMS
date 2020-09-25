@@ -29,8 +29,14 @@ class ScoreShow extends Controller
             return view('user.noper');
         }
         $exams = ExamsModel::get();
+        $exam_first = ExamsModel::first();
+        if ($exam_first) {
+            $first_id = $exam_first->id;
+        } else {
+            $first_id = 0;
+        }
 
-        return view('scores.analyze', compact('exams'));
+        return view('scores.analyze', compact('exams', 'first_id'));
     }
 
     public function getPie($cid, $eid)
