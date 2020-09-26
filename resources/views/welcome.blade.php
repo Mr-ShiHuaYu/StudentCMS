@@ -7,7 +7,8 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <blockquote class="layui-elem-quote">欢迎管理员：
-                            <span class="x-red">{{ auth()->user()->name }}</span>！当前时间:<span id="curTime">{{$time}}</span>
+                            <span class="x-red">{{ auth()->user()->name }}</span>！当前时间:<span
+                                id="curTime">{{$time}}</span>
                         </blockquote>
                         <blockquote class="layui-elem-quote">
                             <span class="x-red">我的桌面还没设计，有好的想法可以跟我反应</span>
@@ -44,6 +45,9 @@
             <style id="welcome_style"></style>
         </div>
     </div>
+    <div class="layui-footer">
+        © 赣ICP备<a href="http://www.beian.miit.gov.cn/" target="_blank" class="text">20008827</a>号-2
+    </div>
 @stop
 @section('js')
     <script !src="">
@@ -67,4 +71,18 @@
             dom.innerHTML = getTime();
         }, 1000)
     </script>
+@stop
+@section('css')
+    <style>
+        .layui-footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 44px;
+            line-height: 44px;
+            padding: 0 15px;
+            background-color: #eee;
+        }
+    </style>
 @stop
