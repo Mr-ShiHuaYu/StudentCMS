@@ -9,8 +9,11 @@ use App\Models\UserModel;
 use DB;
 use Gate;
 
-class ScoreShow extends Controller
+class ScoreAnalyze extends Controller
 {
+    /*
+     * 获取设置中优秀率等的比率
+     */
     public function getRate()
     {
         $score_sep = config('sys.score_sep');
@@ -23,6 +26,9 @@ class ScoreShow extends Controller
         );
     }
 
+    /*
+     * 显示总体分析页
+     */
     public function index()
     {
         if (Gate::denies('isAdmin')) {
@@ -36,9 +42,12 @@ class ScoreShow extends Controller
             $first_id = 0;
         }
 
-        return view('scores.analyze', compact('exams', 'first_id'));
+        return view('scores.zongtifenxi', compact('exams', 'first_id'));
     }
 
+    /*
+     * 总体分析页中课程比率的饼图
+     */
     public function getPie($cid, $eid)
     {
         if (Gate::denies('isAdmin')) {
@@ -65,6 +74,9 @@ class ScoreShow extends Controller
         return view('scores.showPie', compact('data'));
     }
 
+    /*
+     * 总体分析页表格获取数据
+     */
     public function showAll()
     {
         if (Gate::denies('isAdmin')) {
@@ -72,7 +84,7 @@ class ScoreShow extends Controller
         }
         $rate = $this->getRate();
         $eid = request()->input('exam_id');
-        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',AVG( sc.score ) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 and e.id={$eid} GROUP BY course ORDER BY cid";
+        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',format(STD(sc.score),2) std,format(AVG( sc.score ),2) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 and e.id={$eid} GROUP BY course ORDER BY cid";
         $data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $res['data'] = $data;
         $res['code'] = 0;
@@ -208,7 +220,7 @@ class ScoreShow extends Controller
 
     public function gerenfx()
     {
-        return view('scores.showLine');
+        return view('scores.gerenfenxi');
     }
 
     public function getHasScoreUser()

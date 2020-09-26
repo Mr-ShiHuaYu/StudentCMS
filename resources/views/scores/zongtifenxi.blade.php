@@ -16,21 +16,19 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-sm12">
                 <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote layui-word-aux">
+                        1. 可按考试搜索,默认为第一次考试<br>
+                        2. 标准差表示成绩的离散程度,标准差越小，表示成绩越集中于平均成绩
+                    </blockquote>
                     <form class="layui-form layui-col-space5">
-                        <div class="layui-form-mid layui-word-aux">请选择考试,若不选,默认为一</div>
                         <div class="layui-inline layui-show-xs-block">
                             <div class="layui-input-inline">
                                 <select name="exam_id" lay-search="">
-                                        @foreach($exams as $exam)
-                                            <option value="{{$exam->id}}">{{$exam->name}}</option>
-                                        @endforeach
+                                    @foreach($exams as $exam)
+                                        <option value="{{$exam->id}}">{{$exam->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="layui-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="search" data-type="reload">
-                                <i class="layui-icon">&#xe615;</i></button>
                         </div>
                     </form>
                     <table id="analyze_table" lay-filter="test"></table>
@@ -163,11 +161,8 @@
                                 }
                             }
                         }
-                        , {
-                            field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
-                                return (d.avg * 1).toFixed(2);
-                            }
-                        }
+                        , {field: 'avg', title: '平均分', sort: true, align: 'center'}
+                        , {field: 'std', title: '标准差', sort: true, align: 'center'}
                     ]]
                 });
 
@@ -200,18 +195,12 @@
                     }
                 });
 
-                // 表格的搜索重载
-                form.on('submit(search)',
-                    function (data) {
-                        //执行重载
-                        // table.reload('test', {
-                        //     where: data.field
-                        // }, 'data');
-                        analyze_table.reload({
-                            where: data.field
-                        });
-                        return false;
+                // 监听select选择
+                form.on('select', function (data) {
+                    analyze_table.reload({
+                        where: {exam_id: data.value}
                     });
+                });
             });
     </script>
 @stop

@@ -16,9 +16,12 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body ">
+                        <blockquote class="layui-elem-quote layui-word-aux">
+                            1. 可按学生姓名,学号和考试模糊搜索<br>
+                            2. 标准差表示成绩的离散程度,标准差越小，表示成绩越集中于平均成绩
+                        </blockquote>
                         <form class="layui-form layui-col-space5">
                             @can('isAdmin')
-                                <div class="layui-form-mid layui-word-aux">可按学生姓名,学号和考试模糊搜索</div>
                                 <div class="layui-inline layui-show-xs-block">
                                     <input type="text" name="name_uid" placeholder="请输入学生姓名或学号" autocomplete="off"
                                            class="layui-input">
@@ -87,7 +90,7 @@
                         , {field: 'uid', title: '学号', sort: true, align: 'center'}
                         , {field: 'name', title: '姓名', sort: true, align: 'center'}
                         , {field: 'exam', title: '考试', sort: true, align: 'center'}
-                        // 关键代码,循环课程
+                        // 动态获取全部课程,循环遍历
                         @foreach($courses as $course)
                         , {
                             field: '{{$course->name}}',
@@ -97,13 +100,9 @@
                             align: 'center'
                         }
                         @endforeach
-                        , {
-                            field: 'avg', title: '平均分', sort: true, align: 'center', templet: function (d) {
-                                return (d.avg * 1).toFixed(2);
-                            }
-                        }
+                        , {field: 'std', title: '标准差', sort: true, align: 'center'}
+                        , {field: 'avg', title: '平均分', sort: true, align: 'center'}
                         , {field: 'sum', title: '总分', sort: true, align: 'center'}
-
                     ]]
                     , limit: 10
                     , limits: [10, 20, 30, 50, 100]

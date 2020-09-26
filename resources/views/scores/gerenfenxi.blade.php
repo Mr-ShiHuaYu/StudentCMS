@@ -81,7 +81,6 @@
 
                 var showline_table = table.render({
                     elem: '#showline_table'
-                    // , height: 'full-130'
                     , method: 'post'
                     , url: '{{route('analyze.hasscore')}}' //数据接口
                     , page: false //开启分页

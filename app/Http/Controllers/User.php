@@ -6,6 +6,7 @@ use App\Exports\UsersExport;
 use App\Models\UserModel;
 use Gate;
 use Hash;
+use Schema;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -32,7 +33,7 @@ class User extends Controller
 //            是管理员不看自己的信息
             $query->where('is_admin', '<>', 1);
         } else {
-//            不是管理员
+//            不是管理员,只能看到自己的信息
             $query->where('uid', '=', auth()->user()->uid);
         }
         if ($start) {
@@ -42,17 +43,22 @@ class User extends Controller
             $query->whereDate('birth', '<', $end);
         }
         if ($keyword) {
+            // 查找关键词
             $jishuMap = config('modelmap.jishuMap');
             if (in_array($keyword, $jishuMap)) {
+                // 寄宿信息单独搜索,必须全词匹配,因为寄宿的信息在数据库中存储的是1,2,3
                 $query->where('jishu', '=', array_search($keyword, $jishuMap));
             } else {
-                $temp = array_keys(UserModel::first()->toArray());
-                $temp = array_diff($temp, ['id', 'is_admin', 'created_at', 'updated_at']);
+                // 获取users表中所有字段
+                $temp = Schema::getColumnListing('users');
+                // 去除不想要查找的字段
+                $temp = array_diff($temp, ['id', 'is_admin', 'rember_token','password', 'created_at', 'updated_at']);
                 $sql = [];
                 foreach ($temp as $t) {
                     $sql[] = "IFNULL($t,'')";
                 }
                 $sql = join(',', $sql);
+                // 利用mysql的concat函数将所有字段的值拼接成字符串,然后使用like来查找
                 $query->whereRaw("CONCAT($sql) LIKE '%$keyword%'");
             }
         }

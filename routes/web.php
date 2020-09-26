@@ -49,15 +49,15 @@ Route::middleware('auth')->group(
         Route::get('/export/score', 'Scores@export')->name('score.export');
 
         // 成绩分析
-        Route::get('/analyze/index','ScoreShow@index')->name('analyze.index');
-        Route::get('/analyze/pie/{cid}/{eid}','ScoreShow@getPie')->name('analyze.getpie');
-        Route::post('/analyze/showall','ScoreShow@showAll')->name('analyze.showall');
-        Route::post('/analyze/tips','ScoreShow@tips')->name('analyze.tips');
+        Route::get('/analyze/index','ScoreAnalyze@index')->name('analyze.index');
+        Route::get('/analyze/pie/{cid}/{eid}','ScoreAnalyze@getPie')->name('analyze.getpie');
+        Route::post('/analyze/showall','ScoreAnalyze@showAll')->name('analyze.showall');
+        Route::post('/analyze/tips','ScoreAnalyze@tips')->name('analyze.tips');
         // 获取个人成绩不同考试折线图
-        Route::post('/analyze/getrank','ScoreShow@getRank')->name('analyze.getrank');
+        Route::post('/analyze/getrank','ScoreAnalyze@getRank')->name('analyze.getrank');
         // 个人分析列表页
-        Route::get('/analyze/gerenfx','ScoreShow@gerenfx')->name('analyze.gerenfx');
-        Route::post('/analyze/hasscore','ScoreShow@getHasScoreUser')->name('analyze.hasscore');
+        Route::get('/analyze/gerenfx','ScoreAnalyze@gerenfx')->name('analyze.gerenfx');
+        Route::post('/analyze/hasscore','ScoreAnalyze@getHasScoreUser')->name('analyze.hasscore');
     }
 );
 

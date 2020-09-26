@@ -40,14 +40,17 @@ class Scores extends Controller
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
         $sql = "SELECT u.uid uid,u.name name,e.name exam,";
+        // 行列转换的sql拼接代码,动态遍历全部课程
         foreach ($courses as $course) {
             $sql_temp[] = "MAX(if(c.name='$course->name',sc.score,0)) as '$course->name'";
         }
         $sql .= join(',', $sql_temp);
+        // 如果有课程,则还需要在末尾添加,
         if (count($courses)) {
             $sql .= ',';
         }
-        $sql .= "AVG(sc.score) avg,SUM(sc.score) sum";
+        // 平均分,总分,标准差
+        $sql .= "format(AVG(sc.score),2) avg,SUM(sc.score) sum,format(STD(sc.score),2) std";
         $sql .= " FROM scores sc LEFT JOIN courses c on c.id=sc.course_id LEFT JOIN users u on u.id=sc.student_id LEFT JOIN exams e ON e.id=sc.exam_id";
         $uid = auth()->user()->uid;
         // 添加权限判断,学生只能查看自己的成绩
