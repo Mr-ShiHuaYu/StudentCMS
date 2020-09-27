@@ -10,35 +10,67 @@
                             <span class="x-red">{{ auth()->user()->name }}</span>！当前时间:<span
                                 id="curTime">{{$time}}</span>
                         </blockquote>
-                        <blockquote class="layui-elem-quote">
-                            <span class="x-red">我的桌面还没设计，有好的想法可以跟我反应</span>
-                        </blockquote>
                     </div>
                 </div>
             </div>
-            {{--<div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-col-xs12">
                 <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span></div>
-                    <div class="layui-card-body ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                    <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>--}}
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span></div>
-                    <div class="layui-card-body ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                    <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
+                    <div class="layui-card-header"><i class="fa fa-credit-card icon icon-blue"></i>快捷入口</div>
+                    <div class="layui-card-body">
+                        <div class="welcome-module">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('学生列表','{{route('user.index')}}',true)">
+                                        <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+                                        <cite>学生列表</cite>
+                                    </a>
+                                </div>
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('老师列表','{{route('teacher.index')}}',true)">
+                                        <i class="fa fa-user-circle-o fa-5x" aria-hidden="true"></i>
+                                        <cite>老师列表</cite>
+                                    </a>
+                                </div>
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('课程列表','{{route('course.index')}}',true)">
+                                        <i class="fa fa-list-ol fa-5x" aria-hidden="true"></i>
+                                        <cite>课程列表</cite>
+                                    </a>
+                                </div>
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('考试列表','{{route('exam.index')}}',true)">
+                                        <i class="fa fa-etsy fa-5x" aria-hidden="true"></i>
+                                        <cite>考试列表</cite>
+                                    </a>
+                                </div>
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('成绩录入','{{route('score.create')}}',true)">
+                                        <i class="fa fa-upload fa-5x" aria-hidden="true"></i>
+                                        <cite>成绩录入</cite>
+                                    </a>
+                                </div>
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('成绩查询','{{route('score.index')}}',true)">
+                                        <i class="fa fa-search fa-5x" aria-hidden="true"></i>
+                                        <cite>成绩查询</cite>
+                                    </a>
+                                </div>
+                                @can('isAdmin')
+                                    <div class="layui-col-xs3 layui-module">
+                                        <a onclick="parent.xadmin.add_tab('总体分析','{{route('analyze.index')}}',true)">
+                                            <i class="fa fa-pie-chart fa-5x" aria-hidden="true"></i>
+                                            <cite>总体分析</cite>
+                                        </a>
+                                    </div>
+                                @endcan
+                                <div class="layui-col-xs3 layui-module">
+                                    <a onclick="parent.xadmin.add_tab('个人分析','{{route('analyze.gerenfx')}}',true)">
+                                        <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i>
+                                        <cite>个人分析</cite>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,6 +115,33 @@
             line-height: 44px;
             padding: 0 15px;
             background-color: #eee;
+            text-align: center;
+        }
+
+        .layui-module {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .layui-module cite {
+            position: relative;
+            top: 4px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 16px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
         }
     </style>
 @stop

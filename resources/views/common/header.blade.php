@@ -1,13 +1,13 @@
 <div class="container">
     <div class="logo">
-        <a href="{{ route('index') }}">{{ config('app.name') }}</a></div>
+        <a href="{{ route('index') }}"><i class="fa fa-graduation-cap" aria-hidden="true"></i>{{ config('app.name') }}</a></div>
     <div class="left_open">
         <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
     </div>
     <ul class="layui-nav left fast-add" lay-filter="">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe6b8;</i>
+                <i class="left-nav-li fa fa-user-circle-o" lay-tips="会员管理"></i>
                 用户管理</a>
             <dl class="layui-nav-child">
                 <dd>
@@ -22,7 +22,7 @@
         </li>
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <i class="iconfont left-nav-li" lay-tips="成绩管理">&#xe6ae;</i>
+                <i class="left-nav-li fa fa-book" lay-tips="成绩管理"></i>
                 <cite>成绩管理</cite></a>
             <dl class="layui-nav-child">
                 <dd>
@@ -37,7 +37,7 @@
         </li>
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <i class="layui-icon left-nav-li layui-icon-chart-screen" lay-tips="成绩分析"></i>
+                <i class="left-nav-li fa fa-line-chart" lay-tips="成绩分析"></i>
                 <cite>成绩分析</cite></a>
             <dl class="layui-nav-child">
                 @can('isAdmin')
@@ -53,13 +53,13 @@
         </li>
         <li class="layui-nav-item">
             <a onclick="xadmin.add_tab('课程列表','{{route('course.index')}}',true)">
-                <i class="iconfont left-nav-li" lay-tips="课程列表">&#xe6a2;</i>
+                <i class="fa fa-list-ol" lay-tips="课程列表"></i>
                 <cite>课程列表</cite>
             </a>
         </li>
         <li class="layui-nav-item">
             <a onclick="xadmin.add_tab('考试列表','{{route('exam.index')}}',true)">
-                <i class="iconfont left-nav-li" lay-tips="考试列表">&#xe6b5;</i>
+                <i class="fa fa-etsy" lay-tips="考试列表"></i>
                 <cite>考试列表</cite>
             </a>
         </li>
