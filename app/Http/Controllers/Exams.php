@@ -24,7 +24,7 @@ class Exams extends Controller
         $page = $request->input('page');
         $limit = $request->input('limit');
         $offset = ($page - 1) * $limit;
-        $data = ExamsModel::offset($offset)->paginate($limit)->toArray();
+        $data = ExamsModel::orderBy('time')->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
         $res['count'] = $data['total'];
