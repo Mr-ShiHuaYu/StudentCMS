@@ -34,7 +34,7 @@ class ScoreAnalyze extends Controller
         if (Gate::denies('isAdmin')) {
             return view('user.noper');
         }
-        $exams = ExamsModel::get();
+        $exams = ExamsModel::orderBy('time')->get();
         $exam_first = ExamsModel::first();
         if ($exam_first) {
             $first_id = $exam_first->id;

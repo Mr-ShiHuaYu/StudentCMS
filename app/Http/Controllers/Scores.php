@@ -22,7 +22,7 @@ class Scores extends Controller
     public function index()
     {
         $courses = DB::table('courses')->orderBy('id')->get();
-        $exams = ExamsModel::get();
+        $exams = ExamsModel::orderBy('time')->get();
 
         return view('scores.index', compact('courses', 'exams'));
     }
@@ -95,7 +95,7 @@ class Scores extends Controller
         // 筛选中数据库中已经存在的这个学生的考试记录,在添加时,不显示出来,避免重复添加相同记录
         $exam_rec = ScoresModel::where('student_id', '=', $student_id)->select('exam_id as exam')->distinct()->get(
         )->toArray();
-        $exams = ExamsModel::whereNotIn('id', $exam_rec)->get();
+        $exams = ExamsModel::whereNotIn('id', $exam_rec)->orderBy('time')->get();
         $courses = CoursesModel::get();
         $is_admin = Gate::allows('isAdmin');
         $query = UserModel::query();

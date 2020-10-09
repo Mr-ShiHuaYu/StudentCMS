@@ -39,7 +39,7 @@ class Exams extends Controller
      */
     public function create()
     {
-        $exams = ExamsModel::get();
+        $exams = ExamsModel::orderBy('time')->get();
 
         return view('exams.create',compact('exams'));
     }
