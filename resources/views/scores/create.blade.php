@@ -100,13 +100,13 @@
                 var form = layui.form,
                     layer = layui.layer;
                 //自定义验证规则
-                form.verify({
-                    score: function (value) {
-                        if (value > 0) {
-                            return '分数不正确,为了手动添加class';
-                        }
-                    }
-                });
+                // form.verify({
+                //     score: function (value) {
+                //         if (value > 0) {
+                //             return '分数不正确,为了手动添加class';
+                //         }
+                //     }
+                // });
                 $('.scoreinput').on('blur', function () {
                     var course_id = $(this).prev().val();
                     var score = $(this).val();
