@@ -135,6 +135,13 @@ class Scores extends Controller
                 $data[$k]['exam_id'] = $exam;
             }
         }
+        // 此时的data每一个都是这样的数据:
+        //[
+        //    "course_id" => "3"
+        //    "student_id" => 2
+        //    "exam_id" => "2"
+        //    "score" => "145"
+        //  ]
         foreach ($data as $d) {
             // 插入前判断,有没有相同的成绩
             $t = $d;
@@ -143,10 +150,11 @@ class Scores extends Controller
             if ($is_exist) {
                 return $this->fail('已经存在同一考试同一课程的成绩,禁止重复插入!');
             }
-            // 动态获取
-            $full_max = CoursesModel::max('full');
-            if ($d['score'] < 0 or $d['score'] > $full_max) {
-                return $this->fail("成绩不合法,成绩应在0-{$full_max}分之间");
+            // 获取每个课程的最大分数
+//            $full_max = CoursesModel::max('full');
+            $course = CoursesModel::where('id', '=', $d['course_id'])->select(['full', 'name'])->first();
+            if ($d['score'] < 0 or $d['score'] > $course->full) {
+                return $this->fail("{$course->name}成绩不合法,成绩应在0-{$course->full}分之间");
             }
             $temp = ScoresModel::create($d);
             if ( ! $temp) {
@@ -224,5 +232,20 @@ class Scores extends Controller
         }
 
         return Excel::download(new ScoresExport, '学生考试成绩表.xlsx');
+    }
+
+    public function getFull()
+    {
+        if (request()->has('field')) {
+            $course = request()->input('field');
+
+            $full = CoursesModel::where('name', '=', $course)->value('full');
+        } else {
+            $course_id = request()->input('course_id');
+            $full = CoursesModel::where('id', '=', $course_id)->value('full');
+        }
+
+
+        return response()->json(['full' => $full]);
     }
 }

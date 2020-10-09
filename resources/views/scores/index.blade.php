@@ -122,48 +122,44 @@
                 table.on('toolbar(test)', function (obj) {
                     switch (obj.event) {
                         case 'add':
-                            xadmin.open('成绩录入', '{{route('score.create')}}',60);
+                            xadmin.open('成绩录入', '{{route('score.create')}}', 60);
                             break;
                         case 'export_excel':
                             window.open('{{route('score.export')}}', '_blank');
                     }
                 });
 
-                @can('isAdmin')
-                //监听行双击事件（双击事件为：row）
-                table.on('rowDouble(test)', function (obj) {
-                    var data = obj.data;
-                    // 在这里显示某个学生具体的弹窗
-                    var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                    // xadmin.open('修改考试信息', url, 800);
-                    //标注选中样式
-                    obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-                });
-                @endcan
-
                 //监听单元格编辑
                 table.on('edit(test)', function (obj) {
                     var value = obj.value //得到修改后的值
                         , data = obj.data //得到所在行所有键值
-                        , field = obj.field; //得到字段  化学
-                    var old = $(this).prev().text();//旧值
-                    if (value < 0 || value > 150) {
-                        layer.msg('成绩应在0-150分之间');
-                        $(this).val(old);
-                        return false;
-                    }
-                    layer.confirm('真的要修改' + data.name + '的' + field + '成绩为' + value + '吗?', function (index) {
-                        $.ajax({
-                            type: 'put',
-                            url: '{{route('score.update','x')}}',
-                            data: {uid: data.uid, course: field, score: value, exam: data.exam},
-                            success: function (res) {
-                                if (res.status === 'success') {
-                                    layer.msg(res.msg, {icon: 6, time: 1000});
-                                } else {
-                                    layer.alert(res.msg, {icon: 5});
+                        , field = obj.field //得到字段  化学
+                        , that = $(this).prev();
+                    var old = that.text();//旧值
+                    // 在这里去后台获取课程的满分值
+                    $.post("{{route('score.getfull')}}", {field: field}, function (res) {
+                        var full = res.full;
+                        if (value < 0 || value > full) {
+                            layer.msg('成绩应在0-' + full + '分之间');
+                            that.text(old);
+                            return false;
+                        }
+                        layer.confirm('真的要修改' + data.name + '的' + field + '成绩为' + value + '吗?', function (index) {
+                            $.ajax({
+                                type: 'put',
+                                url: '{{route('score.update','x')}}',
+                                data: {uid: data.uid, course: field, score: value, exam: data.exam},
+                                success: function (res) {
+                                    if (res.status === 'success') {
+                                        layer.msg(res.msg, {icon: 6, time: 1000});
+                                    } else {
+                                        layer.alert(res.msg, {icon: 5});
+                                    }
                                 }
-                            }
+                            });
+                        }, function (index) {
+                            that.text(old);
+                            layer.close(index);
                         });
                     });
                     return false;

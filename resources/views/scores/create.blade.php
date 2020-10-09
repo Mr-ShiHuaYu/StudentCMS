@@ -15,7 +15,7 @@
     <div class="layui-fluid">
         <div class="layui-row">
             <div class="layui-col-xs10 layui-col-xs-offset1">
-                <form class="layui-form">
+                <form class="layui-form" lay-filter="score">
                     <div class="layui-form-item">
                         <div class="layui-col-xs6" style="text-align: center;">
                             <div class="layui-inline">
@@ -70,7 +70,7 @@
                                             <td>
                                                 <input type="hidden" name="course_id[]" value="{{$course->id}}">
                                                 <input type="number" lay-verify="required|score" name="score[]"
-                                                       class="layui-input">
+                                                       class="layui-input scoreinput">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -102,10 +102,29 @@
                 //自定义验证规则
                 form.verify({
                     score: function (value) {
-                        if (value < 0 || value > 150) {
-                            return '成绩应在0-150分之间'
+                        if (value > 0) {
+                            return '分数不正确,为了手动添加class';
                         }
                     }
+                });
+                $('.scoreinput').on('blur', function () {
+                    var course_id = $(this).prev().val();
+                    var score = $(this).val();
+                    var name = $(this).parents('tr').find('td').first().text();
+                    var that = this;
+                    $.post("{{route('score.getfull')}}", {course_id: course_id}, function (res) {
+                        var full = res.full;
+                        if (score < 0 || score > full) {
+                            layer.msg(name + '成绩应在0-' + full + '分之间');
+                            $(that).addClass('form-danger');
+                            return false;
+                        } else {
+                            if ($(that).hasClass('form-danger')) {
+                                $(that).removeClass('form-danger');
+                            }
+                        }
+
+                    });
                 });
                 //监听提交
                 form.on('submit(save)',
@@ -124,4 +143,11 @@
                     });
             });
     </script>
+@stop
+@section('css')
+    <style>
+        .form-danger {
+            border-color: #FF5722 !important;
+        }
+    </style>
 @stop

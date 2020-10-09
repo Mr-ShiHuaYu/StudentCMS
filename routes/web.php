@@ -47,6 +47,7 @@ Route::middleware('auth')->group(
         Route::resource('/score', 'Scores');
         Route::post('/getscore', 'Scores@getscore')->name('getscore');
         Route::get('/export/score', 'Scores@export')->name('score.export');
+        Route::post('/getfull','Scores@getFull')->name('score.getfull');
 
         // 成绩分析
         Route::get('/analyze/index','ScoreAnalyze@index')->name('analyze.index');
