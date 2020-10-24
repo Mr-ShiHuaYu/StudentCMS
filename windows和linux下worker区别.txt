@@ -1,0 +1,8 @@
+workerman的在Windows下与Linux下区别
+1、win版本单个进程只支持200+个连接
+2、win版本count属性无效，全部为单进程
+3、不支持start stop reload restart status命令
+4、cmd命令行启动，后面可接多个文件，例如 php start_web.php start_gateway.php start_worker.php
+5、无法守护进程，cmd窗口关掉后服务即停止
+6、每个启动文件只能实例化一个容器(Worker/WebServer/Gateway/BusinessWorker)，需要实例化多个容器时
+需要拆成多个文件，例如 start_web.php start_gateway.php start_worker.php 分别初始化web gateway worker
