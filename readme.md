@@ -5,7 +5,7 @@ http://stu.yushihua.vip
 - 管理员账号:admin/admin
 - 学生账号:test/test
 
-> 切换账号要登录2次，这是个小bug，后续解决
+> 已经成功解决了切换账号要登录2次的问题
 
 > 顺便提一下我的个人博客:https://yushihua.vip
 
@@ -112,7 +112,3 @@ composer install
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20201020133617.png)
 
 ![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20201020133548.png)
-
-
-### 已知bug
-- 切换账号登录新账号时,虽提示登录成功,但依然跳转到登录页,需要进行2次登录才可以登录到首页,同一个账号不存在这个Bug,希望有大佬帮我解决一下这个问题,感谢.
