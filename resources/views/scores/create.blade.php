@@ -40,6 +40,7 @@
                                 <label class="layui-form-label" style="width: 100px;">选择学生</label>
                                 <div class="layui-input-inline">
                                     <select name="student_id" lay-verify="required" lay-search="">
+                                        <option value="">请选择</option>
                                         @foreach($students as $student)
                                             <option value="{{$student->id}}">{{$student->name}}</option>
                                         @endforeach

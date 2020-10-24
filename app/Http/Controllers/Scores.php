@@ -8,6 +8,7 @@ use App\Models\ExamsModel;
 use App\Models\ScoresModel;
 use App\Models\UserModel;
 use DB;
+use Doctrine\DBAL\Schema\Schema;
 use Gate;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;

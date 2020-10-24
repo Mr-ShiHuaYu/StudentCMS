@@ -1,3 +1,8 @@
+> 本项目的另外一个分支前端采用layuimini,页面更加美观大气,集成了laravel-permission及gatewayWorker,推荐大家使用
+>
+> [layuimini分支](https://github.com/974988176/StudentCMS/tree/layuimini)
+
+
 ## 演示站点
 > 系统还在不断更新完善中，成绩分析还没完善，发现问题及时反馈哈
 http://stu.yushihua.vip
@@ -5,9 +10,8 @@ http://stu.yushihua.vip
 - 管理员账号:admin/admin
 - 学生账号:test/test
 
-> 切换账号要登录2次，这是个小bug，后续解决
-
 > 顺便提一下我的个人博客:https://yushihua.vip
+> 里面会及时更新自己的学习笔记及经验
 
 ## 学生管理系统
 ### 项目介绍
@@ -96,14 +100,8 @@ composer install
 - 成绩录入页，录入完一次考试一个课程的后，将不会出现在下拉框中，避免重复录入和更加人性化，当然，重复录入时也会检验
 
 #### 成绩分析
-> 目前还在完成中，考虑用echarts显示图表
-
-### 待完成事项
-- [x] 成绩的echarts分析图,包括优秀率,良好率,及格率和不及格率
-- [x] 学生各科成绩的每次考试的变化折线图
-- [x] 学生信息,老师信息和学生成绩的导出,将采用laravel-excel导出
-- [x] 添加演示站点
-- [ ] 权限改用laravel-permission
+- 总体分析显示每个课程的优秀良好率的饼图
+- 个人分析显示个人每次考试不同课程的成绩变化折线图
 
 ### 效果展示
 
@@ -121,6 +119,3 @@ composer install
 
 [gif演示](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/laravel_studentcms.gif)
 
-
-### 已知bug
-- 切换账号登录新账号时,虽提示登录成功,但依然跳转到登录页,需要进行2次登录才可以登录到首页,同一个账号不存在这个Bug,希望有大佬帮我解决一下这个问题,感谢.

@@ -25,6 +25,7 @@ class Login extends Controller
 
     public function logout()
     {
+        session()->flush();
         Auth::logout();
 
         return redirect()->route('login');
@@ -54,13 +55,12 @@ class Login extends Controller
             if ($validated['oldpass'] == $validated['newpass']) {
                 return $this->fail('新密码和旧密码一致,无需修改');
             }
-            // 为了防止演示网站被别人修改密码,暂时取消密码这个功能
-//            $user->password = Hash::make($validated['newpass']);
-//            $user->save();
-//            Auth::logout();
+            $user->password = Hash::make($validated['newpass']);
+            $user->save();
+            session()->flush();
+            Auth::logout();
 
-//            return $this->success('密码修改成功');
-            return $this->success('验证通过,但演示网站暂时关闭修改密码功能,你的密码仍是'.$validated['oldpass']);
+            return $this->success('密码修改成功');
         }
 
         return $this->fail('旧密码错误,请重试!');
