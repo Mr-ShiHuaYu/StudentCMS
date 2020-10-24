@@ -10,22 +10,19 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
-                <span class="x-red">*</span>旧密码</label>
+            <label for="L_repass" class="layui-form-label required">旧密码</label>
             <div class="layui-input-inline">
                 <input type="password" id="L_repass" name="oldpass" required="" lay-verify="required"
                        autocomplete="off" class="layui-input"></div>
         </div>
         <div class="layui-form-item">
-            <label for="L_pass" class="layui-form-label">
-                <span class="x-red">*</span>新密码</label>
+            <label for="L_pass" class="layui-form-label required">新密码</label>
             <div class="layui-input-inline">
                 <input type="password" id="L_pass" name="newpass" required="" lay-verify="required|newpass"
                        autocomplete="off" class="layui-input"></div>
         </div>
         <div class="layui-form-item">
-            <label for="R_repass" class="layui-form-label">
-                <span class="x-red">*</span>确认密码</label>
+            <label for="R_repass" class="layui-form-label required">确认密码</label>
             <div class="layui-input-inline">
                 <input type="password" id="R_repass" name="newpass_confirmation" required=""
                        lay-verify="required|confirmpass"

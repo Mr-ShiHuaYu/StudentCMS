@@ -3,13 +3,13 @@
 @section('content')
     <form class="layui-form layuimini-form" lay-filter="teacher">
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="x-red">*</span>老师名称</label>
+            <label class="layui-form-label required">老师名称</label>
             <div class="layui-input-inline">
                 <input type="text" lay-verify="required" name="name" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+            <label class="layui-form-label required">性别</label>
             <div class="layui-input-inline">
                 <input type="radio" name="sex" value="男" title="男">
                 <input type="radio" name="sex" value="女" title="女">

@@ -1,4 +1,4 @@
-## 演示站点
+## 演示站点(xadmin版本,暂无layuimini版本)
 > 系统还在不断更新完善中，成绩分析还没完善，发现问题及时反馈哈
 http://stu.yushihua.vip
 

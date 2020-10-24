@@ -3,7 +3,7 @@
 @section('content')
     <form class="layui-form layuimini-form" lay-filter="course">
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="x-red">*</span>课程名称</label>
+            <label class="layui-form-label required">课程名称</label>
             <div class="layui-input-inline">
                 <input type="text" name="name" class="layui-input">
             </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><span class="x-red">*</span>授课老师</label>
+            <label class="layui-form-label required">授课老师</label>
             <div class="layui-input-inline">
                 <select name="teacher_id">
                     <option value=""></option>

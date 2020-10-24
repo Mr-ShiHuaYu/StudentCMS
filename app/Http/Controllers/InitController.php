@@ -33,11 +33,11 @@ class InitController extends Controller
     // 获取菜单列表
     private function getMenuList()
     {
-/*        $menuList = DB::table('system_menu')
-        ->select(['id', 'pid', 'title', 'icon', 'href', 'target'])
-        ->where('status', 1)
-        ->orderBy('sort', 'desc')
-        ->get();*/
+        /*        $menuList = DB::table('system_menu')
+                ->select(['id', 'pid', 'title', 'icon', 'href', 'target'])
+                ->where('status', 1)
+                ->orderBy('sort', 'desc')
+                ->get();*/
 
         // 获取登录用户的菜单列表
         $user = auth()->user();
@@ -48,6 +48,7 @@ class InitController extends Controller
                 $srole->menus()->select(['id', 'pid', 'title', 'icon', 'href', 'target'])
                     ->where('status', 1)
                     ->orderBy('sort', 'desc')
+                    ->orderBy('id', 'asc')
                     ->get()
             );
         }
@@ -93,6 +94,7 @@ class InitController extends Controller
     public function clear()
     {
         \Cache::flush();
+
         return response()->json(
             [
                 "code" => 1,

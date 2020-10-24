@@ -19,6 +19,7 @@ class MenuModel extends Model
 //    use SoftDeletes;
     protected $table = 'system_menu';
     protected $guarded = [];
+    protected $hidden = ['pivot'];
 
     public function roles(): BelongsToMany
     {

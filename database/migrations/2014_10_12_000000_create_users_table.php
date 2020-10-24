@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
                 $table->string('uid')->unique()->comment('学号');
                 $table->string('password')->comment('密码');
                 $table->string('name')->comment('学生姓名');
-//                $table->boolean('is_admin')->default(false);
+                $table->boolean('is_admin')->default(false);
                 $table->string('sex', 2);
                 $table->string('phone');
                 $table->string('sysid', 18);
