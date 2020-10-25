@@ -54,7 +54,7 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('teacher.edit','xxx')}}'.replace('xxx', data.id);
-                    hua.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url);
+                    hua.open('编辑<span style="color:red;">' + data.name + '</span>老师信息', url, 40, 60);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });

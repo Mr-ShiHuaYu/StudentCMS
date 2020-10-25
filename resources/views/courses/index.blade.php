@@ -75,7 +75,7 @@
                             break;
                         case 'edit':
                             var url = '{{route('course.edit','xxx')}}'.replace('xxx', data.id);
-                            hua.open('修改课程信息', url, 45);
+                            hua.open('修改课程信息', url, 40, 50);
                             break;
 
                         case 'del':
@@ -121,7 +121,7 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('course.edit','xxx')}}'.replace('xxx', data.id);
-                    hua.open('修改课程信息', url);
+                    hua.open('修改课程信息', url, 40, 50);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });

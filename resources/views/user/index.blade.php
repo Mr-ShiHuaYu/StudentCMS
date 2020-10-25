@@ -121,7 +121,7 @@
                         //监听单元格事件
                         case 'edit':
                             var url = '{{route('user.show','xxx')}}'.replace('xxx', data.id);
-                            hua.open('个人信息', url, 70);
+                            hua.open('个人信息', url, 90);
                             break;
 
                         case 'del':
@@ -151,7 +151,7 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('user.show','xxx')}}'.replace('xxx', data.id);
-                    hua.open('个人信息', url, 70);
+                    hua.open('个人信息', url, 90);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });

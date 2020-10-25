@@ -45,11 +45,11 @@ class InitController extends Controller
         $menuList = collect(); // 创建一个空菜单集合
         foreach ($stu_roles as $srole) {
             $menuList = $menuList->merge(
-                $srole->menus()->select(['id', 'pid', 'title', 'icon', 'href', 'target'])
+                $srole->menus()
                     ->where('status', 1)
                     ->orderBy('sort', 'desc')
                     ->orderBy('id', 'asc')
-                    ->get()
+                    ->get(['id', 'pid', 'title', 'icon', 'href', 'target'])
             );
         }
         $menuList = $this->changeRoute($menuList);

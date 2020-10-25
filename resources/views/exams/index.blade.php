@@ -50,7 +50,7 @@
                     switch (obj.event) {
                         case 'edit':
                             var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                            hua.open('修改考试信息', url);
+                            hua.open('修改考试信息', url, 40, 50);
                             break;
 
                         case 'del':
@@ -90,7 +90,7 @@
                     var data = obj.data;
                     // 在这里显示某个学生具体的弹窗
                     var url = '{{route('exam.edit','xxx')}}'.replace('xxx', data.id);
-                    hua.open('修改考试信息', url);
+                    hua.open('修改考试信息', url, 40, 50);
                     //标注选中样式
                     obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
                 });
