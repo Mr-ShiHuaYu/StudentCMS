@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Gate;
+
+use DB;
 
 class Test extends Controller
 {
     public function test()
     {
-        $t = Gate::allows('isAdmin');
-        dd($t);
     }
 }
