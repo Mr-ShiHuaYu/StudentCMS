@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CoursesModel;
 use App\Models\TeachersModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Gate;
 
 class Courses extends Controller
 {
