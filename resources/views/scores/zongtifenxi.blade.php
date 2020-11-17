@@ -171,7 +171,8 @@
                                     layer.tips(s, that, {
                                         // tips: [2, '#1E9FFF'],
                                         tips: [2, '#5FB878'],
-                                        tipsMore: true
+                                        time: 30000,
+                                        // tipsMore: true
                                     });
                                 }
                             });
