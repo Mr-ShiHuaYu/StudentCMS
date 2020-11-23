@@ -1,5 +1,56 @@
 @extends('common.layout')
+@section('css')
+    <style>
+        .layui-footer {
+            height: 44px;
+            line-height: 44px;
+            padding: 0 15px;
+            background-color: #eee;
+            text-align: center;
+        }
 
+        .layui-module {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .layui-module cite {
+            position: relative;
+            top: 4px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 16px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
+        }
+
+        .layui-table {
+            width: 10%;
+            float: left;
+        }
+
+        .layui-table td {
+            padding: 10px 0;
+            min-width: 65px;
+        }
+
+        .score-title {
+            color: red;
+            text-align: center;
+        }
+    </style>
+@stop
 @section('content')
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
@@ -76,6 +127,32 @@
             </div>
             <style id="welcome_style"></style>
         </div>
+        <div class="layui-row">
+            <h2 class="score-title">班级前十名({{$last_exam->name}})</h2>
+            <div class="layui-col-md12" style="padding: 0 50px;">
+                @foreach($data as $item)
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <td colspan="2">{{$item['title']}}</td>
+                        </tr>
+                        <tr>
+                            <td>姓名</td>
+                            <td>成绩</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($item['data'] as $body)
+                            <tr>
+                                <td>{{$body->name}}</td>
+                                <td>{{$body->score}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
+            </div>
+        </div>
     </div>
     <div class="layui-footer">
         © 赣ICP备<a href="http://www.beian.miit.gov.cn/" target="_blank" class="text">20008827</a>号-2
@@ -103,45 +180,4 @@
             dom.innerHTML = getTime();
         }, 1000)
     </script>
-@stop
-@section('css')
-    <style>
-        .layui-footer {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 44px;
-            line-height: 44px;
-            padding: 0 15px;
-            background-color: #eee;
-            text-align: center;
-        }
-
-        .layui-module {
-            text-align: center;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .layui-module cite {
-            position: relative;
-            top: 4px;
-            display: block;
-            color: #666;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 16px;
-        }
-
-        .icon {
-            margin-right: 10px;
-            color: #1aa094;
-        }
-
-        .icon-blue {
-            color: #1e9fff !important;
-        }
-    </style>
 @stop
