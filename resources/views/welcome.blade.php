@@ -64,11 +64,9 @@
             font-size: 12px;
             text-align: center;
         }
-
-        .class-rank {
-            font-size: 22px;
-            width: 35px;
-            margin: 15px 20px;
+        .score-title {
+            color: red;
+            text-align: center;
         }
     </style>
 @stop
@@ -144,10 +142,8 @@
     <div class="layui-box">
         {{--分为好多表--}}
         <div class="layui-row">
-            <div class="layui-col-md1 class-rank ">
-                班排前十名
-            </div>
-            <div class="layui-col-md11">
+            <h2 class="score-title">班级前十名({{$last_exam->name}})</h2>
+            <div class="layui-col-md12">
                 @foreach($data as $item)
                     <table class="layui-table">
                         <thead>

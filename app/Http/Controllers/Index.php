@@ -32,7 +32,7 @@ class Index extends Controller
             $data[] = ['title' => $course->name, 'data' => $temp];
         }
 
-        return view('welcome', compact('userCount', 'data'));
+        return view('welcome', compact('userCount', 'data', 'last_exam'));
     }
 
     public function _404()
