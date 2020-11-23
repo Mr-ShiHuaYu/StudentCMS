@@ -52,6 +52,24 @@
         .main_btn > p {
             height: 40px;
         }
+
+        .layui-table {
+            width: 10%;
+            float: left;
+        }
+
+        .layui-table td {
+            padding: 10px 0;
+            width: 1%;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .class-rank {
+            font-size: 22px;
+            width: 35px;
+            margin: 15px 20px;
+        }
     </style>
 @stop
 
@@ -68,7 +86,8 @@
                                     <i class="fa fa-graduation-cap"></i>
                                     学生列表
                                 </h1>
-                                <div class="stat-percent font-bold text-gray"><small>当前学生总数</small> {{ $userCount }}</div>
+                                <div class="stat-percent font-bold text-gray"><small>当前学生总数</small> {{ $userCount }}
+                                </div>
 
                             </div>
                         </div>
@@ -123,6 +142,35 @@
     </div>
 
     <div class="layui-box">
+        {{--分为好多表--}}
+        <div class="layui-row">
+            <div class="layui-col-md1 class-rank ">
+                班排前十名
+            </div>
+            <div class="layui-col-md11">
+                @foreach($data as $item)
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <td colspan="2">{{$item['title']}}</td>
+                        </tr>
+                        <tr>
+                            <td>姓名</td>
+                            <td>成绩</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($item['data'] as $body)
+                            <tr>
+                                <td>{{$body->name}}</td>
+                                <td>{{$body->score}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
+            </div>
+        </div>
         <div class="layui-row layui-col-space10">
             <div class="layui-col-md12">
                 <blockquote class="layui-elem-quote main_btn">
@@ -148,7 +196,7 @@
 
 @section('js')
     <script !src="">
-        layui.use(['miniTab'],function(){
+        layui.use(['table', 'miniTab'], function () {
             var miniTab = layui.miniTab;
             miniTab.listen();
         });
