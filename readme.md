@@ -1,15 +1,21 @@
-## 演示站点(xadmin版本,暂无layuimini版本)
-> 系统还在不断更新完善中，成绩分析还没完善，发现问题及时反馈哈
+## 学生管理系统
+### 演示站点
 http://stu.yushihua.vip
-
+> 此演示站点为layuimini版本,暂无xadmin版本
 - 管理员账号:admin/admin
 - 学生账号:test/test
 
-> 已经成功解决了切换账号要登录2次的问题
+> 系统大部分功能已完成,后续若有好的想法,再继续添加
+>
+> B站部署视频教程:
+>
+> https://www.bilibili.com/video/BV1Wv411r7nT
+>
 
-> 顺便提一下我的个人博客:https://yushihua.vip
+> 顺便提一下我的个人博客,经常分享一些我学习的笔记
+>
+> https://yushihua.vip
 
-## 学生管理系统
 ### 项目介绍
 基于php Laravel和layui开发的学生管理系统
 
@@ -26,10 +32,11 @@ http://stu.yushihua.vip
 - layuimini
 
 ### 使用方法
-#### 方法一
-1. 直接下载release的zip文件，解压后，将整个目录放到网站目录www下
-2. 创建数据库studentcms，运行里面的studentcms.sql文件
-#### 方法二
+请观看B站部署视频
+
+https://www.bilibili.com/video/BV1Wv411r7nT
+
+###参考代码
 ```
 1. git clone https://github.com/974988176/StudentCMS.git
 2. cd StudentCMS
@@ -95,13 +102,6 @@ composer install
 
 #### 成绩分析
 > 目前还在完成中，考虑用echarts显示图表
-
-### 待完成事项
-- [x] 成绩的echarts分析图,包括优秀率,良好率,及格率和不及格率
-- [x] 学生各科成绩的每次考试的变化折线图
-- [x] 学生信息,老师信息和学生成绩的导出,将采用laravel-excel导出
-- [x] 添加演示站点
-- [ ] 权限改用laravel-permission
 
 ### 效果展示
 
