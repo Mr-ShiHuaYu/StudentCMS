@@ -11,7 +11,8 @@
     <script>
         layui.use(['laydate', 'table'],
             function () {
-                var table = layui.table,
+                var $ = layui.jquery,
+                    table = layui.table,
                     laydate = layui.laydate;
                 //执行一个laydate实例
                 laydate.render({
