@@ -2,7 +2,6 @@
 
 use App\Models\ExamsModel;
 use Illuminate\Database\Seeder;
-use Faker\Generator;
 
 class ExamsTableSeeder extends Seeder
 {
@@ -13,7 +12,6 @@ class ExamsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = app(Generator::class);
         ExamsModel::truncate();
         $exams = [
             ['name' => '第一次月考', 'time' => '2020-01-01'],

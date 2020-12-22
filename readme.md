@@ -32,9 +32,16 @@ http://stu.yushihua.vip
 - layuimini
 
 ### 使用方法
-请观看B站部署视频
+- 请观看B站部署视频
 
 https://www.bilibili.com/video/BV1Wv411r7nT
+
+- 一键安装包,带运行环境
+```
+链接：https://pan.baidu.com/s/1Yx7xZa2Maz10o3OO1nd1_Q
+提取码：9999
+复制这段内容后打开百度网盘手机App，操作更方便哦--来自百度网盘超级会员V2的分享
+```
 
 ###参考代码
 ```

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\MenuModel;
+use App\Models\RoleModel as Role;
+use App\Models\UserModel;
 use Illuminate\Database\Seeder;
 
 class SystemMenuTableSeeder extends Seeder
@@ -99,5 +102,42 @@ class SystemMenuTableSeeder extends Seeder
             ],
         ];
         DB::table('system_menu')->insert($menus);
+        $this->initPermission();
+    }
+
+    public function initPermission()
+    {
+        // 给is_admin为1的人添加超级管理员的角色
+        try {
+            // 如果找不到超级管理员这个角色,会报错,通过try-catch捕获错误,在catch里面创建角色
+            Role::findByName('超级管理员');
+        } catch (Exception $e) {
+            Role::create(['name' => '超级管理员']);
+        } finally {
+            $user = UserModel::where('is_admin', '=', 1)->first();
+            $adminRole = Role::findByName('超级管理员');
+            $user->assignRole($adminRole);
+            // 给管理员添加全部菜单列表
+            $allMenusId = MenuModel::pluck('id')->toArray();
+            $adminRole->menus()->sync($allMenusId);
+        }
+
+        // 给其他人添加学生的角色
+        try {
+            Role::findByName('学生');
+        } catch (Exception $e) {
+            Role::create(['name' => '学生']);
+        } finally {
+            $otherUser = UserModel::where('id', '<>', 1)->get();
+            $studentRole = Role::findByName('学生');
+            foreach ($otherUser as $ouser) {
+                $ouser->assignRole($studentRole);
+            }
+            // 给学生添加能访问的菜单列表,attach是添加,sync是同步
+            // $studentRole->menus()->attach([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]);
+            $stuMenusId = MenuModel::where('id','<>',8)->pluck('id')->toArray();
+            $studentRole->menus()->sync($stuMenusId);
+        }
+
     }
 }

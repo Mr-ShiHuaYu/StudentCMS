@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MenuModel;
 use App\Models\RoleModel as Role;
 use App\Models\UserModel;
+use Exception;
 
 //use Spatie\Permission\Models\Role;
 
@@ -21,25 +22,6 @@ class PermissionController extends Controller
 //        $permission = Permission::create(['name'=>'添加老师']);
 //        dump($role);
 //        dump($permission);
-
-        // 给id为1的人添加超级管理员的角色
-        $user = UserModel::find(1);
-        $adminRole = Role::findByName('超级管理员');
-        $user->assignRole($adminRole);
-
-        // 给其他人添加学生的角色
-        $otherUser = UserModel::where('id', '<>', 1)->get();
-        $studentRole = Role::findByName('学生');
-        foreach ($otherUser as $ouser) {
-            $ouser->assignRole($studentRole);
-        }
-
-        // 给管理员添加全部菜单列表
-        $allMenusId = MenuModel::pluck('id')->toArray();
-        $adminRole->menus()->sync($allMenusId);
-        // 给学生添加能访问的菜单列表
-//        $studentRole->menus()->attach([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]);
-        $studentRole->menus()->sync([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]); // 用于测试,只添加3个菜单,id为1,2,3
         // 给用户添加权限
         // 如果添加了一个没有的权限名称,会报错
 //        $user->givePermissionTo('编辑文章');

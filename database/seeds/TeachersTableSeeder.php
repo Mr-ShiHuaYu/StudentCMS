@@ -12,6 +12,7 @@ class TeachersTableSeeder extends Seeder
      */
     public function run()
     {
+        TeachersModel::truncate();
         factory(TeachersModel::class, 10)->create();
     }
 }
