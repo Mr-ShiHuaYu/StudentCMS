@@ -1,7 +1,25 @@
 ## 学生管理系统
 ### 部署方法
-1. 项目根目录下有一个stucms.sql文件,请创建.env文件中DB_DATABASE键名的数据库,默认为stucms,可以自己更改,然后,将这个sql文件导入到这个数据库中,可能会出现导入不成功的情况,因为,我这个sql是基于mysql5.7导出的,如果导入不成功,请看方法2
-2. 请先创建.env文件中DB_DATABASE键名的数据库,默认为stucms,然后,双击win一键生成数据库.bat文件,正常情况下,可以直接生成数据库
+
+- 下载代码
+```
+git clone https://github.com/974988176/StudentCMS.git
+```
+
+- 安装依赖包
+```
+composer install
+```
+
+- 创建数据库`stucms`.在.env文件中`DB_DATABASE`选项中可更改
+
+- 更改.env里面`DB_USERNAME`等数据库配置
+
+- 执行命令
+```cmd
+php artisan stucms:run
+```
+
 
 ### 演示站点
 http://stu.yushihua.vip
@@ -20,13 +38,9 @@ http://stu.yushihua.vip
 
 ### 技术栈
 - Laravel
+- layui
 - layuimini
 
-### 使用方法
-请观看B站部署视频
+### 交流群
+745821153
 
-https://www.bilibili.com/video/BV1Wv411r7nT
-
-## 部署方法
-1. 项目根目录下有一个studentcms_layuimini.sql文件,请创建.env文件中DB_DATABASE键名的数据库,默认为studentcms_layuimini,可以自己更改,然后,将这个sql文件导入到这个数据库中,可能会出现导入不成功的情况,因为,我这个sql是基于mysql5.7导出的,如果导入不成功,请看方法2
-2. 请先创建.env文件中DB_DATABASE键名的数据库,默认为studentcms_layuimini,然后,双击win一键生成数据库.bat文件,正常情况下,可以直接生成数据库
