@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
             'isAdmin',
             function ($user) {
                 return $user->is_admin
-                    ? Response::allow()
+                    ? true
                     : Response::deny('必须要管理员权限');
             }
         );

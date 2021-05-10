@@ -59,8 +59,8 @@ Route::middleware('auth')->group(
         Route::post('/getfull', 'ScoresController@getFull')->name('score.getfull');
 
         // 成绩分析
-        Route::get('/analyze/index', 'ScoreAnalyzeControllerController@index')->name('analyze.index');
-        Route::get('/analyze/pie/{cid}/{eid}', 'ScoreAnalyzeControllerController@getPie')->name('analyze.getpie');
+        Route::get('/analyze/index', 'ScoreAnalyzeController@index')->name('analyze.index');
+        Route::get('/analyze/pie/{cid}/{eid}', 'ScoreAnalyzeController@getPie')->name('analyze.getpie');
         Route::post('/analyze/showall', 'ScoreAnalyzeController@showAll')->name('analyze.showall');
         Route::post('/analyze/tips', 'ScoreAnalyzeController@tips')->name('analyze.tips');
         // 获取个人成绩不同考试折线图
