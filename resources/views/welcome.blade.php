@@ -78,7 +78,7 @@
 
             <div class="layui-col-md3">
                 <div class="col-xs-6 col-md-3">
-                    <div class="panel layui-bg-cyan">
+                    <div class="panel layui-bg-cyan" style="background-color:#f35917 !important;">
                         <div class="panel-body" layuimini-content-href="{{route('user.index')}}" data-title="学生列表">
                             <div class="panel-content" style="margin: 16px 10px;">
                                 <h1 class="no-margins">

@@ -27,9 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(
             'isAdmin',
             function ($user) {
-                return $user->is_admin
-                    ? true
-                    : Response::deny('必须要管理员权限');
+                return $user->is_admin;
             }
         );
 
