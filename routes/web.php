@@ -79,3 +79,5 @@ Route::middleware('guest')->group(
         Route::post('/dologin', 'LoginController@store')->name('login.store');
     }
 );
+
+Route::any('/test', 'TestController@test')->name('test');
