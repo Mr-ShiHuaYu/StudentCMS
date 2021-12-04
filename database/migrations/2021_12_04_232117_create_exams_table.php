@@ -13,15 +13,12 @@ class CreateExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create(
-            'exams',
-            function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('name', 100);
-                $table->date('time')->comment('考试时间');
-                $table->timestamps();
-            }
-        );
+        Schema::create('exams', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 100);
+            $table->date('time')->comment('考试时间');
+            $table->timestamps();
+        });
     }
 
     /**

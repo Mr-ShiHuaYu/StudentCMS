@@ -15,10 +15,10 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings
      */
     public function collection()
     {
-        $columns = Schema::getColumnListing('users');
-        $columns = array_diff($columns, ['id', 'password', 'is_admin', 'remember_token', 'created_at', 'updated_at']);
+        $columns = Schema::getColumnListing('students');
+        $columns = array_diff($columns, ['id', 'password', 'remember_token', 'created_at', 'updated_at']);
 
-        return UserModel::select($columns)->where('is_admin', '<>', 1)->get();
+        return UserModel::select($columns)->get();
     }
 
     public function headings(): array

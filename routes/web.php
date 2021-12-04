@@ -12,10 +12,6 @@
 */
 
 
-// 错误路由
-Route::get('/404', [App\Http\Controllers\IndexController::class, '_404']);
-
-
 // 需要登录
 // 这里部分用数组的写法,因为,数组的写法比@的写法有个好处是,ide可以识别到,可以点击直接跳转到对应方法
 Route::middleware('auth')->group(
@@ -30,6 +26,9 @@ Route::middleware('auth')->group(
         Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
         Route::get('/welcome', [\App\Http\Controllers\IndexController::class, 'welcome'])->name('welcome');
         Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+
+        // 个人信息
+        Route::get('/info', [\App\Http\Controllers\UserController::class, 'info'])->name('user.info');
         // 学生
         Route::resource('/user', 'UserController');
         Route::post('/getuser', 'UserController@getUser')->name('getuser');

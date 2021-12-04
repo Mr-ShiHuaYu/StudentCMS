@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50729
+ Source Server Version : 50728
  Source Host           : localhost:3306
  Source Schema         : stucms
 
  Target Server Type    : MySQL
- Target Server Version : 50729
+ Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 24/07/2021 17:35:57
+ Date: 04/12/2021 23:26:32
 */
 
 SET NAMES utf8mb4;
@@ -77,19 +77,28 @@ CREATE TABLE `migrations`  (
   `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
 -- ----------------------------
-INSERT INTO `migrations` VALUES (1, '2014_10_12_000000_create_users_table', 1);
-INSERT INTO `migrations` VALUES (2, '2020_09_05_130614_create_parents_table', 1);
-INSERT INTO `migrations` VALUES (3, '2020_09_05_133331_create_teachers_table', 1);
-INSERT INTO `migrations` VALUES (4, '2020_09_05_133519_create_courses_table', 1);
-INSERT INTO `migrations` VALUES (5, '2020_09_05_133902_create_exams_table', 1);
-INSERT INTO `migrations` VALUES (6, '2020_09_05_134323_create_scores_table', 1);
-INSERT INTO `migrations` VALUES (7, '2020_10_16_192223_create_permission_tables', 1);
-INSERT INTO `migrations` VALUES (8, '2020_10_31_212117_create_system_menu_table', 1);
+INSERT INTO `migrations` VALUES (1, '2021_12_04_232117_create_courses_table', 0);
+INSERT INTO `migrations` VALUES (2, '2021_12_04_232117_create_exams_table', 0);
+INSERT INTO `migrations` VALUES (3, '2021_12_04_232117_create_parents_table', 0);
+INSERT INTO `migrations` VALUES (4, '2021_12_04_232117_create_permissions_table', 0);
+INSERT INTO `migrations` VALUES (5, '2021_12_04_232117_create_role_has_permissions_table', 0);
+INSERT INTO `migrations` VALUES (6, '2021_12_04_232117_create_role_menu_table', 0);
+INSERT INTO `migrations` VALUES (7, '2021_12_04_232117_create_roles_table', 0);
+INSERT INTO `migrations` VALUES (8, '2021_12_04_232117_create_scores_table', 0);
+INSERT INTO `migrations` VALUES (9, '2021_12_04_232117_create_students_table', 0);
+INSERT INTO `migrations` VALUES (10, '2021_12_04_232117_create_system_menu_table', 0);
+INSERT INTO `migrations` VALUES (11, '2021_12_04_232117_create_teachers_table', 0);
+INSERT INTO `migrations` VALUES (12, '2021_12_04_232117_create_user_has_permissions_table', 0);
+INSERT INTO `migrations` VALUES (13, '2021_12_04_232117_create_user_has_roles_table', 0);
+INSERT INTO `migrations` VALUES (14, '2021_12_04_232117_create_users_table', 0);
+INSERT INTO `migrations` VALUES (15, '2021_12_04_232118_add_foreign_keys_to_role_has_permissions_table', 0);
+INSERT INTO `migrations` VALUES (16, '2021_12_04_232118_add_foreign_keys_to_user_has_permissions_table', 0);
+INSERT INTO `migrations` VALUES (17, '2021_12_04_232118_add_foreign_keys_to_user_has_roles_table', 0);
 
 -- ----------------------------
 -- Table structure for parents
@@ -147,29 +156,7 @@ CREATE TABLE `role_menu`  (
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (1, 1);
-INSERT INTO `role_menu` VALUES (1, 2);
-INSERT INTO `role_menu` VALUES (1, 3);
-INSERT INTO `role_menu` VALUES (1, 4);
-INSERT INTO `role_menu` VALUES (1, 5);
-INSERT INTO `role_menu` VALUES (1, 6);
-INSERT INTO `role_menu` VALUES (1, 7);
 INSERT INTO `role_menu` VALUES (1, 8);
-INSERT INTO `role_menu` VALUES (1, 9);
-INSERT INTO `role_menu` VALUES (1, 10);
-INSERT INTO `role_menu` VALUES (1, 11);
-INSERT INTO `role_menu` VALUES (1, 12);
-INSERT INTO `role_menu` VALUES (2, 1);
-INSERT INTO `role_menu` VALUES (2, 2);
-INSERT INTO `role_menu` VALUES (2, 3);
-INSERT INTO `role_menu` VALUES (2, 4);
-INSERT INTO `role_menu` VALUES (2, 5);
-INSERT INTO `role_menu` VALUES (2, 6);
-INSERT INTO `role_menu` VALUES (2, 7);
-INSERT INTO `role_menu` VALUES (2, 9);
-INSERT INTO `role_menu` VALUES (2, 10);
-INSERT INTO `role_menu` VALUES (2, 11);
-INSERT INTO `role_menu` VALUES (2, 12);
 
 -- ----------------------------
 -- Table structure for roles
@@ -182,13 +169,14 @@ CREATE TABLE `roles`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, '超级管理员', 'web', '2021-04-03 00:28:11', '2021-04-03 00:28:11');
-INSERT INTO `roles` VALUES (2, '学生', 'web', '2021-04-03 00:28:11', '2021-04-03 00:28:11');
+INSERT INTO `roles` VALUES (1, 'admin', 'web', '2021-04-03 00:28:11', '2021-04-03 00:28:11');
+INSERT INTO `roles` VALUES (2, 'teacher', 'web', '2021-04-03 00:28:11', '2021-04-03 00:28:11');
+INSERT INTO `roles` VALUES (3, 'student', 'web', '2021-12-04 16:16:57', '2021-12-04 16:17:00');
 
 -- ----------------------------
 -- Table structure for scores
@@ -386,7 +374,6 @@ INSERT INTO `scores` VALUES (308, 1.00, 9, 1, 6, '2020-12-27 14:57:08', '2020-12
 INSERT INTO `scores` VALUES (309, 1.00, 9, 1, 7, '2020-12-27 14:57:08', '2020-12-27 14:57:08');
 INSERT INTO `scores` VALUES (310, 1.00, 9, 1, 8, '2020-12-27 14:57:08', '2020-12-27 14:57:08');
 INSERT INTO `scores` VALUES (311, 1.00, 9, 1, 9, '2020-12-27 14:57:08', '2020-12-27 14:57:08');
-INSERT INTO `scores` VALUES (312, 1.00, 9, 1, 12, '2020-12-27 14:57:08', '2020-12-27 14:57:08');
 INSERT INTO `scores` VALUES (313, 90.00, 17, 1, 1, '2020-12-27 15:25:56', '2020-12-27 15:25:56');
 INSERT INTO `scores` VALUES (314, 80.00, 17, 1, 2, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
 INSERT INTO `scores` VALUES (315, 80.00, 17, 1, 3, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
@@ -396,7 +383,51 @@ INSERT INTO `scores` VALUES (318, 60.00, 17, 1, 6, '2020-12-27 15:25:57', '2020-
 INSERT INTO `scores` VALUES (319, 90.00, 17, 1, 7, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
 INSERT INTO `scores` VALUES (320, 90.00, 17, 1, 8, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
 INSERT INTO `scores` VALUES (321, 90.00, 17, 1, 9, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
-INSERT INTO `scores` VALUES (322, 74.00, 17, 1, 12, '2020-12-27 15:25:57', '2020-12-27 15:25:57');
+
+-- ----------------------------
+-- Table structure for students
+-- ----------------------------
+DROP TABLE IF EXISTS `students`;
+CREATE TABLE `students`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '学号',
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '学生姓名',
+  `sex` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sysid` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birth` date NOT NULL,
+  `minzu` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jingji` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hukou` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `jishu` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否寄宿',
+  `huji` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '户籍地址',
+  `xianzz` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '现住址',
+  `liushou` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否留守儿童',
+  `liushouqk` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '留守儿童情况',
+  `liushoutgqk` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '留守儿童托管情况',
+  `biye` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '毕业学校',
+  `ganbu` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '曾担任干部情况',
+  `huojiang` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '获奖情况',
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `users_uid_unique`(`uid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of students
+-- ----------------------------
+INSERT INTO `students` VALUES (1, '11536942', '学生甲', '男', '110120119', '26588608', '1993-04-05', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '济南亿次元网络有限公司', NULL, NULL, '96IY4SFSX0E40toJf5A6M9lPSrneVdOWFpAvcDZ2veelmnQSQmhfM9itVtyn', '1971-11-20 08:23:59', '2021-04-03 00:28:11');
+INSERT INTO `students` VALUES (2, 'test', '测试学生', '男', '110120119', '96308564', '2019-04-13', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '群英网络有限公司', NULL, NULL, 'xuP9LtEUXb', '2013-03-30 09:17:26', '2021-04-03 00:28:11');
+INSERT INTO `students` VALUES (3, '11536946', '黎帅', '男', '13257950920', '23639283', '1985-12-11', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '联软传媒有限公司', NULL, NULL, 'shABRz7p2E', '2006-09-28 23:11:05', '2008-09-23 05:41:03');
+INSERT INTO `students` VALUES (4, '90460066', '凌晶', '女', '18137801518', '20798288', '2000-02-02', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '维旺明科技有限公司', NULL, NULL, 'auZS1mpyXT', '2012-02-19 09:17:25', '1974-03-25 19:58:36');
+INSERT INTO `students` VALUES (5, '42365184', '秦冰冰', '男', '13900316761', '87890951', '1973-01-27', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创亿网络有限公司', NULL, NULL, 'BvRNJQ9aHo', '2007-05-03 08:22:12', '1972-04-18 09:30:02');
+INSERT INTO `students` VALUES (6, '97827816', '欧玉英', '男', '17767230472', '98366073', '1997-08-17', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '飞利信信息有限公司', NULL, NULL, 'Pu8moX1Do3', '1986-12-12 16:33:45', '1979-04-17 17:56:59');
+INSERT INTO `students` VALUES (7, '97452034', '窦成', '男', '17799603758', '14592028', '2018-09-23', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '昂歌信息传媒有限公司', NULL, NULL, 'KBYLJHOyER', '1972-04-19 20:05:45', '2007-08-13 02:06:51');
+INSERT INTO `students` VALUES (8, '34185498', '赵娜', '女', '17197588113', '96107232', '1983-06-22', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '双敏电子信息有限公司', NULL, NULL, 'elc4Vcyu8K', '1989-03-10 12:26:16', '1988-12-29 20:13:34');
+INSERT INTO `students` VALUES (9, '21983497', '项坤', '男', '15641596350', '84329003', '2010-03-10', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '信诚致远科技有限公司', NULL, NULL, '4a4dENCqwV', '1993-04-29 22:33:00', '1984-05-20 13:52:09');
+INSERT INTO `students` VALUES (10, '94395183', '靳哲', '女', '15107678894', '66133427', '1991-04-23', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '华泰通安传媒有限公司', NULL, NULL, 'hGR7R3uenL', '2007-01-17 09:36:43', '2016-11-27 20:25:14');
 
 -- ----------------------------
 -- Table structure for system_menu
@@ -484,6 +515,7 @@ CREATE TABLE `user_has_roles`  (
   `role_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
+  `foreign_id` bigint(20) NULL DEFAULT NULL COMMENT '学生表或老师表的外键ID',
   PRIMARY KEY (`role_id`, `user_id`, `model_type`) USING BTREE,
   INDEX `model_has_roles_model_id_model_type_index`(`user_id`, `model_type`) USING BTREE,
   CONSTRAINT `user_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
@@ -492,16 +524,9 @@ CREATE TABLE `user_has_roles`  (
 -- ----------------------------
 -- Records of user_has_roles
 -- ----------------------------
-INSERT INTO `user_has_roles` VALUES (1, 'App\\Models\\UserModel', 1);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 2);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 3);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 4);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 5);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 6);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 7);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 8);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 9);
-INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 10);
+INSERT INTO `user_has_roles` VALUES (1, 'App\\Models\\UserModel', 1, 1);
+INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 3, 2);
+INSERT INTO `user_has_roles` VALUES (3, 'App\\Models\\UserModel', 2, 2);
 
 -- ----------------------------
 -- Table structure for users
@@ -509,45 +534,21 @@ INSERT INTO `user_has_roles` VALUES (2, 'App\\Models\\UserModel', 10);
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '学号',
+  `username` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '昵称',
   `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '学生姓名',
-  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
-  `sex` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sysid` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birth` date NOT NULL,
-  `minzu` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jingji` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `hukou` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `jishu` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否寄宿',
-  `huji` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '户籍地址',
-  `xianzz` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '现住址',
-  `liushou` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否留守儿童',
-  `liushouqk` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '留守儿童情况',
-  `liushoutgqk` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '留守儿童托管情况',
-  `biye` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '毕业学校',
-  `ganbu` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '曾担任干部情况',
-  `huojiang` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '获奖情况',
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `users_uid_unique`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `users_uid_unique`(`username`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'admin', '$2y$10$2jDad/OvKO9Q6sqow1KCmOQJ8eKhEDZVL6gWosUqbhRWIBkFSh7s.', '系统管理员', 1, '男', '110120119', '26588608', '1993-04-05', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '济南亿次元网络有限公司', NULL, NULL, '96IY4SFSX0E40toJf5A6M9lPSrneVdOWFpAvcDZ2veelmnQSQmhfM9itVtyn', '1971-11-20 08:23:59', '2021-04-03 00:28:11');
-INSERT INTO `users` VALUES (2, 'test', '$2y$10$0jNucr8dLICHDcSvXiXQyumw7f.Z3egKqHLfiJH33eJIbSFRqw9fC', '测试学生', 0, '男', '110120119', '96308564', '2019-04-13', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '群英网络有限公司', NULL, NULL, 'xuP9LtEUXb', '2013-03-30 09:17:26', '2021-04-03 00:28:11');
-INSERT INTO `users` VALUES (3, '11536946', '$2y$10$qgWo2YWFMWU3QQ4IHcu4x.CoYntLhc.OISJe50ZL61.1aZoFtGLde', '黎帅', 0, '男', '13257950920', '23639283', '1985-12-11', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '联软传媒有限公司', NULL, NULL, 'shABRz7p2E', '2006-09-28 23:11:05', '2008-09-23 05:41:03');
-INSERT INTO `users` VALUES (4, '90460066', '$2y$10$tV8LNdm9Rr9Tof1wjShIpORK2z9TsiYGYlBm1ZJTjRnMgk8IlNct.', '凌晶', 0, '女', '18137801518', '20798288', '2000-02-02', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '维旺明科技有限公司', NULL, NULL, 'auZS1mpyXT', '2012-02-19 09:17:25', '1974-03-25 19:58:36');
-INSERT INTO `users` VALUES (5, '42365184', '$2y$10$.j/bTmDcFcYzfPApPzyYAeCYNkfZzW8b6vB0/hX4a1NxVEfZeBqou', '秦冰冰', 0, '男', '13900316761', '87890951', '1973-01-27', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '创亿网络有限公司', NULL, NULL, 'BvRNJQ9aHo', '2007-05-03 08:22:12', '1972-04-18 09:30:02');
-INSERT INTO `users` VALUES (6, '97827816', '$2y$10$Q5TmpvGErdaR5BymROYo3ujcXw.m.qATdGBTXlX0.QJo/pvEQCLgu', '欧玉英', 0, '男', '17767230472', '98366073', '1997-08-17', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '飞利信信息有限公司', NULL, NULL, 'Pu8moX1Do3', '1986-12-12 16:33:45', '1979-04-17 17:56:59');
-INSERT INTO `users` VALUES (7, '97452034', '$2y$10$ue0IlBMxwJ4nZF6pQ5x30OHC4nVDq5inUOolRmNdD.2qVYXoDyGIG', '窦成', 0, '男', '17799603758', '14592028', '2018-09-23', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '昂歌信息传媒有限公司', NULL, NULL, 'KBYLJHOyER', '1972-04-19 20:05:45', '2007-08-13 02:06:51');
-INSERT INTO `users` VALUES (8, '34185498', '$2y$10$HEK/cW3KxP/31Tn5/l4GgeH8mGpyGlZJfgUo/JLb71wPi0nb2E0ea', '赵娜', 0, '女', '17197588113', '96107232', '1983-06-22', '畲', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '双敏电子信息有限公司', NULL, NULL, 'elc4Vcyu8K', '1989-03-10 12:26:16', '1988-12-29 20:13:34');
-INSERT INTO `users` VALUES (9, '21983497', '$2y$10$J5W1JFYK40m9TMTD2yuyV.KKTXOx/4VPLNuEhFdFL2W0eHD.KKuf6', '项坤', 0, '男', '15641596350', '84329003', '2010-03-10', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '信诚致远科技有限公司', NULL, NULL, '4a4dENCqwV', '1993-04-29 22:33:00', '1984-05-20 13:52:09');
-INSERT INTO `users` VALUES (10, '94395183', '$2y$10$EXv8VjzbfuKpFWfXVUMwMuxVCY0zkQEk64kHR1zlV67eYuRIuZnJS', '靳哲', 0, '女', '15107678894', '66133427', '1991-04-23', '汉', NULL, NULL, '0', NULL, NULL, 0, NULL, NULL, '华泰通安传媒有限公司', NULL, NULL, 'hGR7R3uenL', '2007-01-17 09:36:43', '2016-11-27 20:25:14');
+INSERT INTO `users` VALUES (1, 'admin', '系统管理员', '$2y$10$2jDad/OvKO9Q6sqow1KCmOQJ8eKhEDZVL6gWosUqbhRWIBkFSh7s.', 'L6A6quHoYk2URjSmbbmvuSxRnWJDrLIyPl1jZ2LAFCBenx6zfDdTDuTWPckY', '1971-11-20 08:23:59', '2021-04-03 00:28:11');
+INSERT INTO `users` VALUES (2, 'test', '测试用户', '$2y$10$0jNucr8dLICHDcSvXiXQyumw7f.Z3egKqHLfiJH33eJIbSFRqw9fC', 'egiEa335QzIXaeUzk36idwvGhtcYEYWG7vTMCnKdqgoIv79hSEiOQTgxXhkV', '2013-03-30 09:17:26', '2021-04-03 00:28:11');
+INSERT INTO `users` VALUES (3, 'teacher', '老师', '$10$0jNucr8dLICHDcSvXiXQyumw7f.Z3egKqHLfiJH33eJIbSFRqw9fC', 'egiEa335QzIXaeUzk36idwvGhtcYEYWG7vTMCnKdqgoIv79hSEiOQTgxXhkV', '2021-12-04 22:05:25', '2021-12-04 22:05:28');
 
 SET FOREIGN_KEY_CHECKS = 1;

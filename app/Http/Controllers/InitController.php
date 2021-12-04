@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MenuModel;
+
 class InitController extends Controller
 {
     // 获取初始化数据
@@ -30,22 +32,23 @@ class InitController extends Controller
         return response()->json($systemInit);
     }
 
-    // 获取菜单列表
+    // 获取菜用户的菜单列表,如果在role_menu中有的菜单,说明需要老师或管理员才能访问
     private function getMenuList()
     {
-        // 获取登录用户的菜单列表
         $user = auth()->user();
         $stu_roles = $user->roles()->get(); // 获取用户的角色列表
-        $menuList = collect(); // 创建一个空菜单集合
+        $specialMenu = \DB::table('role_menu')->pluck('menu_id')->toArray();
+        $menuList = MenuModel::query()
+            ->where('status', 1)
+            ->whereNotIn('id',$specialMenu)
+            ->get();
+
         foreach ($stu_roles as $srole) {
             $menuList = $menuList->merge(
-                $srole->menus()
-                    ->where('status', 1)
-                    ->orderBy('sort', 'desc')
-                    ->orderBy('id', 'asc')
-                    ->get(['id', 'pid', 'title', 'icon', 'href', 'target'])
+                $srole->menus()->where('status', 1)->get()
             );
         }
+        $menuList = $menuList->sortByDesc('sort');
         $menuList = $this->changeRoute($menuList);
         $menuList = $this->buildMenuChild(0, $menuList);
 
@@ -72,7 +75,7 @@ class InitController extends Controller
         return $treeList;
     }
 
-    // 自己新增的修改数据库路由的方法
+    // 自己新增的修改数据库路由的方法,将数据表system_menu表中的href字段user.index改为相应的路由
     public function changeRoute($menuList)
     {
         foreach ($menuList as $v) {
@@ -89,6 +92,8 @@ class InitController extends Controller
     {
         \Cache::flush();
         \Artisan::call('optimize:clear');
+        // 手动清理权限缓存
+        \Artisan::call('cache:forget spatie.permission.cache');
 
         return response()->json(
             [

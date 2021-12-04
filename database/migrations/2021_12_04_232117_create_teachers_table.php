@@ -13,17 +13,14 @@ class CreateTeachersTable extends Migration
      */
     public function up()
     {
-        Schema::create(
-            'teachers',
-            function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('name', 100);
-                $table->string('sex', 10);
-                $table->string('phone', 20)->nullable();
-                $table->string('qq', 20)->nullable();
-                $table->timestamps();
-            }
-        );
+        Schema::create('teachers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 100);
+            $table->string('sex', 10);
+            $table->string('phone', 20)->nullable();
+            $table->string('qq', 20)->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

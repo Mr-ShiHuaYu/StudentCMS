@@ -15,7 +15,6 @@ class ScoresExport implements FromCollection, ShouldAutoSize, WithHeadings
      */
     public function collection()
     {
-        $is_admin = Gate::allows('isAdmin');
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
         $sql = "SELECT u.uid uid,u.name name,e.name exam,";
@@ -30,9 +29,7 @@ class ScoresExport implements FromCollection, ShouldAutoSize, WithHeadings
         LEFT JOIN exams e ON e.id=sc.exam_id";
         $uid = auth()->user()->uid;
         // 添加权限判断,学生只能查看自己的成绩
-        if ($is_admin) {
-            $sql .= " WHERE u.is_admin = 0";
-        } else {
+        if (user()->hasRole("student")) {
             $sql .= " WHERE u.uid = '$uid'";
         }
         $sql .= " GROUP BY u.uid,e.name ORDER BY sc.created_at";

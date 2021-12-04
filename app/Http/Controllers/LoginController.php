@@ -15,7 +15,7 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        $credentials = $request->only('uid', 'password');
+        $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
             return $this->success('登录成功');
         }

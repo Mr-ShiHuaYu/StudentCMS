@@ -6,6 +6,7 @@ use App\Exports\ScoresExport;
 use App\Models\CoursesModel;
 use App\Models\ExamsModel;
 use App\Models\ScoresModel;
+use App\Models\StudentModel;
 use App\Models\UserModel;
 use DB;
 use Doctrine\DBAL\Schema\Schema;
@@ -32,7 +33,6 @@ class ScoresController extends Controller
     {
         // 全站最难,最关键的方法,利用mysql的if函数,将行转列,按学生的学号分组,max最课程成绩最大值,正常来说,一个学生的一次考试一个课程的成绩只有一个
         // 要考虑权限,学生只能查看自己的成绩
-        $is_admin = Gate::allows('isAdmin');
         $page = $request->input('page');
         $limit = $request->input('limit');
         $offset = ($page - 1) * $limit;
@@ -52,12 +52,10 @@ class ScoresController extends Controller
         }
         // 平均分,总分,标准差
         $sql .= "format(AVG(sc.score),2) avg,SUM(sc.score) sum,format(STD(sc.score),2) std";
-        $sql .= " FROM scores sc LEFT JOIN courses c on c.id=sc.course_id LEFT JOIN users u on u.id=sc.student_id LEFT JOIN exams e ON e.id=sc.exam_id";
-        $uid = auth()->user()->uid;
+        $sql .= " FROM scores sc LEFT JOIN courses c on c.id=sc.course_id LEFT JOIN students u on u.id=sc.student_id LEFT JOIN exams e ON e.id=sc.exam_id";
+        $uid = user()->uid;
         // 添加权限判断,学生只能查看自己的成绩
-        if ($is_admin) {
-            $sql .= " WHERE u.is_admin = 0";
-        } else {
+        if (user()->hasRole('student')) {
             $sql .= " WHERE u.uid = '$uid'";
         }
         // 搜索考试
@@ -84,11 +82,7 @@ class ScoresController extends Controller
         return $res;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         // 列表检查,已经添加的不显示
@@ -98,31 +92,22 @@ class ScoresController extends Controller
         )->toArray();
         $exams = ExamsModel::whereNotIn('id', $exam_rec)->orderBy('time')->get();
         $courses = CoursesModel::get();
-        $is_admin = Gate::allows('isAdmin');
-        $query = UserModel::query();
+        $query = StudentModel::query();
         // 添加权限判断,学生录入只能录入自己的名字的成绩
-        if ($is_admin) {
-            $students = $query->where('is_admin', '<>', 1);
-        } else {
-            // 如果是学生,只筛选出自己的
-            $students = $query->where('uid', '=', auth()->user()->uid);
+        if (user()->hasRole('student')) {
+            $query->where('uid', '=', user()->uid);
         }
-        $students = $students->get();
+        $students = $query->get();
 
         return view('scores.create', compact('exams', 'courses', 'students'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $student = (int)$request->input('student_id');
-        $is_admin = Gate::allows('isAdmin');
-        if ( ! $is_admin && $student !== auth()->user()->id) {
+        $is_admin = auth()->user()->hasRole("teacher");
+        if ( ! $is_admin && $student !== user()->id) {
             return $this->fail('非法操作,不能添加不是自己的成绩');
         }
         $exam = $request->input('exam_id');

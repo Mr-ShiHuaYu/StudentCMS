@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CoursesModel;
 use App\Models\ExamsModel;
 use App\Models\ScoresModel;
+use App\Models\StudentModel;
 use App\Models\UserModel;
 use DB;
 use Gate;
@@ -56,7 +57,7 @@ class ScoreAnalyzeController extends Controller
 
         $full = (int)CoursesModel::where('id', '=', $cid)->value('full');
         $rate = $this->getRate();
-        $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 AND c.id = {$cid} AND e.id={$eid}";
+        $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN students u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE c.id = {$cid} AND e.id={$eid}";
         $res = (array)DB::select($sql)[0];
         $json_str = '{"name":"","type":"pie","radius":"55%","center":["45%","50%"],"data":[],"itemStyle":{"emphasis":{"shadowBlur":10,"shadowOffsetX":0,"shadowColor":"rgba(0, 0, 0, 0.5)"}}}';
         $template = json_decode($json_str, true);
@@ -84,7 +85,7 @@ class ScoreAnalyzeController extends Controller
         }
         $rate = $this->getRate();
         $eid = request()->input('exam_id');
-        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',format(STD(sc.score),2) std,format(AVG( sc.score ),2) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN users u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE u.is_admin = 0 and e.id={$eid} GROUP BY course ORDER BY cid";
+        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',format(STD(sc.score),2) std,format(AVG( sc.score ),2) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN students u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE e.id={$eid} GROUP BY course ORDER BY cid";
         $data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $res['data'] = $data;
         $res['code'] = 0;
@@ -130,13 +131,16 @@ class ScoreAnalyzeController extends Controller
      */
     public function getRank()
     {
-        $uid = request()->input('uid');
-        $user = UserModel::find($uid);
         // 权限判断,判断当前登录的用户id和想要查看的用户是不是一个
-        if (Gate::denies('is_own', $user)) {
-            return $this->fail('无权限查看不是自己的成绩');
+        if (user()->hasRole('student')){
+            // 是学生,获取当前学生的ID
+            $uid= user()->roles[0]->pivot->foreign_id;
+            if (request('uid') != $uid){
+                return $this->fail('无权限查看不是自己的成绩');
+            }
         }
-        $uname = UserModel::where('id', '=', $uid)->value('name');
+
+        $uname = StudentModel::where('id', '=', $uid)->value('name');
         // 获取学号为x的学生参加的考试
         $sql = "select distinct e.name exam from scores sc,exams e where sc.exam_id=e.id and sc.student_id={$uid} ORDER BY e.id";
         $exams = DB::table(DB::raw("($sql) as res"))->pluck('exam')->toArray();
@@ -230,7 +234,7 @@ class ScoreAnalyzeController extends Controller
         // 要列出至少有一门考试的学生的列表，形成表格
         $uid = ScoresModel::distinct()->pluck('student_id')->toArray();
         // 根据这个uid,从学生表里面找
-        $query = UserModel::whereIn('id', $uid)->select('id', 'uid', 'name');
+        $query = StudentModel::whereIn('id', $uid)->select('id', 'uid', 'name');
         // 搜索学号或姓名
         if ($keyword) {
             $query->where('uid', 'like', '%'.$keyword.'%')->orWhere(

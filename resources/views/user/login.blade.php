@@ -127,17 +127,17 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="uid" lay-verify="required|account" placeholder="学号" autocomplete="off"
-                           class="layui-input" value="admin">
+                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名" autocomplete="off"
+                           class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <input type="password" name="password" lay-verify="required|password" placeholder="密码"
-                           autocomplete="off" class="layui-input" value="admin">
+                           autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit=""
-                            lay-filter="login">登 入
+                            lay-filter="login">登  录
                     </button>
                 </div>
             </form>
@@ -168,8 +168,8 @@
         // 进行登录操作
         form.on('submit(login)', function (data) {
             data = data.field;
-            if (data.uid === '') {
-                layer.msg('学号不能为空');
+            if (data.username === '') {
+                layer.msg('用户名不能为空');
                 return false;
             }
             if (data.password === '') {

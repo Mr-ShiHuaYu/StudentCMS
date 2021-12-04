@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CoursesModel;
 use App\Models\ExamsModel;
+use App\Models\StudentModel;
 use App\Models\UserModel;
 use DB;
 
@@ -19,7 +20,7 @@ class IndexController extends Controller
      */
     public function welcome()
     {
-        $userCount = UserModel::where('is_admin', '<>', 1)->count();
+        $userCount = StudentModel::getCount();
 
         return view('welcome', compact('userCount'));
     }

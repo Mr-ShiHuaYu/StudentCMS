@@ -61,7 +61,7 @@
                     <a href="javascript:;">{{auth()->user()->name}}</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="{{route('user.show',auth()->user()->id)}}"
+                            <a href="javascript:;" layuimini-content-href="{{route('user.info')}}"
                                data-title="个人信息"
                                data-icon="fa fa-gears">个人信息<span class="layui-badge-dot"></span></a>
                         </dd>
@@ -144,7 +144,7 @@
             menuChildOpen: false,       // 是否默认展开菜单
             loadingTime: 0.01,             // 初始化加载时间
             pageAnim: true,             // iframe窗口动画
-            maxTabNum: 15              // 最大的tab打开数量
+            maxTabNum: 10              // 最大的tab打开数量
         };
         miniAdmin.render(options);
         $('.login-out').on("click", function () {

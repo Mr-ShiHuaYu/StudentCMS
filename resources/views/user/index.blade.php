@@ -29,9 +29,7 @@
             </form>
         </div>
     </fieldset>
-
     <table id="user_table" lay-filter="test"></table>
-
 @stop
 
 @section('js')
