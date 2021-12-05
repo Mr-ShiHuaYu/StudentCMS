@@ -71,7 +71,6 @@ Route::middleware('auth')->group(
         // 管理员专属
         Route::resource('/admin', 'AdminController');
         Route::post('/admin.data', 'AdminController@getData')->name('admin.data');
-
     }
 );
 
