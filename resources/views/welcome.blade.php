@@ -108,21 +108,23 @@
                     </div>
                 </div>
             </div>
-
-            <div class="layui-col-md3">
-                <div class="col-xs-6 col-md-3">
-                    <div class="panel layui-bg-green">
-                        <div class="panel-body" layuimini-content-href="{{route('analyze.index')}}" data-title="总体分析">
-                            <div class="panel-content" style="margin: 25px 10px;">
-                                <h1 class="no-margins">
-                                    <i class="fa fa-pie-chart"></i>
-                                    总体分析
-                                </h1>
+            @can('isAdmin')
+                <div class="layui-col-md3">
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel layui-bg-green">
+                            <div class="panel-body" layuimini-content-href="{{route('analyze.index')}}"
+                                 data-title="总体分析">
+                                <div class="panel-content" style="margin: 25px 10px;">
+                                    <h1 class="no-margins">
+                                        <i class="fa fa-pie-chart"></i>
+                                        总体分析
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endcan
             <div class="layui-col-md3">
                 <div class="col-xs-6 col-md-3">
                     <div class="panel layui-bg-orange">

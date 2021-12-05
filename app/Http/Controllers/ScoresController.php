@@ -33,11 +33,11 @@ class ScoresController extends Controller
     {
         // 全站最难,最关键的方法,利用mysql的if函数,将行转列,按学生的学号分组,max最课程成绩最大值,正常来说,一个学生的一次考试一个课程的成绩只有一个
         // 要考虑权限,学生只能查看自己的成绩
-        $page = $request->input('page');
-        $limit = $request->input('limit');
+        $page = request('page');
+        $limit = request('limit');
         $offset = ($page - 1) * $limit;
-        $exam_id = $request->input('exam_id'); // 搜索考试
-        $keyword = $request->input('name_uid'); // 搜索学号或姓名
+        $exam_id = request('exam_id'); // 搜索考试
+        $keyword = request('name_uid'); // 搜索学号或姓名
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
         $sql = "SELECT u.uid uid,u.name name,e.name exam,";
@@ -52,7 +52,7 @@ class ScoresController extends Controller
         }
         // 平均分,总分,标准差
         $sql .= "format(AVG(sc.score),2) avg,SUM(sc.score) sum,format(STD(sc.score),2) std";
-        $sql .= " FROM scores sc LEFT JOIN courses c on c.id=sc.course_id LEFT JOIN students u on u.id=sc.student_id LEFT JOIN exams e ON e.id=sc.exam_id";
+        $sql .= " FROM scores sc JOIN courses c on c.id=sc.course_id JOIN students u on u.id=sc.student_id JOIN exams e ON e.id=sc.exam_id";
         $uid = user()->uid;
         // 添加权限判断,学生只能查看自己的成绩
         if (user()->hasRole('student')) {
@@ -73,6 +73,7 @@ class ScoresController extends Controller
             $sql .= " and u.id IN ($id_str)";
         }
         $sql .= " GROUP BY u.uid,e.name ORDER BY e.id";
+
         $data = DB::table(DB::raw("($sql) as res"))->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
@@ -154,35 +155,6 @@ class ScoresController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $input = $request->all();
@@ -200,16 +172,6 @@ class ScoresController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function export()
     {

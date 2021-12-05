@@ -31,11 +31,10 @@ class StudentModel extends Model
         $keyword = request('keyword');
 
         $offset = ($page - 1) * $limit;
-        $is_teacher = auth()->user()->role('teacher');
         $query = static::query();
-        if (! $is_teacher) {
+        if (user()->hasRole('student')) {
             // 是学生,学生只能看自己的信息
-            $query->where('id', '=', auth()->user()->id);
+            $query->where('id', '=', auth()->user()->bind_user_id);
         }
 
         if ($start) {

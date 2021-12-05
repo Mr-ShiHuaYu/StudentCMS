@@ -59,6 +59,8 @@ class LoginController extends Controller
             }
             $user->password = Hash::make($validated['newpass']);
             $user->save();
+
+            \Session::flush();
             Auth::logout();
 
             return $this->success('密码修改成功');

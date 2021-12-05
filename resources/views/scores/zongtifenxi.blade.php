@@ -41,8 +41,8 @@
                     , cols: [[
                         {field: 'cid', hide: true}
                         , {field: 'eid', hide: true}
-                        , {type: 'numbers', title: '序号', width: 100, align: 'center'}
-                        , {field: 'exam', title: '考试', sort: true, align: 'center'}
+                        , {type: 'numbers', title: '序号', width: 50, align: 'center'}
+                        , {field: 'exam', title: '考试', width: 120, sort: true, align: 'center'}
                         , {
                             field: 'course',
                             title: '课程',

@@ -123,7 +123,7 @@
                 }
 
                 @cannot('isAdmin')
-                showLine({{auth()->user()->id}});
+                showLine({{auth()->user()->bind_user_id}});
                 @endcannot
                 //监听行单击事件（双击事件为：rowDouble）
                 table.on('row(test)', function (obj) {

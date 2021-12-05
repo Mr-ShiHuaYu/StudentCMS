@@ -9,11 +9,12 @@ use Gate;
 
 class CoursesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        // 规定只有老师才能访问的方法
+        $this->middleware(['role:teacher'])->only(['store', 'create', 'destroy', 'edit','update']);
+    }
+
     public function index()
     {
         return view('courses.index');
@@ -33,11 +34,7 @@ class CoursesController extends Controller
         return $res;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+
     public function create()
     {
         $teachers = TeachersModel::get();
@@ -45,17 +42,9 @@ class CoursesController extends Controller
         return view('courses.create', compact('teachers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function store(Request $request)
     {
-        if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权添加课程');
-        }
         $res = CoursesModel::create($request->all());
         if ($res) {
             return $this->success('添加成功');
@@ -64,48 +53,20 @@ class CoursesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $course = CoursesModel::find($id);
         $teachers = TeachersModel::get();
-        if (Gate::denies('isAdmin')) {
-            return view('user.noper');
-        }
 
         return view('courses.edit', compact('course', 'teachers'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $course = CoursesModel::find($id);
 
-        if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权修改课程');
-        }
         $res = $course->update($request->all());
         if ($res) {
             return $this->success('修改成功');
@@ -114,17 +75,10 @@ class CoursesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        if (Gate::denies('isAdmin')) {
-            return $this->fail('您无权删除课程');
-        }
+
         $res = CoursesModel::destroy($id);
         if ($res) {
             return $this->success('删除成功');

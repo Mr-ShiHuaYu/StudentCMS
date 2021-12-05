@@ -174,7 +174,7 @@ class UserController extends Controller
         $user = auth()->user();
         // 从中间表中获取自己对应的表ID
         // 根据不同的人,显示不同的信息
-        $foreign_id = $user->roles[0]->pivot->foreign_id;
+        $foreign_id = $user->foreign_id;
         // 获取自己的角色,管理员,老师/学生
         if ($user->hasAnyRole(['admin', 'teacher'])) {
             // 管理员和老师都显示一样的模板

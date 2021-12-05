@@ -57,7 +57,7 @@ class ScoreAnalyzeController extends Controller
 
         $full = (int)CoursesModel::where('id', '=', $cid)->value('full');
         $rate = $this->getRate();
-        $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN students u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE c.id = {$cid} AND e.id={$eid}";
+        $sql = "SELECT c.NAME course, e.name exam, sum( CASE WHEN sc.score >= {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '优秀', sum( CASE WHEN sc.score >= {$rate['lianghao']}*{$full} AND sc.score < {$rate['youxiu']}*{$full} THEN 1 ELSE 0 END ) '良好', sum( CASE WHEN sc.score >= {$rate['jige']}*{$full} AND sc.score < {$rate['lianghao']}*{$full} THEN 1 ELSE 0 END ) '及格', sum( CASE WHEN sc.score < {$rate['jige']}*{$full} THEN 1 ELSE 0 END ) '不及格' FROM scores sc JOIN courses c ON c.id = sc.course_id JOIN students u ON u.id = sc.student_id JOIN exams e ON e.id = sc.exam_id WHERE c.id = {$cid} AND e.id={$eid}";
         $res = (array)DB::select($sql)[0];
         $json_str = '{"name":"","type":"pie","radius":"55%","center":["45%","50%"],"data":[],"itemStyle":{"emphasis":{"shadowBlur":10,"shadowOffsetX":0,"shadowColor":"rgba(0, 0, 0, 0.5)"}}}';
         $template = json_decode($json_str, true);
@@ -85,7 +85,7 @@ class ScoreAnalyzeController extends Controller
         }
         $rate = $this->getRate();
         $eid = request()->input('exam_id');
-        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',format(STD(sc.score),2) std,format(AVG( sc.score ),2) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc LEFT JOIN courses c ON c.id = sc.course_id LEFT JOIN students u ON u.id = sc.student_id LEFT JOIN exams e ON e.id = sc.exam_id WHERE e.id={$eid} GROUP BY course ORDER BY cid";
+        $sql = "SELECT c.NAME course,c.id cid,e.id eid,e.name exam,c.full as full,count(*) join_num,sum( CASE WHEN sc.score >= ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'youxiu',sum( CASE WHEN sc.score >= ({$rate['lianghao']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['youxiu']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'lianghao',sum( CASE WHEN sc.score >= ({$rate['jige']}*(select full from courses where id=c.id)) AND sc.score < ({$rate['lianghao']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'jige',sum( CASE WHEN sc.score < ({$rate['jige']}*(select full from courses where id=c.id)) THEN 1 ELSE 0 END ) 'bujige',format(STD(sc.score),2) std,format(AVG( sc.score ),2) avg,MAX( sc.score ) max,min( sc.score ) min FROM scores sc JOIN courses c ON c.id = sc.course_id JOIN students u ON u.id = sc.student_id JOIN exams e ON e.id = sc.exam_id WHERE e.id={$eid} GROUP BY course ORDER BY cid";
         $data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $res['data'] = $data;
         $res['code'] = 0;
@@ -106,17 +106,17 @@ class ScoreAnalyzeController extends Controller
         $score_sep = config('sys.score_sep');
 
         if ($field == 'max') {
-            $sql = "SELECT u.name,s.score FROM (select exam_id,course_id,max(score) max from scores sc where exam_id={$eid} and course_id={$cid}) t,scores s,users u WHERE t.max=s.score and t.exam_id=s.exam_id and t.course_id=s.course_id and u.id=s.student_id";
+            $sql = "SELECT u.name,s.score FROM (select exam_id,course_id,max(score) max from scores sc where exam_id={$eid} and course_id={$cid}) t,scores s,students u WHERE t.max=s.score and t.exam_id=s.exam_id and t.course_id=s.course_id and u.id=s.student_id";
         } elseif ($field == 'min') {
-            $sql = "SELECT u.name,s.score FROM (select exam_id,course_id,min(score) min from scores sc where exam_id={$eid} and course_id={$cid}) t,scores s,users u WHERE t.min=s.score and t.exam_id=s.exam_id and t.course_id=s.course_id and u.id=s.student_id";
+            $sql = "SELECT u.name,s.score FROM (select exam_id,course_id,min(score) min from scores sc where exam_id={$eid} and course_id={$cid}) t,scores s,students u WHERE t.min=s.score and t.exam_id=s.exam_id and t.course_id=s.course_id and u.id=s.student_id";
         } elseif ($field == 'youxiu') {
-            $sql = "SELECT u.name,sc.score FROM scores sc,users u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score>={$score_sep['youxiu']}*t.rate";
+            $sql = "SELECT u.name,sc.score FROM scores sc,students u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score>={$score_sep['youxiu']}*t.rate";
         } elseif ($field == 'lianghao') {
-            $sql = "SELECT u.name,sc.score FROM scores sc,users u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['youxiu']}*t.rate and sc.score>={$score_sep['lianghao']}*t.rate";
+            $sql = "SELECT u.name,sc.score FROM scores sc,students u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['youxiu']}*t.rate and sc.score>={$score_sep['lianghao']}*t.rate";
         } elseif ($field == 'jige') {
-            $sql = "SELECT u.name,sc.score FROM scores sc,users u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['lianghao']}*t.rate and sc.score>={$score_sep['jige']}*t.rate";
+            $sql = "SELECT u.name,sc.score FROM scores sc,students u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['lianghao']}*t.rate and sc.score>={$score_sep['jige']}*t.rate";
         } elseif ($field == 'bujige') {
-            $sql = "SELECT u.name,sc.score FROM scores sc,users u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['jige']}*t.rate";
+            $sql = "SELECT u.name,sc.score FROM scores sc,students u,(select full/100 rate from courses where id={$cid}) t WHERE sc.exam_id={$eid} and sc.course_id={$cid} and u.id=sc.student_id and sc.score<{$score_sep['jige']}*t.rate";
         }
         $data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         if ($data) {
@@ -131,11 +131,11 @@ class ScoreAnalyzeController extends Controller
      */
     public function getRank()
     {
+        $uid = request('uid');
         // 权限判断,判断当前登录的用户id和想要查看的用户是不是一个
         if (user()->hasRole('student')){
             // 是学生,获取当前学生的ID
-            $uid= user()->roles[0]->pivot->foreign_id;
-            if (request('uid') != $uid){
+            if ( $uid != user()->bind_user_id){
                 return $this->fail('无权限查看不是自己的成绩');
             }
         }
@@ -149,7 +149,7 @@ class ScoreAnalyzeController extends Controller
         $sql = "select distinct c.name course from scores sc,courses c where sc.course_id=c.id and sc.student_id={$uid} ORDER BY c.id";
         $courses = DB::table(DB::raw("($sql) as res"))->pluck('course')->toArray();
         // 个人分析----各科分数变化折线图1
-        $sql = "select t.name,group_concat(score order by eid) scores,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
+        $sql = "select t.name,group_concat(score order by eid) scores,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,students u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $scdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $score_series = [];
         foreach ($scdata as $d) {
@@ -174,7 +174,7 @@ class ScoreAnalyzeController extends Controller
         }
 
         // 个人分析----各科排名变化折线图2
-        $sql = "select t.name,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
+        $sql = "select t.name,group_concat(rank order by eid) ranks from (select a.*,if(@cid=cid,if(@sco=score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=score,@cid:=cid from (select u.id uid,c.name name,c.id cid,e.id eid,score from scores sc,students u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id order by e.id,c.id,score desc) a,(select @cid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} group by cid order by cid,eid";
         $rkdata = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $rkdata_series = [];
         foreach ($rkdata as $d) {
@@ -186,7 +186,7 @@ class ScoreAnalyzeController extends Controller
             ];
         }
         // 个人分析----总分折线图3
-        $sql = "select t.uid,t.name,t.eid,t.exam,t.sum_score sum,rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,e.name exam,sum(score) sum_score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
+        $sql = "select t.uid,t.name,t.eid,t.exam,t.sum_score sum,rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,e.name exam,sum(score) sum_score from scores sc,students u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
         $sum_data = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $sum_data_temp = [];
         foreach ($sum_data as $d) {
@@ -202,7 +202,7 @@ class ScoreAnalyzeController extends Controller
         ];
 
         // 个人分析----总分排名折线图4
-        $sql = "select rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,sum(score) sum_score from scores sc,users u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
+        $sql = "select rank from (select a.*,if(@eid=eid,if(@sco=sum_score,@rank,@rank:=@rank+1),@rank:=1) as rank,@sco:=sum_score,@eid:=eid from (select u.id uid,u.name name,e.id eid,sum(score) sum_score from scores sc,students u,courses c,exams e where u.id=sc.student_id and c.id=sc.course_id and e.id=sc.exam_id group by uid,eid order by eid,sum_score desc) a,(select @eid:=null,@sco:=null,@rank:=0) b) t where uid={$uid} order by eid";
         $sum_rank_temp = DB::table(DB::raw("($sql) as res"))->get()->toArray();
         $sum_rank_data = [];
         foreach ($sum_rank_temp as $r) {

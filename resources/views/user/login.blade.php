@@ -127,7 +127,8 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名" autocomplete="off"
+                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名"
+                           autocomplete="off"
                            class="layui-input">
                 </div>
                 <div class="layui-form-item">
@@ -137,8 +138,14 @@
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit=""
-                            lay-filter="login">登  录
+                            lay-filter="login">登 录
                     </button>
+                </div>
+
+                <div class="layui-form-item">
+                    管理员:admin/admin<br/>
+                    老师: teacher/teacher<br/>
+                    学生: student/student<br/>
                 </div>
             </form>
         </div>

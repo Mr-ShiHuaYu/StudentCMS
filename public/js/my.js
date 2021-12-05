@@ -104,7 +104,7 @@ layui.use("jquery", function () {
 
 
         my.prototype.msg = function (res) {
-            var table_id = $('table[id]', parent.document).attr('id');
+            var table_id = $('table[id]').attr('id')||$('table[id]', parent.document).attr('id');
             if (res.status === 'success') {
                 layer.msg(res.msg, {icon: 6, time: 1000}, function () {
                     var index = parent.layer.getFrameIndex(window.name);

@@ -17,8 +17,8 @@
 Route::middleware('auth')->group(
     function () {
         // 权限相关
-        Route::get('/per/create', [\App\Http\Controllers\PermissionController::class, 'create']);
-        Route::get('/per/index', [\App\Http\Controllers\PermissionController::class, 'index']);
+//        Route::get('/per/create', [\App\Http\Controllers\PermissionController::class, 'create']);
+//        Route::get('/per/index', [\App\Http\Controllers\PermissionController::class, 'index']);
         // 初始化
         Route::get('/init', [\App\Http\Controllers\InitController::class, 'systemInit'])->name('init');
         Route::get('/clear', [\App\Http\Controllers\InitController::class, 'clear'])->name('clear');
@@ -67,6 +67,11 @@ Route::middleware('auth')->group(
         // 个人分析列表页
         Route::get('/analyze/gerenfx', 'ScoreAnalyzeController@gerenfx')->name('analyze.gerenfx');
         Route::post('/analyze/hasscore', 'ScoreAnalyzeController@getHasScoreUser')->name('analyze.hasscore');
+
+        // 管理员专属
+        Route::resource('/admin', 'AdminController');
+        Route::post('/admin.data', 'AdminController@getData')->name('admin.data');
+
     }
 );
 

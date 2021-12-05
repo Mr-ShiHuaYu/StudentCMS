@@ -12,19 +12,19 @@
         <div class="layui-form-item">
             <label for="L_repass" class="layui-form-label required">旧密码</label>
             <div class="layui-input-inline">
-                <input type="password" id="L_repass" name="oldpass" required="" lay-verify="required"
+                <input type="text" id="L_repass" name="oldpass" required="" lay-verify="required"
                        autocomplete="off" class="layui-input"></div>
         </div>
         <div class="layui-form-item">
             <label for="L_pass" class="layui-form-label required">新密码</label>
             <div class="layui-input-inline">
-                <input type="password" id="L_pass" name="newpass" required="" lay-verify="required|newpass"
+                <input type="text" id="L_pass" name="newpass" required="" lay-verify="required|newpass"
                        autocomplete="off" class="layui-input"></div>
         </div>
         <div class="layui-form-item">
             <label for="R_repass" class="layui-form-label required">确认密码</label>
             <div class="layui-input-inline">
-                <input type="password" id="R_repass" name="newpass_confirmation" required=""
+                <input type="text" id="R_repass" name="newpass_confirmation" required=""
                        lay-verify="required|confirmpass"
                        autocomplete="off" class="layui-input"></div>
         </div>
@@ -59,7 +59,13 @@
                 form.on('submit(save)',
                     function (data) {
                         $.post('{{route('dorepwd')}}', data.field, function (res) {
-                            my.msg(res);
+                            if (res.status === 'success') {
+                                layer.msg(res.msg, {icon: 6, time: 1000}, function () {
+                                    top.window.location.reload();
+                                })
+                            } else {
+                                layer.alert(res.msg, {icon: 5});
+                            }
                         });
                         return false;
                     });
