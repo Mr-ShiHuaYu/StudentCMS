@@ -17,7 +17,6 @@ class CreateUserHasRolesTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->string('model_type');
             $table->unsignedBigInteger('user_id');
-            $table->bigInteger('foreign_id')->nullable()->comment('学生表或老师表的外键ID');
 
             $table->index(['user_id', 'model_type'], 'model_has_roles_model_id_model_type_index');
             $table->primary(['role_id', 'user_id', 'model_type']);

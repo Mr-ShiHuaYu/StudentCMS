@@ -24,6 +24,16 @@ class RoleMenuTableSeeder extends Seeder
                 'role_id' => 1,
                 'menu_id' => 8,
             ),
+            1 => 
+            array (
+                'role_id' => 2,
+                'menu_id' => 8,
+            ),
+            2 => 
+            array (
+                'role_id' => 1,
+                'menu_id' => 13,
+            ),
         ));
         
         

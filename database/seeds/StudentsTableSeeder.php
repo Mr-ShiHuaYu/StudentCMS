@@ -21,34 +21,9 @@ class StudentsTableSeeder extends Seeder
         \DB::table('students')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'uid' => '11536942',
-                'name' => '学生甲',
-                'sex' => '男',
-                'phone' => '110120119',
-                'sysid' => '26588608',
-                'birth' => '1993-04-05',
-                'minzu' => '畲',
-                'jingji' => NULL,
-                'hukou' => NULL,
-                'jishu' => '0',
-                'huji' => NULL,
-                'xianzz' => NULL,
-                'liushou' => 0,
-                'liushouqk' => NULL,
-                'liushoutgqk' => NULL,
-                'biye' => '济南亿次元网络有限公司',
-                'ganbu' => NULL,
-                'huojiang' => NULL,
-                'remember_token' => '96IY4SFSX0E40toJf5A6M9lPSrneVdOWFpAvcDZ2veelmnQSQmhfM9itVtyn',
-                'created_at' => '1971-11-20 08:23:59',
-                'updated_at' => '2021-04-03 00:28:11',
-            ),
-            1 => 
-            array (
                 'id' => 2,
                 'uid' => 'test',
-                'name' => '测试学生',
+                'name' => '学生甲',
                 'sex' => '男',
                 'phone' => '110120119',
                 'sysid' => '96308564',
@@ -69,7 +44,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '2013-03-30 09:17:26',
                 'updated_at' => '2021-04-03 00:28:11',
             ),
-            2 => 
+            1 => 
             array (
                 'id' => 3,
                 'uid' => '11536946',
@@ -94,7 +69,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '2006-09-28 23:11:05',
                 'updated_at' => '2008-09-23 05:41:03',
             ),
-            3 => 
+            2 => 
             array (
                 'id' => 4,
                 'uid' => '90460066',
@@ -119,7 +94,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '2012-02-19 09:17:25',
                 'updated_at' => '1974-03-25 19:58:36',
             ),
-            4 => 
+            3 => 
             array (
                 'id' => 5,
                 'uid' => '42365184',
@@ -144,7 +119,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '2007-05-03 08:22:12',
                 'updated_at' => '1972-04-18 09:30:02',
             ),
-            5 => 
+            4 => 
             array (
                 'id' => 6,
                 'uid' => '97827816',
@@ -169,7 +144,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '1986-12-12 16:33:45',
                 'updated_at' => '1979-04-17 17:56:59',
             ),
-            6 => 
+            5 => 
             array (
                 'id' => 7,
                 'uid' => '97452034',
@@ -194,7 +169,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '1972-04-19 20:05:45',
                 'updated_at' => '2007-08-13 02:06:51',
             ),
-            7 => 
+            6 => 
             array (
                 'id' => 8,
                 'uid' => '34185498',
@@ -219,7 +194,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '1989-03-10 12:26:16',
                 'updated_at' => '1988-12-29 20:13:34',
             ),
-            8 => 
+            7 => 
             array (
                 'id' => 9,
                 'uid' => '21983497',
@@ -244,7 +219,7 @@ class StudentsTableSeeder extends Seeder
                 'created_at' => '1993-04-29 22:33:00',
                 'updated_at' => '1984-05-20 13:52:09',
             ),
-            9 => 
+            8 => 
             array (
                 'id' => 10,
                 'uid' => '94395183',

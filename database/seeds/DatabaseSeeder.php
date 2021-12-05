@@ -17,7 +17,21 @@ class DatabaseSeeder extends Seeder
             $filename = $seeder->getFilename();
             if ($filename == "DatabaseSeeder.php") {
                 continue;
-            }
+                $this->call(UsersTableSeeder::class);
+        $this->call(CoursesTableSeeder::class);
+        $this->call(ExamsTableSeeder::class);
+        $this->call(ParentsTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(RoleHasPermissionsTableSeeder::class);
+        $this->call(RoleMenuTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(ScoresTableSeeder::class);
+        $this->call(StudentsTableSeeder::class);
+        $this->call(SystemMenuTableSeeder::class);
+        $this->call(TeachersTableSeeder::class);
+        $this->call(UserHasPermissionsTableSeeder::class);
+        $this->call(UserHasRolesTableSeeder::class);
+    }
             $ext = $seeder->getExtension();
             $model = "Database\Seeders\\".rtrim($filename, ".{$ext}");
 
