@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\StudentModel;
 use App\Models\UserModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -18,7 +19,7 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings
         $columns = Schema::getColumnListing('students');
         $columns = array_diff($columns, ['id', 'password', 'remember_token', 'created_at', 'updated_at']);
 
-        return UserModel::select($columns)->get();
+        return StudentModel::select($columns)->get();
     }
 
     public function headings(): array
