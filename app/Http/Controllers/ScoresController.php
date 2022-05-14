@@ -53,10 +53,10 @@ class ScoresController extends Controller
         // 平均分,总分,标准差
         $sql .= "format(AVG(sc.score),2) avg,SUM(sc.score) sum,format(STD(sc.score),2) std";
         $sql .= " FROM scores sc JOIN courses c on c.id=sc.course_id JOIN students u on u.id=sc.student_id JOIN exams e ON e.id=sc.exam_id";
-        $uid = user()->uid;
+        $uid = user()->bind_user_id;
         // 添加权限判断,学生只能查看自己的成绩
         if (user()->hasRole('student')) {
-            $sql .= " WHERE u.uid = '$uid'";
+            $sql .= " WHERE u.id = '$uid'";
         }
         // 搜索考试
         if ($exam_id) {
@@ -73,7 +73,6 @@ class ScoresController extends Controller
             $sql .= " and u.id IN ($id_str)";
         }
         $sql .= " GROUP BY u.uid,e.name ORDER BY e.id";
-
         $data = DB::table(DB::raw("($sql) as res"))->offset($offset)->paginate($limit)->toArray();
         $res['data'] = $data['data'];
         $res['code'] = 0;
