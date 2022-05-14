@@ -86,7 +86,7 @@ class ScoresController extends Controller
     public function create()
     {
         // 列表检查,已经添加的不显示
-        $student_id = auth()->user()->id;
+        $student_id = auth()->user()->bind_user_id;
         // 筛选中数据库中已经存在的这个学生的考试记录,在添加时,不显示出来,避免重复添加相同记录
         $exam_rec = ScoresModel::where('student_id', '=', $student_id)->select('exam_id as exam')->distinct()->get(
         )->toArray();
@@ -107,7 +107,7 @@ class ScoresController extends Controller
     {
         $student = (int)$request->input('student_id');
         $is_admin = auth()->user()->hasRole("admin");
-        if ( ! $is_admin && $student !== user()->id) {
+        if ( ! $is_admin && $student !== user()->bind_user_id) {
             return $this->fail('非法操作,不能添加不是自己的成绩');
         }
         $exam = $request->input('exam_id');

@@ -1,20 +1,24 @@
 <?php
 
-if ( ! function_exists("is_own")) {
+if (!function_exists("is_own")) {
     function is_own($id)
     {
-        return auth()->user()->bind_user_id == $id;
+        if (user()->hasRole('admin')) {
+            return true;
+        } else {
+            return user()->bind_user_id == $id;
+        }
     }
 }
 
-if ( ! function_exists("user")) {
+if (!function_exists("user")) {
     function user()
     {
         return auth()->user();
     }
 }
 
-if ( ! function_exists("table")) {
+if (!function_exists("table")) {
     function table($data)
     {
         $res['data'] = $data['data'];
