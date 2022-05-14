@@ -3,7 +3,7 @@
 if ( ! function_exists("is_own")) {
     function is_own($id)
     {
-        return auth()->user()->id == $id;
+        return auth()->user()->bind_user_id == $id;
     }
 }
 

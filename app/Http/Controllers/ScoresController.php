@@ -40,7 +40,7 @@ class ScoresController extends Controller
         $keyword = request('name_uid'); // 搜索学号或姓名
         $courses = DB::table('courses')->orderBy('id')->get();
         $sql_temp = [];
-        $sql = "SELECT u.uid uid,u.name name,e.name exam,";
+        $sql = "SELECT u.id,u.uid uid,u.name name,e.name exam,";
         // 行列转换的sql拼接代码,动态遍历全部课程
         foreach ($courses as $course) {
             $sql_temp[] = "MAX(if(c.name='$course->name',sc.score,0)) as '$course->name'";
@@ -160,10 +160,12 @@ class ScoresController extends Controller
         if ($input['score'] < 0 or $input['score'] > 150) {
             return $this->fail('成绩不合法,成绩应在0-150分之间');
         }
-        $student_id = UserModel::where('uid', '=', $input['uid'])->value('id');
+        $student_id = (int)$input['id'];
         $course_id = CoursesModel::where('name', '=', $input['course'])->value('id');
         $exam_id = ExamsModel::where('name', '=', $input['exam'])->value('id');
-        $res = ScoresModel::where(compact('student_id', 'course_id', 'exam_id'))->update(['score' => $input['score']]);
+        $res = ScoresModel::where(compact('student_id', 'course_id', 'exam_id'))
+            ->update(['score' => $input['score']]);
+
         if ($res) {
             return $this->success('修改成功');
         } else {

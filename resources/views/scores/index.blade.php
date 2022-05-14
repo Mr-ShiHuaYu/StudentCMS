@@ -126,7 +126,7 @@
                             $.ajax({
                                 type: 'put',
                                 url: '{{route('score.update','x')}}',
-                                data: {uid: data.uid, course: field, score: value, exam: data.exam},
+                                data: {id: data.id, course: field, score: value, exam: data.exam},
                                 success: function (res) {
                                     my.msg(res);
                                 }
