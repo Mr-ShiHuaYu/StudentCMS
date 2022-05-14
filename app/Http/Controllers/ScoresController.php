@@ -107,7 +107,7 @@ class ScoresController extends Controller
     public function store(Request $request)
     {
         $student = (int)$request->input('student_id');
-        $is_admin = auth()->user()->hasRole("teacher");
+        $is_admin = auth()->user()->hasRole("admin");
         if ( ! $is_admin && $student !== user()->id) {
             return $this->fail('非法操作,不能添加不是自己的成绩');
         }
