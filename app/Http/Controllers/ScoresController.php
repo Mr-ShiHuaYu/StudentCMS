@@ -64,10 +64,10 @@ class ScoresController extends Controller
         }
         // 搜索学号或姓名
         if ($keyword) {
-            $student_id = UserModel::where('uid', 'like', '%'.$keyword.'%')->orWhere(
+            $student_id = StudentModel::where('uid', 'like', '%' . $keyword . '%')->orWhere(
                 'name',
                 'like',
-                '%'.$keyword.'%'
+                '%' . $keyword . '%'
             )->pluck('id')->toArray();
             $id_str = join(',', $student_id);
             $sql .= " and u.id IN ($id_str)";
@@ -88,8 +88,7 @@ class ScoresController extends Controller
         // 列表检查,已经添加的不显示
         $student_id = auth()->user()->bind_user_id;
         // 筛选中数据库中已经存在的这个学生的考试记录,在添加时,不显示出来,避免重复添加相同记录
-        $exam_rec = ScoresModel::where('student_id', '=', $student_id)->select('exam_id as exam')->distinct()->get(
-        )->toArray();
+        $exam_rec = ScoresModel::where('student_id', '=', $student_id)->select('exam_id as exam')->distinct()->get()->toArray();
         $exams = ExamsModel::whereNotIn('id', $exam_rec)->orderBy('time')->get();
         $courses = CoursesModel::get();
         $query = StudentModel::query();
@@ -107,7 +106,7 @@ class ScoresController extends Controller
     {
         $student = (int)$request->input('student_id');
         $is_admin = auth()->user()->hasRole("admin");
-        if ( ! $is_admin && $student !== user()->bind_user_id) {
+        if (!$is_admin && $student !== user()->bind_user_id) {
             return $this->fail('非法操作,不能添加不是自己的成绩');
         }
         $exam = $request->input('exam_id');
@@ -143,7 +142,7 @@ class ScoresController extends Controller
                 return $this->fail("{$course->name}成绩不合法,成绩应在0-{$course->full}分之间");
             }
             $temp = ScoresModel::create($d);
-            if ( ! $temp) {
+            if (!$temp) {
                 $flag = false;
             }
         }
