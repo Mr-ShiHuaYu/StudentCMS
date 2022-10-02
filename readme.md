@@ -67,16 +67,20 @@ http://stu.yushihua.vip
 
 ### 图片演示
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20210403003928.png)
+![个人分析](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E4%B8%AA%E4%BA%BA%E5%88%86%E6%9E%90.jpg?raw=true)
 
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20210403003833.png)
+![学生列表](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E5%AD%A6%E7%94%9F%E5%88%97%E8%A1%A8.jpg?raw=true)
 
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20210403003710.png)
+![总体分析](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E6%80%BB%E4%BD%93%E5%88%86%E6%9E%90.jpg?raw=true)
 
 
-![](https://cdn.jsdelivr.net/gh/974988176/PicsBed/2020/20210403003750.png)
+![成绩查询](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E6%88%90%E7%BB%A9%E6%9F%A5%E8%AF%A2.jpg?raw=true)
+
+
+![课程分析](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E8%AF%BE%E7%A8%8B%E5%88%86%E6%9E%90.jpg?raw=true)
+
 
 ### 常见问题
 
