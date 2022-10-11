@@ -16,11 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ScoresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $courses = DB::table('courses')->orderBy('id')->get();

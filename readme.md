@@ -65,6 +65,13 @@ http://stu.yushihua.vip
 ### 交流群
 已解散
 
+### 配套毕业论文
+请联系作者获取（有偿），备注：毕业论文
+
+QQ: 974988176
+WX: lg974988176
+
+
 ### 图片演示
 
 ![个人分析](https://github.com/974988176/StudentCMS/blob/master/screenshots/%E4%B8%AA%E4%BA%BA%E5%88%86%E6%9E%90.jpg?raw=true)
